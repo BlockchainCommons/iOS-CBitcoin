@@ -1,0 +1,23 @@
+PODS:
+  - CBitcoin (0.1.0)
+  - WolfPipe (1.0.4)
+
+DEPENDENCIES:
+  - CBitcoin (from `../`)
+  - WolfPipe
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - WolfPipe
+
+EXTERNAL SOURCES:
+  CBitcoin:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CBitcoin: a5ea3cb3c08dd4af1c02d8bab9f53bdb2c22055d
+  WolfPipe: 7ac686d6e3d4e960323c864c9e57a667cda7126c
+
+PODFILE CHECKSUM: 782562ce09173240e493450b5e9e091bf051c140
+
+COCOAPODS: 1.6.0.beta.1

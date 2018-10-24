@@ -1,0 +1,3 @@
+[submodule "CBitcoin/airbitz-core"]
+	path = CBitcoin/airbitz-core
+	url = https://github.com/wolfmcnally/airbitz-core.git
