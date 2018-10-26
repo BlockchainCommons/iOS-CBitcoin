@@ -32,9 +32,3 @@ libbitcoin::hash_digest _toHashDigest(const uint8_t* data) {
     }
     return d;
 }
-
-void _returnData(const libbitcoin::hash_digest& hash, uint8_t** data, size_t* dataLength) {
-    *dataLength = hash.size();
-    *data = static_cast<uint8_t*>(malloc(*dataLength));
-    std::copy(hash.begin(), hash.end(), *data);
-}
