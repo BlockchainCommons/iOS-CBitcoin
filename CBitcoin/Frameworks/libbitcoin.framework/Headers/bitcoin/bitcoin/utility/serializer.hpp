@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,228 +14,112 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef LIBBITCOIN_SERIALIZER_HPP
 #define LIBBITCOIN_SERIALIZER_HPP
 
-#include <stdexcept>
+#include <cstddef>
+#include <cstdint>
+#include <functional>
 #include <string>
-#include <bitcoin/bitcoin/primitives.hpp>
+#include <bitcoin/bitcoin/error.hpp>
+#include <bitcoin/bitcoin/math/hash.hpp>
 #include <bitcoin/bitcoin/utility/data.hpp>
+////#include <bitcoin/bitcoin/utility/noncopyable.hpp>
+#include <bitcoin/bitcoin/utility/writer.hpp>
 
 namespace libbitcoin {
 
-BC_API size_t variable_uint_size(uint64_t v);
-
-/**
- * Serializer that uses iterators and is oblivious to the underlying
- * container type. Is not threadsafe.
- *
- * Use the helper make_serializer() to construct a serializer without
- * needing to specify the Iterator type.
- *
- * Makes no assumptions about the size of the underlying container type.
- * User is responsible for allocating enough space prior to serialization.
- *
- * @code
- *  data_chunk buffer(8);
- *  auto serial = make_serializer(buffer.begin());
- *  serial.write_8_bytes(110);
- * @endcode
- */
+/// Writer to wrap arbitrary iterator.
 template <typename Iterator>
 class serializer
+  : public writer/*, noncopyable*/
 {
 public:
+    typedef std::function<void(serializer<Iterator>&)> functor;
+
     serializer(const Iterator begin);
 
-    /* These write data in little endian format: */
-    void write_byte(uint8_t value);
-    void write_2_bytes(uint16_t value);
-    void write_4_bytes(uint32_t value);
-    void write_8_bytes(uint64_t value);
+    template <typename Tuple>
+    void write_forward(const Tuple& data);
 
-    /**
-     * Encodes an unsigned integer in big-endian format.
-     */
-    template <typename T>
-    void write_big_endian(T n);
+    template <typename Tuple>
+    void write_reverse(const Tuple& data);
 
-    /**
-     * Encodes an unsigned integer in little-endian format.
-     */
-    template <typename T>
-    void write_little_endian(T n);
+    template <typename Integer>
+    void write_big_endian(Integer value);
 
-    /**
-     * Variable uints are usually used for sizes.
-     * They're encoded using fewer bytes depending on the value itself.
-     */
-    void write_variable_uint(uint64_t value);
+    template <typename Integer>
+    void write_little_endian(Integer value);
 
-    template <typename T>
-    void write_data(const T& data);
+    /// Context.
+    operator bool() const;
+    bool operator!() const;
+
+    /// Write hashes.
     void write_hash(const hash_digest& hash);
     void write_short_hash(const short_hash& hash);
+    void write_mini_hash(const mini_hash& hash);
 
-    void write_network_address(network_address_type addr);
+    /// Write big endian integers.
+    void write_2_bytes_big_endian(uint16_t value);
+    void write_4_bytes_big_endian(uint32_t value);
+    void write_8_bytes_big_endian(uint64_t value);
+    void write_variable_big_endian(uint64_t value);
+    void write_size_big_endian(size_t value);
 
-    /**
-     * Write a fixed size string padded with zeroes.
-     */
-    void write_fixed_string(const std::string& command, size_t string_size);
+    /// Write little endian integers.
+    void write_error_code(const code& ec);
+    void write_2_bytes_little_endian(uint16_t value);
+    void write_4_bytes_little_endian(uint32_t value);
+    void write_8_bytes_little_endian(uint64_t value);
+    void write_variable_little_endian(uint64_t value);
+    void write_size_little_endian(size_t value);
 
-    /**
-     * Write a variable length string.
-     */
-    void write_string(const std::string& str);
+    /// Write one byte.
+    void write_byte(uint8_t value);
 
-    /**
-     * Returns underlying iterator.
-     */
-    Iterator iterator();
+    /// Write all bytes.
+    void write_bytes(const data_slice data);
 
-    /**
-     * Useful if you want to serialize some data using another
-     * routine and then continue with this serializer.
-     */
-    void set_iterator(Iterator iter);
+    /// Write required size buffer.
+    void write_bytes(const uint8_t* data, size_t size);
 
-private:
-    template <typename T>
-    void write_data_reverse(const T& data);
+    /// Write variable length string.
+    void write_string(const std::string& value);
 
-    Iterator iter_;
-};
+    /// Write required length string, padded with nulls.
+    void write_string(const std::string& value, size_t size);
 
-template <typename Iterator>
-serializer<Iterator> make_serializer(Iterator begin);
+    /// Advance iterator without writing.
+    void skip(size_t size);
 
-class BC_API end_of_stream
-  : std::exception {};
+    // non-interface
+    //-------------------------------------------------------------------------
 
-/**
- * Deserializer that uses iterators and is oblivious to the underlying
- * container type. Is not threadsafe.
- *
- * Use the helper make_deserializer() to construct a deserializer without
- * needing to specify the Iterator type.
- *
- * Throws end_of_stream exception upon early termination during deserialize.
- * For example, calling read_8_bytes() with only 5 bytes remaining will throw.
- *
- * @code
- *  auto deserial = make_deserializer(data.begin(), data.end());
- *  try {
- *    uint64_t value = deserial.read_8_bytes();
- *  } catch (end_of_stream) {
- *    // ...
- *  }
- * @endcode
- */
-template <typename Iterator, bool SafeCheckLast>
-class deserializer
-{
-public:
-    deserializer(const Iterator begin, const Iterator end);
+    /// Delegate write to a write function.
+    void write_delegated(functor write);
 
-    /* These read data in little endian format: */
-    uint8_t read_byte();
-    uint16_t read_2_bytes();
-    uint32_t read_4_bytes();
-    uint64_t read_8_bytes();
+    /// Utility for variable skipping of writer.
+    size_t read_size_big_endian();
 
-    /**
-     * Reads an unsigned integer that has been encoded in big endian format.
-     */
-    template <typename T>
-    T read_big_endian();
-
-    /**
-     * Reads an unsigned integer that has been encoded in little endian format.
-     */
-    template <typename T>
-    T read_little_endian();
-
-    /**
-     * Variable uints are usually used for sizes.
-     * They're encoded using fewer bytes depending on the value itself.
-     */
-    uint64_t read_variable_uint();
-
-    data_chunk read_data(size_t n_bytes);
-    hash_digest read_hash();
-    short_hash read_short_hash();
-
-    network_address_type read_network_address();
-
-    /**
-     * Read a fixed size string padded with zeroes.
-     */
-    std::string read_fixed_string(size_t len);
-
-    /**
-     * Read a variable length string.
-     */
-    std::string read_string();
-
-    /**
-     * Read a fixed-length data block.
-     */
-    template<unsigned N>
-    byte_array<N> read_bytes();
-
-    template<unsigned N>
-    byte_array<N> read_bytes_reverse();
-
-    /**
-     * Returns underlying iterator.
-     */
-    Iterator iterator() const;
-
-    /**
-     * Useful if you advance the iterator using other serialization
-     * methods or objects.
-     */
-    void set_iterator(const Iterator iter);
-
-    /**
-     * Returns underlying iterator end.
-     */
-    Iterator end() const
-    {
-        return end_;
-    }
+    /// Utility for variable skipping of writer.
+    size_t read_size_little_endian();
 
 private:
-    // The compiler will optimise out all calls to this function
-    // if SafeCheckLast is false.
-    static void check_distance(
-        Iterator it, const Iterator end, size_t distance);
-
-    Iterator iter_;
-    const Iterator end_;
+    bool valid_;
+    Iterator iterator_;
 };
 
-/**
- * Deserializer which performs bounds checking and throws end_of_stream
- * if the iterator exceeds 'end'.
- */
-template <typename Iterator>
-deserializer<Iterator, true> make_deserializer(
-    const Iterator begin, const Iterator end);
+// Factories.
+//-----------------------------------------------------------------------------
 
-/**
- * Faster deserializer with no bounds checking.
- */
 template <typename Iterator>
-deserializer<Iterator, false> make_deserializer_unsafe(
-    const Iterator begin);
+serializer<Iterator> make_unsafe_serializer(Iterator begin);
 
 } // namespace libbitcoin
 
 #include <bitcoin/bitcoin/impl/utility/serializer.ipp>
 
 #endif
-

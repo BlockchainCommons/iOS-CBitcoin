@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,30 +14,18 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef LIBBITCOIN_DEFINE_HPP
 #define LIBBITCOIN_DEFINE_HPP
+
+#include <bitcoin/bitcoin/compat.hpp>
 
 // Create bc namespace alias.
 namespace libbitcoin {
 } // namespace libbitcoin
 
 namespace bc = libbitcoin;
-
-// Logger definitions. You can add your own to the logger.
-// Better to use a define because you get type safety.
-#define LOG_NETWORK     "network"
-#define LOG_DATABASE    "database"
-#define LOG_BLOCKCHAIN  "blockchain"
-#define LOG_VALIDATE    "validate"
-#define LOG_PROTOCOL    "protocol"
-#define LOG_POLLER      "poller"
-#define LOG_SESSION     "session"
-#define LOG_RESPONDER   "responder"
-#define LOG_SCRIPT      "script"
-#define LOG_TXPOOL      "transaction_pool"
-#define LOG_TXIDX       "transaction_indexer"
 
 // See http://gcc.gnu.org/wiki/Visibility
 
@@ -59,11 +46,10 @@ namespace bc = libbitcoin;
     #endif
 #endif
 
-// Now we use the generic helper definitions above to
-// define BC_API and BC_INTERNAL.
-// BC_API is used for the public API symbols. It either DLL imports or
-// DLL exports (or does nothing for static build)
-// BC_INTERNAL is used for non-api symbols.
+// Now we use the generic helper definitions above to define BC_API
+// and BC_INTERNAL. BC_API is used for the public API symbols. It either DLL
+// imports or DLL exports (or does nothing for static build) BC_INTERNAL is
+// used for non-api symbols.
 
 #if defined BC_STATIC
     #define BC_API
@@ -88,13 +74,11 @@ namespace bc = libbitcoin;
     #endif
 #endif
 
-// Define so we can have better visibility of lcov exclusion ranges.
-#define LCOV_EXCL_START(text)
-#define LCOV_EXCL_STOP()
+// Avoid namespace conflict between boost::placeholders and std::placeholders.
+#define BOOST_BIND_NO_PLACEHOLDERS
 
 // Define so we can have better visibility of lcov exclusion ranges.
 #define LCOV_EXCL_START(text)
 #define LCOV_EXCL_STOP()
 
 #endif
-

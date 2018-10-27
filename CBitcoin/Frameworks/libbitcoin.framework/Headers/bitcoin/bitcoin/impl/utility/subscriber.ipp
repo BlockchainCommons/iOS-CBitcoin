@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,62 +14,146 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef LIBBITCOIN_SUBSCRIBER_IPP
 #define LIBBITCOIN_SUBSCRIBER_IPP
 
-#include <bitcoin/bitcoin/utility/subscriber.hpp>
-
 #include <functional>
 #include <memory>
-#include <bitcoin/bitcoin/utility/logger.hpp>
-#include <bitcoin/bitcoin/utility/sequencer.hpp>
+#include <string>
+#include <utility>
+#include <bitcoin/bitcoin/utility/assert.hpp>
+#include <bitcoin/bitcoin/utility/dispatcher.hpp>
+#include <bitcoin/bitcoin/utility/thread.hpp>
 #include <bitcoin/bitcoin/utility/threadpool.hpp>
-   
+////#include <bitcoin/bitcoin/utility/track.hpp>
+
 namespace libbitcoin {
 
 template <typename... Args>
-subscriber<Args...>::subscriber(threadpool& pool)
-  : strand_(pool)
+subscriber<Args...>::subscriber(threadpool& pool,
+    const std::string& class_name)
+  : stopped_(true), dispatch_(pool, class_name)
+    /*, track<subscriber<Args...>>(class_name)*/
 {
 }
 
 template <typename... Args>
 subscriber<Args...>::~subscriber()
 {
+    BITCOIN_ASSERT_MSG(subscriptions_.empty(), "subscriber not cleared");
 }
 
 template <typename... Args>
-void subscriber<Args...>::subscribe(subscription_handler handler)
+void subscriber<Args...>::start()
 {
-    strand_.wrap(&subscriber<Args...>::do_subscribe,
-        this->shared_from_this(), handler)();
+    // Critical Section
+    ///////////////////////////////////////////////////////////////////////////
+    subscribe_mutex_.lock_upgrade();
+
+    if (stopped_)
+    {
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        subscribe_mutex_.unlock_upgrade_and_lock();
+        stopped_ = false;
+        subscribe_mutex_.unlock();
+        //---------------------------------------------------------------------
+        return;
+    }
+
+    subscribe_mutex_.unlock_upgrade();
+    ///////////////////////////////////////////////////////////////////////////
+}
+
+template <typename... Args>
+void subscriber<Args...>::stop()
+{
+    // Critical Section
+    ///////////////////////////////////////////////////////////////////////////
+    subscribe_mutex_.lock_upgrade();
+
+    if (!stopped_)
+    {
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        subscribe_mutex_.unlock_upgrade_and_lock();
+        stopped_ = true;
+        subscribe_mutex_.unlock();
+        //---------------------------------------------------------------------
+        return;
+    }
+
+    subscribe_mutex_.unlock_upgrade();
+    ///////////////////////////////////////////////////////////////////////////
+}
+
+template <typename... Args>
+void subscriber<Args...>::subscribe(handler&& notify, Args... stopped_args)
+{
+    // Critical Section
+    ///////////////////////////////////////////////////////////////////////////
+    subscribe_mutex_.lock_upgrade();
+
+    if (!stopped_)
+    {
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        subscribe_mutex_.unlock_upgrade_and_lock();
+        subscriptions_.push_back(std::forward<handler>(notify));
+        subscribe_mutex_.unlock();
+        //---------------------------------------------------------------------
+        return;
+    }
+
+    subscribe_mutex_.unlock_upgrade();
+    ///////////////////////////////////////////////////////////////////////////
+
+    notify(stopped_args...);
+}
+
+template <typename... Args>
+void subscriber<Args...>::invoke(Args... args)
+{
+    do_invoke(args...);
 }
 
 template <typename... Args>
 void subscriber<Args...>::relay(Args... args)
 {
-    strand_.wrap(&subscriber<Args...>::do_relay,
-        this->shared_from_this(), std::forward<Args>(args)...)();
+    // This enqueues work while maintaining order.
+    dispatch_.ordered(&subscriber<Args...>::do_invoke,
+        this->shared_from_this(), args...);
 }
 
+// private
 template <typename... Args>
-void subscriber<Args...>::do_subscribe(subscription_handler notifier)
+void subscriber<Args...>::do_invoke(Args... args)
 {
-    subscriptions_.push_back(notifier);
-}
+    // Critical Section (prevent concurrent handler execution)
+    ///////////////////////////////////////////////////////////////////////////
+    unique_lock lock(invoke_mutex_);
 
-template <typename... Args>
-void subscriber<Args...>::do_relay(Args... args)
-{
-    if (subscriptions_.empty())
-        return;
+    // Critical Section (protect stop)
+    ///////////////////////////////////////////////////////////////////////////
+    subscribe_mutex_.lock();
 
-    const auto subscriptions = subscriptions_;
-    subscriptions_.clear();
-    for (const auto notifier: subscriptions)
-        notifier(args...);
+    // Move subscribers from the member list to a temporary list.
+    list subscriptions;
+    std::swap(subscriptions, subscriptions_);
+
+    subscribe_mutex_.unlock();
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Subscriptions may be created while this loop is executing.
+    // Invoke subscribers from temporary list, without subscription renewal.
+    for (const auto& handler: subscriptions)
+    {
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // DEADLOCK RISK, handler must not return to invoke.
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        handler(args...);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 } // namespace libbitcoin

@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,18 +14,18 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef LIBBITCOIN_AUTHORITY_HPP
-#define LIBBITCOIN_AUTHORITY_HPP
+#ifndef LIBBITCOIN_CONFIG_AUTHORITY_HPP
+#define LIBBITCOIN_CONFIG_AUTHORITY_HPP
 
 #include <cstdint>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/asio.hpp>
 #include <bitcoin/bitcoin/define.hpp>
-#include <bitcoin/bitcoin/primitives.hpp>
+#include <bitcoin/bitcoin/message/network_address.hpp>
+#include <bitcoin/bitcoin/utility/asio.hpp>
 
 namespace libbitcoin {
 namespace config {
@@ -40,7 +39,7 @@ class BC_API authority
 public:
     /**
      * A list of authorities.
-     * This must provide operator<< for ostream in order to be used as a 
+     * This must provide operator<< for ostream in order to be used as a
      * boost::program_options default_value.
      */
     typedef std::vector<authority> list;
@@ -49,13 +48,13 @@ public:
      * Default constructor.
      */
     authority();
-    
+
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
     authority(const authority& other);
-    
+
     /**
      * Initialization constructor.
      * Deserialize a IPv4 or IPv6 address-based hostname[:port].
@@ -64,20 +63,20 @@ public:
      *                        [2001:db8::2]:port or 1.2.240.1:port
      */
     authority(const std::string& authority);
-    
+
     /**
      * Initialization constructor.
      * @param[in]  net  The network address (ip and port) to initialize with.
      */
-    authority(const network_address_type& net);
-    
+    authority(const message::network_address& address);
+
     /**
      * Initialization constructor.
      * @param[in]  ip    The ip addresss to initialize with.
      * @param[in]  port  The port to initialize with.
      */
-    authority(const ip_address_type& ip, uint16_t port);
-    
+    authority(const message::ip_address& ip, uint16_t port);
+
     /**
      * Initialization constructor.
      * @param[in]  host  The host to initialize with in one of three forms:
@@ -85,39 +84,51 @@ public:
      * @param[in]  port  The port to initialize with.
      */
     authority(const std::string& host, uint16_t port);
-    
+
     /**
      * Initialization constructor.
      * @param[in]  ip    The boost ip addresss to initialize with.
      * @param[in]  port  The port to initialize with.
      */
-    authority(const boost::asio::ip::address& ip, uint16_t port);
-    
+    authority(const asio::address& ip, uint16_t port);
+
     /**
      * Initialization constructor.
-     * @param[in]  endpoint  The boost endpoint addresss to initialize with.
+     * @param[in]  endpoint  The boost endpoint address to initialize with.
      */
-    authority(const boost::asio::ip::tcp::endpoint& endpoint);
+    authority(const asio::endpoint& endpoint);
+
+    /**
+     * Getter.
+     * @return True if the port is non-zero.
+     */
+    operator bool() const;
 
     /**
      * Getter.
      * @return The ip address of the authority.
      */
-    ip_address_type ip() const;
+    asio::ipv6 asio_ip() const;
+
+    /**
+     * Getter.
+     * @return The ip address of the authority.
+     */
+    message::ip_address ip() const;
 
     /**
      * Getter.
      * @return The tcp port of the authority.
      */
     uint16_t port() const;
-    
+
     /**
      * Get the hostname of the authority as a string.
      * The form of the return is determined by the type of address.
      * @return The hostname in one of two forms: 2001:db8::2 or 1.2.240.1
      */
     std::string to_hostname() const;
-    
+
     /**
      * Get the authority as a string.
      * The form of the return is determined by the type of address.
@@ -131,7 +142,7 @@ public:
      * Convert to bitcoin network address type.
      * @return  The authority converted to a network address.
      */
-    network_address_type to_network_address() const;
+    message::network_address to_network_address() const;
 
     /**
      * Override the equality operator.
@@ -164,7 +175,7 @@ public:
         const authority& argument);
 
 private:
-    boost::asio::ip::address_v6 ip_;
+    asio::ipv6 ip_;
     uint16_t port_;
 };
 

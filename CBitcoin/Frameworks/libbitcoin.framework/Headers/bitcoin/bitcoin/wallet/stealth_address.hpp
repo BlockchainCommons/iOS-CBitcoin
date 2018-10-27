@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,73 +14,104 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef LIBBITCOIN_STEALTH_ADDRESS_HPP
-#define LIBBITCOIN_STEALTH_ADDRESS_HPP
+#ifndef LIBBITCOIN_WALLET_STEALTH_ADDRESS_HPP
+#define LIBBITCOIN_WALLET_STEALTH_ADDRESS_HPP
 
 #include <cstdint>
+#include <iostream>
 #include <vector>
+#include <bitcoin/bitcoin/chain/script.hpp>
 #include <bitcoin/bitcoin/constants.hpp>
 #include <bitcoin/bitcoin/define.hpp>
-#include <bitcoin/bitcoin/script.hpp>
-#include <bitcoin/bitcoin/stealth.hpp>
-#include <bitcoin/bitcoin/math/ec_keys.hpp>
+#include <bitcoin/bitcoin/math/elliptic_curve.hpp>
+#include <bitcoin/bitcoin/utility/binary.hpp>
+#include <bitcoin/bitcoin/utility/data.hpp>
 
 namespace libbitcoin {
+namespace wallet {
 
-typedef std::vector<ec_point> pubkey_list;
-
-// Supports testnet and mainnet addresses but not prefix > 0
-class stealth_address
+/// A class for working with stealth payment addresses.
+class BC_API stealth_address
 {
 public:
-    static const uint8_t max_prefix_bits = sizeof(uint32_t) * byte_bits;
+    /// DEPRECATED: we intend to make p2kh same as payment address versions.
+    static const uint8_t mainnet_p2kh;
 
-    enum flags : uint8_t
-    {
-        none = 0x00,
-        reuse_key = 0x01
-    };
+    /// If set and the spend_keys contains the scan_key then the key is reused.
+    static const uint8_t reuse_key_flag;
 
-    // TODO: move this to higher level with dynamic testnet refactor.
-    enum network : uint8_t
-    {
-        mainnet = 0x2a,
-        testnet = 0x2b
-    };
+    /// This is advisory in nature and likely to be enforced by a server.
+    static const size_t min_filter_bits;
 
-    // Construction
-    BC_API stealth_address();
-    BC_API stealth_address(const binary_type& prefix,
-        const ec_point& scan_pubkey, const pubkey_list& spend_pubkeys,
-        uint8_t signatures, bool testnet);
+    /// This is the protocol limit to the size of a stealth prefix filter.
+    static const size_t max_filter_bits;
 
-    // Serialization
-    BC_API std::string encoded() const;
-    BC_API bool set_encoded(const std::string& encoded_address);
-    BC_API bool valid() const;
+    /// Constructors.
+    stealth_address();
+    stealth_address(const data_chunk& decoded);
+    stealth_address(const std::string& encoded);
+    stealth_address(const stealth_address& other);
+    stealth_address(const binary& filter, const ec_compressed& scan_key,
+        const point_list& spend_keys, uint8_t signatures=0,
+        uint8_t version=mainnet_p2kh);
 
-    // Properties
-    BC_API const binary_type& get_prefix() const;
-    BC_API const ec_point& get_scan_pubkey() const;
-    BC_API uint8_t get_signatures() const;
-    BC_API const pubkey_list& get_spend_pubkeys() const;
-    BC_API bool get_testnet() const;
+    /// Operators.
+    bool operator<(const stealth_address& other) const;
+    bool operator==(const stealth_address& other) const;
+    bool operator!=(const stealth_address& other) const;
+    stealth_address& operator=(const stealth_address& other);
+    friend std::istream& operator>>(std::istream& in, stealth_address& to);
+    friend std::ostream& operator<<(std::ostream& out,
+        const stealth_address& of);
 
-protected:
-    bool get_reuse_key() const;
-    uint8_t get_options() const;
-    uint8_t get_version() const;
+    /// Cast operators.
+    operator bool() const;
+    operator const data_chunk() const;
 
-    bool valid_ = false;
-    bool testnet_ = false;
-    uint8_t signatures_ = 0;
-    ec_point scan_pubkey_;
-    pubkey_list spend_pubkeys_;
-    binary_type prefix_;
+    /// Serializer.
+    std::string encoded() const;
+
+    /// Accessors.
+    uint8_t version() const;
+    const ec_compressed& scan_key() const;
+    const point_list& spend_keys() const;
+    uint8_t signatures() const;
+    const binary& filter() const;
+
+    /// Methods.
+    data_chunk to_chunk() const;
+
+private:
+    /// Factories.
+    static stealth_address from_string(const std::string& encoded);
+    static stealth_address from_stealth(const data_chunk& decoded);
+    static stealth_address from_stealth(const binary& filter,
+        const ec_compressed& scan_key, const point_list& spend_keys,
+        uint8_t signatures, uint8_t version);
+
+    /// Parameter order is used to change the constructor signature.
+    stealth_address(uint8_t version, const binary& filter,
+        const ec_compressed& scan_key, const point_list& spend_keys,
+        uint8_t signatures);
+
+    /// Helpers.
+    bool reuse_key() const;
+    uint8_t options() const;
+
+
+    /// Members.
+    /// These should be const, apart from the need to implement assignment.
+    bool valid_;
+    uint8_t version_;
+    ec_compressed scan_key_;
+    point_list spend_keys_;
+    uint8_t signatures_;
+    binary filter_;
 };
 
+} // namespace wallet
 } // namespace libbitcoin
 
 #endif

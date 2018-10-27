@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,353 +14,322 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef LIBBITCOIN_SERIALIZER_IPP
 #define LIBBITCOIN_SERIALIZER_IPP
 
 #include <algorithm>
-#include <boost/asio/streambuf.hpp>
-#include <bitcoin/bitcoin/utility/assert.hpp>
+#include <cstddef>
+#include <cstdint>
+#include <bitcoin/bitcoin/constants.hpp>
+#include <bitcoin/bitcoin/error.hpp>
+#include <bitcoin/bitcoin/math/limits.hpp>
 #include <bitcoin/bitcoin/utility/endian.hpp>
 
 namespace libbitcoin {
 
 template <typename Iterator>
 serializer<Iterator>::serializer(const Iterator begin)
-  : iter_(begin)
+  : iterator_(begin), valid_(true)
 {
 }
 
+// Context.
+//-----------------------------------------------------------------------------
+
 template <typename Iterator>
-void serializer<Iterator>::write_byte(uint8_t value)
+serializer<Iterator>::operator bool() const
 {
-    *iter_ = value;
-    ++iter_;
-}
-template <typename Iterator>
-void serializer<Iterator>::write_2_bytes(uint16_t value)
-{
-    write_little_endian(value);
-}
-template <typename Iterator>
-void serializer<Iterator>::write_4_bytes(uint32_t value)
-{
-    write_little_endian(value);
-}
-template <typename Iterator>
-void serializer<Iterator>::write_8_bytes(uint64_t value)
-{
-    write_little_endian(value);
+    return valid_;
 }
 
 template <typename Iterator>
-template <typename T>
-void serializer<Iterator>::write_big_endian(T n)
+bool serializer<Iterator>::operator!() const
 {
-    return write_data(to_big_endian(n));
-}
-template <typename Iterator>
-template <typename T>
-void serializer<Iterator>::write_little_endian(T n)
-{
-    return write_data(to_little_endian(n));
+    return !valid_;
 }
 
-template <typename Iterator>
-void serializer<Iterator>::write_variable_uint(uint64_t value)
-{
-    if (value < 0xfd)
-    {
-        write_byte((uint8_t)value);
-    }
-    else if (value <= 0xffff)
-    {
-        write_byte(0xfd);
-        write_2_bytes((uint16_t)value);
-    }
-    else if (value <= 0xffffffff)
-    {
-        write_byte(0xfe);
-        write_4_bytes((uint32_t)value);
-    }
-    else
-    {
-        write_byte(0xff);
-        write_8_bytes(value);
-    }
-}
-
-template <typename Iterator>
-template <typename T>
-void serializer<Iterator>::write_data(const T& data)
-{
-    iter_ = std::copy(data.begin(), data.end(), iter_);
-}
-
-template <typename Iterator>
-void serializer<Iterator>::write_network_address(network_address_type addr)
-{
-    write_8_bytes(addr.services);
-    write_data(addr.ip);
-    write_big_endian<uint16_t>(addr.port);
-}
+// Hashes.
+//-----------------------------------------------------------------------------
 
 template <typename Iterator>
 void serializer<Iterator>::write_hash(const hash_digest& hash)
 {
-    write_data(hash);
+    write_forward(hash);
 }
 
 template <typename Iterator>
 void serializer<Iterator>::write_short_hash(const short_hash& hash)
 {
-    write_data(hash);
+    write_forward(hash);
 }
 
 template <typename Iterator>
-void serializer<Iterator>::write_fixed_string(
-    const std::string& command, size_t string_size)
+void serializer<Iterator>::write_mini_hash(const mini_hash& hash)
 {
-    BITCOIN_ASSERT(command.size() <= string_size);
-    data_chunk raw_string(string_size, 0);
-    std::copy(command.begin(), command.end(), raw_string.begin());
-    write_data(raw_string);
+    write_forward(hash);
+}
+
+// Big Endian Integers.
+//-----------------------------------------------------------------------------
+
+template <typename Iterator>
+void serializer<Iterator>::write_2_bytes_big_endian(uint16_t value)
+{
+    write_big_endian(value);
 }
 
 template <typename Iterator>
-void serializer<Iterator>::write_string(const std::string& str)
+void serializer<Iterator>::write_4_bytes_big_endian(uint32_t value)
 {
-    write_variable_uint(str.size());
-    write_data(str);
-}
-
-/**
- * Returns underlying iterator.
- */
-template <typename Iterator>
-Iterator serializer<Iterator>::iterator()
-{
-    return iter_;
-}
-
-/**
- * Useful if you want to serialize some data using another
- * routine and then continue with this serializer.
- */
-template <typename Iterator>
-void serializer<Iterator>::set_iterator(Iterator iter)
-{
-    iter_ = iter;
+    write_big_endian(value);
 }
 
 template <typename Iterator>
-template <typename T>
-void serializer<Iterator>::write_data_reverse(const T& data)
+void serializer<Iterator>::write_8_bytes_big_endian(uint64_t value)
 {
-    iter_ = std::reverse_copy(data.begin(), data.end(), iter_);
+    write_big_endian(value);
 }
 
 template <typename Iterator>
-serializer<Iterator> make_serializer(Iterator begin)
+void serializer<Iterator>::write_variable_big_endian(uint64_t value)
 {
-    return serializer<Iterator>(begin);
-}
-
-// Macro used so that compiler will optimise out function calls to
-// check_distance() if SafeCheckLast is false.
-#define SAFE_CHECK_DISTANCE(N) \
-    if (SafeCheckLast) \
-        check_distance(iter_, end_, N);
-
-template <typename Iterator, bool SafeCheckLast>
-deserializer<Iterator, SafeCheckLast>::deserializer(
-    const Iterator begin, const Iterator end)
-  : iter_(begin), end_(end)
-{
-}
-
-template <typename Iterator, bool SafeCheckLast>
-uint8_t deserializer<Iterator, SafeCheckLast>::read_byte()
-{
-    SAFE_CHECK_DISTANCE(1);
-    return *(iter_++);
-}
-template <typename Iterator, bool SafeCheckLast>
-uint16_t deserializer<Iterator, SafeCheckLast>::read_2_bytes()
-{
-    return read_little_endian<uint16_t>();
-}
-template <typename Iterator, bool SafeCheckLast>
-uint32_t deserializer<Iterator, SafeCheckLast>::read_4_bytes()
-{
-    return read_little_endian<uint32_t>();
-}
-template <typename Iterator, bool SafeCheckLast>
-uint64_t deserializer<Iterator, SafeCheckLast>::read_8_bytes()
-{
-    return read_little_endian<uint64_t>();
-}
-
-template <typename Iterator, bool SafeCheckLast>
-template <typename T>
-T deserializer<Iterator, SafeCheckLast>::read_big_endian()
-{
-    const auto begin = iter_;
-    SAFE_CHECK_DISTANCE(sizeof(T));
-    iter_ += sizeof(T);
-    return from_big_endian_unsafe<T>(begin);
-}
-template <typename Iterator, bool SafeCheckLast>
-template <typename T>
-T deserializer<Iterator, SafeCheckLast>::read_little_endian()
-{
-    const auto begin = iter_;
-    SAFE_CHECK_DISTANCE(sizeof(T));
-    iter_ += sizeof(T);
-    return from_little_endian_unsafe<T>(begin);
-}
-
-template <typename Iterator, bool SafeCheckLast>
-uint64_t deserializer<Iterator, SafeCheckLast>::read_variable_uint()
-{
-    uint8_t length = read_byte();
-    if (length < 0xfd)
-        return length;
-    else if (length == 0xfd)
-        return read_2_bytes();
-    else if (length == 0xfe)
-        return read_4_bytes();
-    // length should be 0xff
-    return read_8_bytes();
-}
-
-template <typename Iterator, bool SafeCheckLast>
-data_chunk deserializer<
-    Iterator, SafeCheckLast>::read_data(size_t n_bytes)
-{
-    SAFE_CHECK_DISTANCE(n_bytes);
-    data_chunk raw_bytes(n_bytes);
-    for (size_t i = 0; i < n_bytes; ++i)
-        raw_bytes[i] = read_byte();
-    return raw_bytes;
-}
-
-template <typename Iterator, bool SafeCheckLast>
-network_address_type deserializer<
-    Iterator, SafeCheckLast>::read_network_address()
-{
-    network_address_type addr;
-    addr.services = read_8_bytes();
-    // Read IP address
-    addr.ip = read_bytes<16>();
-    addr.port = read_big_endian<uint16_t>();
-    return addr;
-}
-
-template <typename Iterator, bool SafeCheckLast>
-hash_digest deserializer<Iterator, SafeCheckLast>::read_hash()
-{
-    return read_bytes<hash_size>();
-}
-
-template <typename Iterator, bool SafeCheckLast>
-short_hash deserializer<Iterator, SafeCheckLast>::read_short_hash()
-{
-    return read_bytes<short_hash_size>();
-}
-
-template <typename Iterator, bool SafeCheckLast>
-std::string deserializer<
-    Iterator, SafeCheckLast>::read_fixed_string(size_t len)
-{
-    data_chunk string_bytes = read_data(len);
-    std::string result(string_bytes.begin(), string_bytes.end());
-    // Removes trailing 0s... Needed for string comparisons
-    return result.c_str();
-}
-
-template <typename Iterator, bool SafeCheckLast>
-std::string deserializer<Iterator, SafeCheckLast>::read_string()
-{
-    uint64_t string_size = read_variable_uint();
-    // Warning: conversion from uint64_t to size_t, possible loss of data.
-    return read_fixed_string((size_t)string_size);
-}
-
-template <typename Iterator, bool SafeCheckLast>
-template<unsigned N>
-byte_array<N> deserializer<Iterator, SafeCheckLast>::read_bytes()
-{
-    SAFE_CHECK_DISTANCE(N);
-    byte_array<N> out;
-    std::copy(iter_, iter_ + N, out.begin());
-    iter_ += N;
-    return out;
-}
-
-template <typename Iterator, bool SafeCheckLast>
-template<unsigned N>
-byte_array<N> deserializer<Iterator, SafeCheckLast>::read_bytes_reverse()
-{
-    SAFE_CHECK_DISTANCE(N);
-    byte_array<N> out;
-    std::reverse_copy(iter_, iter_ + N, out.begin());
-    iter_ += N;
-    return out;
-}
-
-/**
- * Returns underlying iterator.
- */
-template <typename Iterator, bool SafeCheckLast>
-Iterator deserializer<Iterator, SafeCheckLast>::iterator() const
-{
-    return iter_;
-}
-
-/**
- * Useful if you advance the iterator using other serialization
- * methods or objects.
- */
-template <typename Iterator, bool SafeCheckLast>
-void deserializer<Iterator, SafeCheckLast>::set_iterator(const Iterator iter)
-{
-    iter_ = iter;
-}
-
-// Try to advance iterator 'distance' increments forwards.
-// Throw if we prematurely reach the end.
-template <typename Iterator, bool SafeCheckLast>
-void deserializer<Iterator, SafeCheckLast>::check_distance(
-    Iterator it, const Iterator end, size_t distance)
-{
-    BITCOIN_ASSERT(SafeCheckLast);
-    for (size_t i = 0; i < distance; ++i)
+    if (value < varint_two_bytes)
     {
-        // Is this a valid byte?
-        if (it == end)
-            throw end_of_stream();
-        // If so move to next value.
-        ++it;
+        write_byte(static_cast<uint8_t>(value));
+    }
+    else if (value <= max_uint16)
+    {
+        write_byte(varint_two_bytes);
+        write_2_bytes_big_endian(static_cast<uint16_t>(value));
+    }
+    else if (value <= max_uint32)
+    {
+        write_byte(varint_four_bytes);
+        write_4_bytes_big_endian(static_cast<uint32_t>(value));
+    }
+    else
+    {
+        write_byte(varint_eight_bytes);
+        write_8_bytes_big_endian(value);
     }
 }
 
-#undef SAFE_CHECK_DISTANCE
+template <typename Iterator>
+void serializer<Iterator>::write_size_big_endian(size_t value)
+{
+    write_variable_big_endian(value);
+}
+
+// Little Endian Integers.
+//-----------------------------------------------------------------------------
 
 template <typename Iterator>
-deserializer<Iterator, true> make_deserializer(
-    const Iterator begin, const Iterator end)
+void serializer<Iterator>::write_error_code(const code& ec)
 {
-    return deserializer<Iterator, true>(begin, end);
+    write_4_bytes_little_endian(static_cast<uint32_t>(ec.value()));
 }
 
 template <typename Iterator>
-deserializer<Iterator, false> make_deserializer_unsafe(
-    const Iterator begin)
+void serializer<Iterator>::write_2_bytes_little_endian(uint16_t value)
 {
-    // end argument isn't used so just reuse begin here.
-    return deserializer<Iterator, false>(begin, begin);
+    write_little_endian(value);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_4_bytes_little_endian(uint32_t value)
+{
+    write_little_endian(value);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_8_bytes_little_endian(uint64_t value)
+{
+    write_little_endian(value);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_variable_little_endian(uint64_t value)
+{
+    if (value < varint_two_bytes)
+    {
+        write_byte(static_cast<uint8_t>(value));
+    }
+    else if (value <= max_uint16)
+    {
+        write_byte(varint_two_bytes);
+        write_2_bytes_little_endian(static_cast<uint16_t>(value));
+    }
+    else if (value <= max_uint32)
+    {
+        write_byte(varint_four_bytes);
+        write_4_bytes_little_endian(static_cast<uint32_t>(value));
+    }
+    else
+    {
+        write_byte(varint_eight_bytes);
+        write_8_bytes_little_endian(value);
+    }
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_size_little_endian(size_t value)
+{
+    write_variable_little_endian(value);
+}
+
+// Bytes (unchecked).
+//-----------------------------------------------------------------------------
+
+template <typename Iterator>
+void serializer<Iterator>::write_byte(uint8_t value)
+{
+    *iterator_++ = value;
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_bytes(const data_slice data)
+{
+    write_forward(data);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_bytes(const uint8_t* data, size_t size)
+{
+    iterator_ = std::copy_n(data, size, iterator_);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_string(const std::string& value)
+{
+    write_variable_little_endian(value.size());
+    write_forward(value);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::write_string(const std::string& value, size_t size)
+{
+    const auto length = std::min(size, value.size());
+    write_bytes(reinterpret_cast<const uint8_t*>(value.data()), length);
+    data_chunk padding(floor_subtract(size, length), string_terminator);
+    write_bytes(padding);
+}
+
+template <typename Iterator>
+void serializer<Iterator>::skip(size_t size)
+{
+    iterator_ += size;
+}
+
+// non-interface
+//-------------------------------------------------------------------------
+
+template <typename Iterator>
+void serializer<Iterator>::write_delegated(functor write)
+{
+    write(*this);
+}
+
+template <typename Iterator>
+template <typename Tuple>
+void serializer<Iterator>::write_forward(const Tuple& data)
+{
+    iterator_ = std::copy(data.begin(), data.end(), iterator_);
+}
+
+template <typename Iterator>
+template <typename Tuple>
+void serializer<Iterator>::write_reverse(const Tuple& data)
+{
+    iterator_ = std::reverse_copy(data.begin(), data.end(), iterator_);
+}
+
+template <typename Iterator>
+template <typename Integer>
+void serializer<Iterator>::write_big_endian(Integer value)
+{
+    return write_forward(to_big_endian(value));
+}
+
+template <typename Iterator>
+template <typename Integer>
+void serializer<Iterator>::write_little_endian(Integer value)
+{
+    return write_forward(to_little_endian(value));
+}
+
+template <typename Iterator>
+size_t serializer<Iterator>::read_size_big_endian()
+{
+    static_assert(sizeof(size_t) >= sizeof(uint32_t), "unexpected size");
+    const auto prefix = *iterator_++;
+    const auto begin = iterator_;
+    uint64_t size;
+
+    switch (prefix)
+    {
+        case varint_eight_bytes:
+            iterator_ += sizeof(uint64_t);
+            size = from_big_endian_unsafe<uint64_t>(begin);
+        case varint_four_bytes:
+            iterator_ += sizeof(uint32_t);
+            return from_big_endian_unsafe<uint32_t>(begin);
+        case varint_two_bytes:
+            iterator_ += sizeof(uint16_t);
+            return from_big_endian_unsafe<uint16_t>(begin);
+        default:
+            return prefix;
+    }
+
+    // This facilitates safely passing the size into a follow-on writer.
+    // Return zero allows follow-on use before testing reader state.
+    if (size <= max_size_t)
+        return static_cast<size_t>(size);
+
+    valid_ = false;
+    return 0;
+}
+
+template <typename Iterator>
+size_t serializer<Iterator>::read_size_little_endian()
+{
+    static_assert(sizeof(size_t) >= sizeof(uint32_t), "unexpected size");
+    const auto prefix = *iterator_++;
+    const auto begin = iterator_;
+    uint64_t size;
+
+    switch (prefix)
+    {
+        case varint_eight_bytes:
+            iterator_ += sizeof(uint64_t);
+            size = from_little_endian_unsafe<uint64_t>(begin);
+        case varint_four_bytes:
+            iterator_ += sizeof(uint32_t);
+            return from_little_endian_unsafe<uint32_t>(begin);
+        case varint_two_bytes:
+            iterator_ += sizeof(uint16_t);
+            return from_little_endian_unsafe<uint16_t>(begin);
+        default:
+            return prefix;
+    }
+
+    // This facilitates safely passing the size into a follow-on writer.
+    // Return zero allows follow-on use before testing reader state.
+    if (size <= max_size_t)
+        return static_cast<size_t>(size);
+
+    valid_ = false;
+    return 0;
+}
+
+// Factories.
+//-----------------------------------------------------------------------------
+
+template <typename Iterator>
+serializer<Iterator> make_unsafe_serializer(Iterator begin)
+{
+    return serializer<Iterator>(begin);
 }
 
 } // namespace libbitcoin

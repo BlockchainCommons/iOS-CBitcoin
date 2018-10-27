@@ -1,13 +1,12 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
- * libbitcoin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,10 +14,10 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef LIBBITCOIN_PRINTER_HPP
-#define LIBBITCOIN_PRINTER_HPP
+#ifndef LIBBITCOIN_CONFIG_PRINTER_HPP
+#define LIBBITCOIN_CONFIG_PRINTER_HPP
 
 #include <iostream>
 #include <string>
@@ -43,10 +42,10 @@ namespace config {
 /**
  * Class for managing the serialization of command line options and arguments.
  */
-class printer
+class BC_API printer
 {
 public:
-        
+
     /**
      * Number of arguments above which the argument is considered unlimited.
      */
@@ -58,7 +57,7 @@ public:
      * @param[in]  application  This application (e.g. 'bitcoin_server').
      * @param[in]  description  This application description (e.g. 'Server').
      */
-    BC_API printer(const boost::program_options::options_description& settings,
+    printer(const boost::program_options::options_description& settings,
         const std::string& application, const std::string& description="");
 
     /**
@@ -69,9 +68,9 @@ public:
      * @param[in]  description  This command description (e.g. 'Convert BTC').
      * @param[in]  command      This command (e.g. 'btc').
      */
-    BC_API printer(const boost::program_options::options_description& options,
+    printer(const boost::program_options::options_description& options,
         const boost::program_options::positional_options_description& arguments,
-        const std::string& application, const std::string& description="", 
+        const std::string& application, const std::string& description="",
         const std::string& command="");
 
     /**
@@ -82,73 +81,73 @@ public:
      * @param[in]  paragraph  The paragraph to columnize.
      * @return                The column, as a list of fragments.
      */
-    BC_API virtual std::vector<std::string> columnize(
-        const std::string& paragraph, size_t width);
+    virtual std::vector<std::string> columnize(const std::string& paragraph,
+        size_t width);
 
     /**
      * Format the command description.
      * @return  The command description.
      */
-    BC_API virtual std::string format_description();
-    
+    virtual std::string format_description();
+
     /**
      * Format the parameters table.
      * @param[in]  positional  True for positional otherwize named.
      * @return                 The formatted help arguments table.
      */
-    BC_API virtual std::string format_parameters_table(bool positional);
-    
+    virtual std::string format_parameters_table(bool positional);
+
     /**
      * Format the settings table.
      * @return  The formatted settings table.
      */
-    BC_API virtual std::string format_settings_table();
+    virtual std::string format_settings_table();
 
     /**
      * Format a paragraph.
-     * @param[in]  paragraph  The text to format. 
+     * @param[in]  paragraph  The text to format.
      * @return                The formatted paragraph.
      */
-    BC_API virtual std::string format_paragraph(const std::string& paragraph);
+    virtual std::string format_paragraph(const std::string& paragraph);
 
     /**
      * Format the command line usage.
      * @return  The formatted usage.
      */
-    BC_API virtual std::string format_usage();
+    virtual std::string format_usage();
 
     /**
      * Format the command line parameters.
      * @return  The formatted command line parameters.
      */
-    BC_API virtual std::string format_usage_parameters();
-    
+    virtual std::string format_usage_parameters();
+
     /**
      * Build the list of argument name/count tuples.
      */
-    BC_API virtual void generate_argument_names();
+    virtual void generate_argument_names();
 
     /**
      * Build the list of parameters.
      */
-    BC_API virtual void generate_parameters();
+    virtual void generate_parameters();
 
     /**
      * Parse the arguments and options into the normalized parameter list.
      */
-    BC_API virtual void initialize();
+    virtual void initialize();
 
     /**
      * Serialize command line help (full details).
-     * @param[out] output  Stream that is sink for output. 
+     * @param[out] output  Stream that is sink for output.
      */
-    BC_API virtual void commandline(std::ostream& output);
+    virtual void commandline(std::ostream& output);
 
     /**
      * Serialize as config settings (full details).
-     * @param[out] output  Stream that is sink for output. 
+     * @param[out] output  Stream that is sink for output.
      */
-    BC_API virtual void settings(std::ostream& output);
+    virtual void settings(std::ostream& output);
 
     /**
      * Virtual property declarations, passed on construct.
