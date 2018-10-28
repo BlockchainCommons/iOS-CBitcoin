@@ -20,6 +20,7 @@ extern "C" {
     void _encodeBase58(const uint8_t* data, size_t length, char** string, size_t* stringLength);
     void _decodeBase58(const char* string, uint8_t** data, size_t* dataLength);
     void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength);
+    void _decodeBase58Check(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version);
 
 #ifdef __cplusplus
 }

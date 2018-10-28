@@ -15,6 +15,11 @@ void _returnData(const libbitcoin::data_chunk& chunk, uint8_t** data, size_t* da
 
 libbitcoin::data_slice _toDataSlice(const uint8_t* data, uint32_t length);
 
+libbitcoin::data_chunk _toDataChunk(const uint8_t* data, uint32_t length);
+
+//template <size_t Size>
+//std::array<uint8_t, Size> _toArray(const uint8_t* data);
+
 libbitcoin::hash_digest _toHashDigest(const uint8_t* data);
 
 template<size_t SIZE>
