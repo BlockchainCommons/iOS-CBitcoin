@@ -14,8 +14,8 @@
 extern "C" {
 #endif
 
-    void _encodeBase32(const char* prefix, const uint8_t* payload, size_t payloadLength, char** string, size_t* stringLength);
-    void _decodeBase32(const char* string, char** prefix, size_t* prefixLength, uint8_t** payload, size_t* payloadLength);
+    void _base32Encode(const char* prefix, const uint8_t* payload, size_t payloadLength, char** string, size_t* stringLength);
+    void _base32Decode(const char* string, char** prefix, size_t* prefixLength, uint8_t** payload, size_t* payloadLength);
 
 #ifdef __cplusplus
 }

@@ -12,12 +12,12 @@
 
 using namespace libbitcoin;
 
-void _encodeBase64(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
+void _base64Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
     auto s = encode_base64(_toDataSlice(data, length));
     _returnString(s, string, stringLength);
 }
 
-void _decodeBase64(const char* string, uint8_t** data, size_t* dataLength) {
+void _base64Decode(const char* string, uint8_t** data, size_t* dataLength) {
     auto s = std::string(string);
     auto chunk = data_chunk();
     if(decode_base64(chunk, s)) {

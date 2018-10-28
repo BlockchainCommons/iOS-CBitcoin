@@ -21,12 +21,12 @@ bool _isBase58String(const char* string) {
     return is_base58(std::string(string));
 }
 
-void _encodeBase58(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
+void _base58Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
     auto s = encode_base58(_toDataSlice(data, length));
     _returnString(s, string, stringLength);
 }
 
-void _decodeBase58(const char* string, uint8_t** data, size_t* dataLength) {
+void _base58Decode(const char* string, uint8_t** data, size_t* dataLength) {
     auto s = std::string(string);
     auto chunk = data_chunk();
     if(decode_base58(chunk, s)) {
@@ -36,7 +36,7 @@ void _decodeBase58(const char* string, uint8_t** data, size_t* dataLength) {
     }
 }
 
-void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength) {
+void _base58CheckEncode(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength) {
     auto bytes = to_chunk(version);
     auto payload = _toDataChunk(data, length);
     extend_data(bytes, payload);
@@ -45,7 +45,7 @@ void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, cha
     _returnString(s, string, stringLength);
 }
 
-void _decodeBase58Check(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version) {
+void _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version) {
     auto s = std::string(string);
     if(s.length() == 0) {
         *data = NULL;
