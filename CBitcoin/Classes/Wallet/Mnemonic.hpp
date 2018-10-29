@@ -18,6 +18,7 @@ extern "C" {
     size_t _mnemonicSeedMultiple();
     const void* _dictionaryForLanguage(const char* language);
     bool _mnemonicNew(const uint8_t* seed, size_t seedLength, const void* dictionary, char** mnemonic, size_t* mnemonicLength);
+    bool _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength);
 
 #ifdef __cplusplus
 }
