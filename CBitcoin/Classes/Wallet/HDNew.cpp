@@ -1,11 +1,11 @@
 //
-//  HDPrivate.cpp
+//  HDNew.cpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/29/18.
 //
 
-#include "HDPrivate.hpp"
+#include "HDNew.hpp"
 #include <bitcoin/bitcoin.hpp>
 #include "Util.hpp"
 
@@ -16,7 +16,7 @@ size_t _minimumSeedSize() {
 }
 
 bool _hdNew(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength) {
-    if(seedLength < _minimumSeedSize()) {
+    if(seedLength < minimum_seed_size) {
         return false;
     }
     auto seedChunk = _toDataChunk(seed, seedLength);

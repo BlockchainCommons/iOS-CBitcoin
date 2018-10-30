@@ -1,5 +1,12 @@
-#ifndef hdPrivate_hpp
-#define hdPrivate_hpp
+//
+//  HDNew.hpp
+//  CBitcoin
+//
+//  Created by Wolf McNally on 10/30/18.
+//
+
+#ifndef HDNew_hpp
+#define HDNew_hpp
 
 #include <stdlib.h>
 
@@ -14,4 +21,4 @@ extern "C" {
 }
 #endif
 
-#endif /* hdPrivate_hpp */
+#endif /* HDNew_hpp */
