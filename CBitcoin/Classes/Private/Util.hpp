@@ -29,4 +29,12 @@ void _returnData(const libbitcoin::byte_array<SIZE>& hash, uint8_t** data, size_
     std::copy(hash.begin(), hash.end(), *data);
 }
 
+template<size_t SIZE>
+void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* bytes) {
+    auto p = bytes;
+    for(typename libbitcoin::byte_array<SIZE>::iterator i = array.begin(); i != array.end();) {
+        *i++ = *p++;
+    }
+}
+
 #endif /* PrivateUtil_hpp */
