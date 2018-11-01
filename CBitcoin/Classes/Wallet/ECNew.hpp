@@ -15,12 +15,12 @@ extern "C" {
 #endif
 
     size_t _ecPrivateKeySize();
-    size_t _ecPublicKeySize();
+    size_t _ecCompressedPublicKeySize();
     size_t _ecUncompressedPublicKeySize();
 
     bool _ecNew(const uint8_t* seed, size_t seedLength, uint8_t** privateKey, size_t* privateKeyLength);
-    bool _ecToPublic(const uint8_t* privateKey, size_t privateKeyLength, uint8_t** publicKey, size_t* publicKeyLength);
-    bool _ecToPublicUncompressed(const uint8_t* privateKey, size_t privateKeyLength, uint8_t** publicKey, size_t* publicKeyLength);
+    bool _ecToPublic(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
+    bool _ecPublicToPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);
 
 #ifdef __cplusplus
 }
