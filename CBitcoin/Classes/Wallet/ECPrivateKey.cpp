@@ -42,3 +42,14 @@ bool _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint
     _returnString(wifString, wif, wifLength);
     return true;
 }
+
+bool _wifToECPrivateKey(const char* wif, uint8_t** privateKey, size_t* privateKeyLength) {
+    const auto wifString = std::string(wif);
+    const wallet::ec_private priv(wifString, wallet::ec_private::mainnet_p2kh);
+    const auto secret = priv.secret();
+    if(secret == null_hash) {
+        return false;
+    }
+    _returnData(secret, privateKey, privateKeyLength);
+    return true;
+}
