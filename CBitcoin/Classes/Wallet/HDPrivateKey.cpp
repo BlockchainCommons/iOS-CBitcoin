@@ -15,7 +15,7 @@ size_t _minimumSeedSize() {
     return minimum_seed_size;
 }
 
-bool _hdNew(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength) {
+bool _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength) {
     if(seedLength < minimum_seed_size) {
         return false;
     }

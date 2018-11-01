@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
     size_t _minimumSeedSize();
-    bool _hdNew(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength);
+    bool _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength);
 
 #ifdef __cplusplus
 }
