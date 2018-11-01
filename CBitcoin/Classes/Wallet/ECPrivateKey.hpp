@@ -1,0 +1,25 @@
+//
+//  ECPrivateKey.hpp
+//  CBitcoin
+//
+//  Created by Wolf McNally on 10/30/18.
+//
+
+#ifndef ECPrivateKey_hpp
+#define ECPrivateKey_hpp
+
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    size_t _ecPrivateKeySize();
+
+    bool _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateKey, size_t* privateKeyLength);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* ECPrivateKey_hpp */

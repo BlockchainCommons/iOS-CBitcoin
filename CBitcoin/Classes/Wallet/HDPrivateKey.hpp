@@ -1,12 +1,12 @@
 //
-//  HDNew.hpp
+//  HDPrivateKey.hpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/30/18.
 //
 
-#ifndef HDNew_hpp
-#define HDNew_hpp
+#ifndef HDPrivateKey_hpp
+#define HDPrivateKey_hpp
 
 #include <stdlib.h>
 
@@ -21,4 +21,4 @@ extern "C" {
 }
 #endif
 
-#endif /* HDNew_hpp */
+#endif /* HDPrivateKey_hpp */

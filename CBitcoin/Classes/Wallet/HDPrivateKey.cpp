@@ -1,11 +1,11 @@
 //
-//  HDNew.cpp
+//  HDPrivateKey.cpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/29/18.
 //
 
-#include "HDNew.hpp"
+#include "HDPrivateKey.hpp"
 #include <bitcoin/bitcoin.hpp>
 #include "Util.hpp"
 
