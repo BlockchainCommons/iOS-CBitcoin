@@ -28,3 +28,17 @@ bool _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateK
     _returnData(secret, privateKey, privateKeyLength);
     return true;
 }
+
+bool _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char** wif, size_t* wifLength) {
+    if(privateKeyLength != ec_secret_size) {
+        return false;
+    }
+    ec_secret secretKey;
+    _toByteArray(secretKey, privateKey);
+    const uint8_t paymentVersion = 0; // unused
+    const auto version = wallet::ec_private::to_version(paymentVersion, wifVersion);
+    const wallet::ec_private priv(secretKey, version, isCompressed);
+    const auto wifString = priv.encoded();
+    _returnString(wifString, wif, wifLength);
+    return true;
+}

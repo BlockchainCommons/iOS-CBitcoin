@@ -17,6 +17,7 @@ extern "C" {
     size_t _ecPrivateKeySize();
 
     bool _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateKey, size_t* privateKeyLength);
+    bool _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char** wif, size_t* wifLength);
 
 #ifdef __cplusplus
 }
