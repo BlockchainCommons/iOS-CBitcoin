@@ -29,3 +29,22 @@ bool _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, 
     _returnString(hdKey, key, keyLength);
     return true;
 }
+
+bool _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHardened, char** childPrivateKey, size_t* childPrivateKeyLength) {
+    const auto parentPrivateString = std::string(parentPrivateKey);
+    const auto parentPrivate = wallet::hd_private(parentPrivateString);
+    if(!parentPrivate) {
+        return false;
+    }
+
+    static constexpr auto firstHard = bc::wallet::hd_first_hardened_key;
+    const auto position = isHardened ? firstHard + index : index;
+    const auto childPrivate = parentPrivate.derive_private(position);
+    if (!childPrivate) {
+        return false;
+    }
+
+    const auto childPrivateString = childPrivate.encoded();
+    _returnString(childPrivateString, childPrivateKey, childPrivateKeyLength);
+    return true;
+}
