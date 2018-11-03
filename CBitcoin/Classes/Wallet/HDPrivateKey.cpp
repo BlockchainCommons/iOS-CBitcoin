@@ -37,7 +37,7 @@ bool _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHard
         return false;
     }
 
-    static constexpr auto firstHard = bc::wallet::hd_first_hardened_key;
+    static constexpr auto firstHard = wallet::hd_first_hardened_key;
     const auto position = isHardened ? firstHard + index : index;
     const auto childPrivate = parentPrivate.derive_private(position);
     if (!childPrivate) {
@@ -47,4 +47,56 @@ bool _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHard
     const auto childPrivateString = childPrivate.encoded();
     _returnString(childPrivateString, childPrivateKey, childPrivateKeyLength);
     return true;
+}
+
+CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHardened, uint32_t publicVersion, uint32_t privateVersion, char** childPublicKey, size_t* childPublicKeyLength) {
+    const std::string parentKeyString(parentKey);
+    data_chunk parentKeyData;
+    if (!decode_base58(parentKeyData, parentKeyString) || parentKeyData.size() != wallet::hd_key_size) {
+        return CBITCOIN_ERROR_INVALID_FORMAT;
+    }
+
+    wallet::hd_key key;
+    std::copy(parentKeyData.begin(), parentKeyData.end(), key.begin());
+    uint32_t keyVersion = from_big_endian_unsafe<uint32_t>(key.begin());
+    if (keyVersion != privateVersion && keyVersion != publicVersion) {
+        return CBITCOIN_ERROR_INVALID_VERSION;
+    }
+
+    if (isHardened && keyVersion != privateVersion) {
+        return CBITCOIN_ERROR_PRIVATE_KEY_REQUIRED;
+    }
+
+    if (keyVersion == privateVersion) {
+        const auto prefixes = wallet::hd_private::to_prefixes(keyVersion, publicVersion);
+
+        // Derive the public key from new private key and the public version.
+        const wallet::hd_private privateKey(key, prefixes);
+        if(!privateKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+        static constexpr auto firstHard = wallet::hd_first_hardened_key;
+        const auto position = isHardened ? firstHard + index : index;
+
+        const auto childPubKey = privateKey.derive_public(position);
+        if(!childPubKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+        const auto childPublicKeyString = childPubKey.encoded();
+        _returnString(childPublicKeyString, childPublicKey, childPublicKeyLength);
+        return CBITCOIN_SUCCESS;
+    } else {
+        // Derive the public key from new private key and the public version.
+        const wallet::hd_public publicKey(key, publicVersion);
+        if(!publicKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+        const auto childPubKey = publicKey.derive_public(index);
+        if(!childPubKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+        const auto childPublicKeyString = childPubKey.encoded();
+        _returnString(childPublicKeyString, childPublicKey, childPublicKeyLength);
+        return CBITCOIN_SUCCESS;
+    }
 }

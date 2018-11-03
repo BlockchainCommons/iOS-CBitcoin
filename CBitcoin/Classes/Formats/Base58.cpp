@@ -56,7 +56,8 @@ void _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, 
         *version = chunk[0];
         auto slice = data_slice(&*chunk.begin(), &*chunk.end());
         if(verify_checksum(slice)) {
-            return _returnData(chunk, data, dataLength);
+            auto chunk2 = data_chunk(&*(chunk.begin() + 1), &*(chunk.end() - 4));
+            return _returnData(chunk2, data, dataLength);
         } else {
             *data = NULL;
         }
