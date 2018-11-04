@@ -68,7 +68,7 @@ CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHa
     }
 
     if (keyVersion == privateVersion) {
-        const auto prefixes = wallet::hd_private::to_prefixes(keyVersion, publicVersion);
+        const auto prefixes = wallet::hd_private::to_prefixes(privateVersion, publicVersion);
 
         // Derive the public key from new private key and the public version.
         const wallet::hd_private privateKey(key, prefixes);
@@ -99,4 +99,22 @@ CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHa
         _returnString(childPublicKeyString, childPublicKey, childPublicKeyLength);
         return CBITCOIN_SUCCESS;
     }
+}
+
+CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, char** publicKeyOut, size_t* publicKeyLength) {
+    const std::string privateKeyString(privateKeyIn);
+    wallet::hd_private privateKey(privateKeyString);
+    const auto privateHDKey = privateKey.to_hd_key();
+
+    const auto privateVersion = bc::wallet::hd_private::to_prefix(privateKey.lineage().prefixes);
+    const auto prefixes = wallet::hd_private::to_prefixes(privateVersion, publicVersion);
+    const wallet::hd_private versioned(privateHDKey, prefixes);
+
+    if(!versioned) {
+        return CBITCOIN_ERROR_INVALID_KEY;
+    }
+
+    const auto publicKey = versioned.to_public().encoded();
+    _returnString(publicKey, publicKeyOut, publicKeyLength);
+    return CBITCOIN_SUCCESS;
 }
