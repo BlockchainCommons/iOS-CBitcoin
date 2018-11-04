@@ -9,15 +9,16 @@
 #define Base16_hpp
 
 #include <stdlib.h>
+#include "CBitcoinResult.hpp"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
     void _base16Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    void _base16Decode(const char* string, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _base16Decode(const char* string, uint8_t** data, size_t* dataLength);
     void _bitcoinHashEncode(const uint8_t* data, char** string, size_t* stringLength);
-    void _bitcoinHashDecode(const char* string, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _bitcoinHashDecode(const char* string, uint8_t** data, size_t* dataLength);
 
 #ifdef __cplusplus
 }

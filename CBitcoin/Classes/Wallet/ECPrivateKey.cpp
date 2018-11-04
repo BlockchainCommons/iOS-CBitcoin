@@ -25,7 +25,7 @@ bool _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateK
     if(secret == null_hash) {
         return false;
     }
-    _returnData(secret, privateKey, privateKeyLength);
+    _sendData(secret, privateKey, privateKeyLength);
     return true;
 }
 
@@ -39,7 +39,7 @@ bool _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint
     const auto version = wallet::ec_private::to_version(paymentVersion, wifVersion);
     const wallet::ec_private priv(secretKey, version, isCompressed);
     const auto wifString = priv.encoded();
-    _returnString(wifString, wif, wifLength);
+    _sendString(wifString, wif, wifLength);
     return true;
 }
 
@@ -50,6 +50,6 @@ bool _wifToECPrivateKey(const char* wif, uint8_t** privateKey, size_t* privateKe
     if(secret == null_hash) {
         return false;
     }
-    _returnData(secret, privateKey, privateKeyLength);
+    _sendData(secret, privateKey, privateKeyLength);
     return true;
 }

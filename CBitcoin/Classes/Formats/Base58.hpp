@@ -10,6 +10,7 @@
 #define Base58_hpp
 
 #include <stdlib.h>
+#include "CBitcoinResult.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,9 +19,9 @@ extern "C" {
     bool _isBase58Char(char c);
     bool _isBase58String(const char* string);
     void _base58Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    void _base58Decode(const char* string, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _base58Decode(const char* string, uint8_t** data, size_t* dataLength);
     void _base58CheckEncode(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength);
-    void _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version);
+    CBitcoinResult _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version);
 
 #ifdef __cplusplus
 }

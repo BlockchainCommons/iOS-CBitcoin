@@ -57,7 +57,7 @@ bool _mnemonicNew(const uint8_t* seed, size_t seedLength, const void* dictionary
     const auto dict = *(const wallet::dictionary*)dictionary;
     const auto words = wallet::create_mnemonic(entropy, dict);
     const auto mnemonicString = join(words);
-    _returnString(mnemonicString, mnemonic, mnemonicLength);
+    _sendString(mnemonicString, mnemonic, mnemonicLength);
     return true;
 }
 
@@ -93,10 +93,10 @@ bool _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* p
     auto passphraseString = std::string(passphrase);
     if(passphraseString.empty()) {
         auto seedArray = wallet::decode_mnemonic(words);
-        _returnData(seedArray, seed, seedLength);
+        _sendData(seedArray, seed, seedLength);
     } else {
         auto seedArray = _decode_mnemonic(words, passphraseString);
-        _returnData(seedArray, seed, seedLength);
+        _sendData(seedArray, seed, seedLength);
     }
     return true;
 }

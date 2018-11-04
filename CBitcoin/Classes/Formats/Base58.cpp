@@ -23,17 +23,17 @@ bool _isBase58String(const char* string) {
 
 void _base58Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
     auto s = encode_base58(_toDataSlice(data, length));
-    _returnString(s, string, stringLength);
+    _sendString(s, string, stringLength);
 }
 
-void _base58Decode(const char* string, uint8_t** data, size_t* dataLength) {
+CBitcoinResult _base58Decode(const char* string, uint8_t** data, size_t* dataLength) {
     auto s = std::string(string);
     auto chunk = data_chunk();
-    if(decode_base58(chunk, s)) {
-        return _returnData(chunk, data, dataLength);
-    } else {
-        *data = NULL;
+    if(!decode_base58(chunk, s)) {
+        return CBITCOIN_ERROR_INVALID_FORMAT;
     }
+    _sendData(chunk, data, dataLength);
+    return CBITCOIN_SUCCESS;
 }
 
 void _base58CheckEncode(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength) {
@@ -42,26 +42,24 @@ void _base58CheckEncode(const uint8_t* data, size_t length, uint8_t version, cha
     extend_data(bytes, payload);
     append_checksum(bytes);
     auto s = encode_base58(bytes);
-    _returnString(s, string, stringLength);
+    _sendString(s, string, stringLength);
 }
 
-void _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version) {
+CBitcoinResult _base58CheckDecode(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version) {
     auto s = std::string(string);
     if(s.length() == 0) {
-        *data = NULL;
-        return;
+        return CBITCOIN_ERROR_INVALID_FORMAT;
     }
     auto chunk = data_chunk();
-    if(decode_base58(chunk, s)) {
-        *version = chunk[0];
-        auto slice = data_slice(&*chunk.begin(), &*chunk.end());
-        if(verify_checksum(slice)) {
-            auto chunk2 = data_chunk(&*(chunk.begin() + 1), &*(chunk.end() - 4));
-            return _returnData(chunk2, data, dataLength);
-        } else {
-            *data = NULL;
-        }
-    } else {
-        *data = NULL;
+    if(!decode_base58(chunk, s)) {
+        return CBITCOIN_ERROR_INVALID_FORMAT;
     }
+    *version = chunk[0];
+    auto slice = data_slice(&*chunk.begin(), &*chunk.end());
+    if(!verify_checksum(slice)) {
+        return CBITCOIN_ERROR_INVALID_FORMAT;
+    }
+    auto chunk2 = data_chunk(&*(chunk.begin() + 1), &*(chunk.end() - 4));
+    _sendData(chunk2, data, dataLength);
+    return CBITCOIN_SUCCESS;
 }

@@ -9,13 +9,13 @@
 
 using namespace libbitcoin;
 
-void _returnString(std::string s, char** string, size_t* stringLength) {
+void _sendString(std::string s, char** string, size_t* stringLength) {
     *stringLength = s.length();
     *string = static_cast<char*>(malloc(*stringLength));
     s.copy(*string, *stringLength);
 }
 
-void _returnData(const data_chunk& chunk, uint8_t** data, size_t* dataLength) {
+void _sendData(const data_chunk& chunk, uint8_t** data, size_t* dataLength) {
     *dataLength = chunk.size();
     *data = static_cast<uint8_t*>(malloc(*dataLength));
     std::copy(chunk.begin(), chunk.end(), *data);

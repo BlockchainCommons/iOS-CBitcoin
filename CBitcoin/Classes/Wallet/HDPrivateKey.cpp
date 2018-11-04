@@ -26,7 +26,7 @@ bool _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, 
         return false;
     }
     auto hdKey = encode_base58(privateKey.to_hd_key());
-    _returnString(hdKey, key, keyLength);
+    _sendString(hdKey, key, keyLength);
     return true;
 }
 
@@ -45,7 +45,7 @@ bool _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHard
     }
 
     const auto childPrivateString = childPrivate.encoded();
-    _returnString(childPrivateString, childPrivateKey, childPrivateKeyLength);
+    _sendString(childPrivateString, childPrivateKey, childPrivateKeyLength);
     return true;
 }
 
@@ -83,7 +83,7 @@ CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHa
             return CBITCOIN_ERROR_INVALID_KEY;
         }
         const auto childPublicKeyString = childPubKey.encoded();
-        _returnString(childPublicKeyString, childPublicKey, childPublicKeyLength);
+        _sendString(childPublicKeyString, childPublicKey, childPublicKeyLength);
         return CBITCOIN_SUCCESS;
     } else {
         // Derive the public key from new private key and the public version.
@@ -96,7 +96,7 @@ CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHa
             return CBITCOIN_ERROR_INVALID_KEY;
         }
         const auto childPublicKeyString = childPubKey.encoded();
-        _returnString(childPublicKeyString, childPublicKey, childPublicKeyLength);
+        _sendString(childPublicKeyString, childPublicKey, childPublicKeyLength);
         return CBITCOIN_SUCCESS;
     }
 }
@@ -115,6 +115,6 @@ CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, 
     }
 
     const auto publicKey = versioned.to_public().encoded();
-    _returnString(publicKey, publicKeyOut, publicKeyLength);
+    _sendString(publicKey, publicKeyOut, publicKeyLength);
     return CBITCOIN_SUCCESS;
 }

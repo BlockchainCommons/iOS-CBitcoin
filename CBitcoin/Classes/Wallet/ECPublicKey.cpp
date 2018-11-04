@@ -30,7 +30,7 @@ bool _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isC
     const wallet::ec_public pub(point, isCompressed);
     data_chunk data;
     pub.to_data(data);
-    _returnData(data, publicKey, publicKeyLength);
+    _sendData(data, publicKey, publicKeyLength);
     return true;
 }
 
@@ -41,7 +41,7 @@ bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8
         const wallet::ec_public pub(point);
         const wallet::payment_address paymentAddress(pub, version);
         const auto encodedAddress = paymentAddress.encoded();
-        _returnString(encodedAddress, address, addressLength);
+        _sendString(encodedAddress, address, addressLength);
         return true;
     } else if(publicKeyLength == ec_uncompressed_size) {
         ec_uncompressed point;
@@ -49,7 +49,7 @@ bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8
         const wallet::ec_public pub(point);
         const wallet::payment_address paymentAddress(pub, version);
         const auto encodedAddress = paymentAddress.encoded();
-        _returnString(encodedAddress, address, addressLength);
+        _sendString(encodedAddress, address, addressLength);
         return true;
     } else {
         return false;

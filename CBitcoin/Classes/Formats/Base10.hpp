@@ -9,6 +9,7 @@
 #define Base10_hpp
 
 #include <stdlib.h>
+#include "CBitcoinResult.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,7 +20,7 @@ extern "C" {
     uint8_t _ubtcDecimalPlaces();
 
     void _encodeBase10(uint64_t amount, char** string, size_t* stringLength, uint8_t decimalPlaces);
-    bool _decodeBase10(const char* string, uint64_t* amount, size_t decimalPlaces, bool strict);
+    CBitcoinResult _decodeBase10(const char* string, uint64_t* amount, size_t decimalPlaces, bool strict);
 
 #ifdef __cplusplus
 }

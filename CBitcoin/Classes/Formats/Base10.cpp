@@ -25,10 +25,10 @@ uint8_t _ubtcDecimalPlaces() {
 
 void _encodeBase10(uint64_t amount, char** string, size_t* stringLength, uint8_t decimalPlaces) {
     auto s = encode_base10(amount, decimalPlaces);
-    _returnString(s, string, stringLength);
+    _sendString(s, string, stringLength);
 }
 
-bool _decodeBase10(const char* string, uint64_t* amount, size_t decimalPlaces, bool strict) {
+CBitcoinResult _decodeBase10(const char* string, uint64_t* amount, size_t decimalPlaces, bool strict) {
     auto s = std::string(string);
-    return decode_base10(*amount, s, static_cast<uint8_t>(decimalPlaces), strict);
+    return decode_base10(*amount, s, static_cast<uint8_t>(decimalPlaces), strict) ? CBITCOIN_SUCCESS : CBITCOIN_ERROR_INVALID_FORMAT;
 }
