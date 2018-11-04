@@ -19,9 +19,9 @@ size_t _ecUncompressedPublicKeySize() {
     return ec_uncompressed_size;
 }
 
-bool _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength) {
+CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength) {
     if(privateKeyLength != ec_secret_size) {
-        return false;
+        return CBITCOIN_ERROR_INVALID_SEED_SIZE;
     }
     ec_secret secretKey;
     _toByteArray(secretKey, privateKey);
@@ -31,10 +31,10 @@ bool _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isC
     data_chunk data;
     pub.to_data(data);
     _sendData(data, publicKey, publicKeyLength);
-    return true;
+    return CBITCOIN_SUCCESS;
 }
 
-bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength) {
+CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength) {
     if(publicKeyLength == ec_compressed_size) {
         ec_compressed point;
         _toByteArray(point, publicKey);
@@ -42,7 +42,7 @@ bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8
         const wallet::payment_address paymentAddress(pub, version);
         const auto encodedAddress = paymentAddress.encoded();
         _sendString(encodedAddress, address, addressLength);
-        return true;
+        return CBITCOIN_SUCCESS;
     } else if(publicKeyLength == ec_uncompressed_size) {
         ec_uncompressed point;
         _toByteArray(point, publicKey);
@@ -50,8 +50,7 @@ bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8
         const wallet::payment_address paymentAddress(pub, version);
         const auto encodedAddress = paymentAddress.encoded();
         _sendString(encodedAddress, address, addressLength);
-        return true;
-    } else {
-        return false;
+        return CBITCOIN_SUCCESS;
     }
+    return CBITCOIN_ERROR_INVALID_SEED_SIZE;
 }

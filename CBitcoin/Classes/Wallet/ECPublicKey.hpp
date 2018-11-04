@@ -9,6 +9,7 @@
 #define ECPublicKey_hpp
 
 #include <stdlib.h>
+#include "CBitcoinResult.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,8 +18,8 @@ extern "C" {
     size_t _ecCompressedPublicKeySize();
     size_t _ecUncompressedPublicKeySize();
 
-    bool _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
-    bool _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);
+    CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
+    CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);
 
 #ifdef __cplusplus
 }

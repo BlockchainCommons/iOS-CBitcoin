@@ -49,16 +49,16 @@ const void* _dictionaryForLanguage(const char* language) {
     return (void*)dict;
 }
 
-bool _mnemonicNew(const uint8_t* seed, size_t seedLength, const void* dictionary, char** mnemonic, size_t* mnemonicLength) {
+CBitcoinResult _mnemonicNew(const uint8_t* seed, size_t seedLength, const void* dictionary, char** mnemonic, size_t* mnemonicLength) {
     const auto entropy = _toDataChunk(seed, seedLength);
     if(entropy.size() % wallet::mnemonic_seed_multiple != 0) {
-        return false;
+        return CBITCOIN_ERROR_INVALID_SEED_SIZE;
     }
     const auto dict = *(const wallet::dictionary*)dictionary;
     const auto words = wallet::create_mnemonic(entropy, dict);
     const auto mnemonicString = join(words);
     _sendString(mnemonicString, mnemonic, mnemonicLength);
-    return true;
+    return CBITCOIN_SUCCESS;
 }
 
 /// Passphrase must already be normalized
@@ -74,18 +74,16 @@ long_hash _decode_mnemonic(const wallet::word_list& mnemonic,
 }
 
 /// Passphrase must already be normalized
-bool _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength) {
+CBitcoinResult _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength) {
     const auto mnemonicString = std::string(mnemonic);
     std::vector<std::string> words;
     boost::split(words, mnemonicString, [](char c){return c == ' ';});
     if(words.size() % wallet::mnemonic_word_multiple != 0) {
-        seed = NULL;
-        return false;
+        return CBITCOIN_ERROR_INVALID_FORMAT;
     }
     const auto dict = *(const wallet::dictionary*)dictionary;
     if(!wallet::validate_mnemonic(words, dict)) {
-        seed = NULL;
-        return false;
+        return CBITCOIN_ERROR_INVALID_FORMAT;
     }
     if(passphrase == NULL) {
         passphrase = "";
@@ -98,5 +96,5 @@ bool _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* p
         auto seedArray = _decode_mnemonic(words, passphraseString);
         _sendData(seedArray, seed, seedLength);
     }
-    return true;
+    return CBITCOIN_SUCCESS;
 }
