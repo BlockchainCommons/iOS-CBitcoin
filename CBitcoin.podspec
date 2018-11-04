@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
     # DESC
 
     s.homepage         = 'https://github.com/blockchaincommons/iOS-CBitcoin'
-    s.license          = { :type => 'MIT', :file => 'LICENSE' }
+    s.license          = { :type => 'Apache', :file => 'LICENSE' }
     s.author           = { 'Wolf McNally' => 'wolf@wolfmcnally.com' }
     s.source           = { :git => 'https://github.com/blockchaincommons/iOS-CBitcoin', :tag => s.version.to_s }
 
