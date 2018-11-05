@@ -131,3 +131,44 @@ CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, 
     _sendString(publicKey, publicKeyOut, publicKeyLength);
     return CBITCOIN_SUCCESS;
 }
+
+CBitcoinResult _toECKey(const char* hdKeyIn, uint32_t publicVersion, uint32_t privateVersion, bool* isPrivate, uint8_t** ecKeyOut, size_t* ecKeyLength) {
+    const std::string hdKey(hdKeyIn);
+    data_chunk hdKeyData;
+    if (!decode_base58(hdKeyData, hdKey) || hdKeyData.size() != wallet::hd_key_size) {
+        return CBITCOIN_ERROR_INVALID_FORMAT;
+    }
+
+    wallet::hd_key key;
+    std::copy(hdKeyData.begin(), hdKeyData.end(), key.begin());
+    uint32_t keyVersion = from_big_endian_unsafe<uint32_t>(key.begin());
+    if (keyVersion != privateVersion && keyVersion != publicVersion) {
+        return CBITCOIN_ERROR_INVALID_VERSION;
+    }
+
+    if (keyVersion == privateVersion) {
+        const auto prefixes = wallet::hd_private::to_prefixes(privateVersion, publicVersion);
+
+        const wallet::hd_private privateKey(key, prefixes);
+        if(!privateKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+
+        *isPrivate = true;
+        const auto secret = privateKey.secret();
+        _sendData(secret, ecKeyOut, ecKeyLength);
+        return CBITCOIN_SUCCESS;
+    } else {
+        const auto publicKey = wallet::hd_public(key, publicVersion);
+        if(!publicKey) {
+            return CBITCOIN_ERROR_INVALID_KEY;
+        }
+
+        *isPrivate = false;
+        const auto ecPublic = wallet::ec_public(publicKey);
+        data_chunk ecPublicData;
+        ecPublic.to_data(ecPublicData);
+        _sendData(ecPublicData, ecKeyOut, ecKeyLength);
+        return CBITCOIN_SUCCESS;
+    }
+}

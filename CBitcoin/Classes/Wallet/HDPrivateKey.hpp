@@ -33,6 +33,7 @@ extern "C" {
     CBitcoinResult _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHardened, char** childPrivateKey, size_t* childPrivateKeyLength);
     CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHardened, uint32_t publicVersion, uint32_t privateVersion, char** childPublicKey, size_t* childPublicKeyLength);
     CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, char** publicKeyOut, size_t* publicKeyLength);
+    CBitcoinResult _toECKey(const char* hdKeyIn, uint32_t publicVersion, uint32_t privateVersion, bool* isPrivate, uint8_t** ecKeyOut, size_t* ecKeyLength);
 
 #ifdef __cplusplus
 }
