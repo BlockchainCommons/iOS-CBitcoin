@@ -33,3 +33,16 @@ void _messageSign(const uint8_t* message, size_t messageLength, const char* wifK
     const auto signatureString = encode_base64(sign);
     _sendString(signatureString, signature, signatureLength);
 }
+
+bool _messageValidate(const char* paymentAddress, const char* signature, const uint8_t* message, size_t messageLength) {
+    const auto address = wallet::payment_address(std::string(paymentAddress));
+
+    data_chunk signatureChunk;
+    decode_base64(signatureChunk, std::string(signature));
+    wallet::message_signature sig;
+    _toByteArray(sig, &*signatureChunk.begin());
+
+    const auto messageSlice = _toDataSlice(message, messageLength);
+
+    return wallet::verify_message(messageSlice, address, sig);
+}
