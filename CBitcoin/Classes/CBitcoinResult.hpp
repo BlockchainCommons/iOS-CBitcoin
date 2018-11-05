@@ -38,6 +38,7 @@ extern "C" {
     #define CBITCOIN_ERROR_INVALID_VERSION 7
     #define CBITCOIN_ERROR_PRIVATE_KEY_REQUIRED 8
     #define CBITCOIN_ERROR_INVALID_KEY 9
+    #define CBITCOIN_ERROR_INVALID_ADDRESS 10
 
 #ifdef __cplusplus
 }
