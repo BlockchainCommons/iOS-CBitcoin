@@ -32,14 +32,14 @@ void _addressEncode(const uint8_t* ripemd160, uint8_t version, char** paymentAdd
     _sendString(addressString, paymentAddress, paymentAddressLength);
 }
 
-CBitcoinResult _addressDecode(const char* address, uint8_t** payload, size_t* payloadLength, uint32_t* checksum, uint8_t* prefix) {
+CBitcoinResult _addressDecode(const char* address, uint8_t* version, uint8_t** payload, size_t* payloadLength, uint32_t* checksum) {
     const auto paymentAddress = wallet::payment_address(std::string(address));
     if(!paymentAddress) {
         return CBITCOIN_ERROR_INVALID_KEY;
     }
     const auto payment = paymentAddress.to_payment();
     short_hash payld;
-    unwrap(*prefix, payld, *checksum, payment);
+    unwrap(*version, payld, *checksum, payment);
     _sendData(payld, payload, payloadLength);
     return CBITCOIN_SUCCESS;
 }

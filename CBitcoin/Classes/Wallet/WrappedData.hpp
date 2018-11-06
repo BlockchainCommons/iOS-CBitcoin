@@ -1,8 +1,8 @@
 //
-//  CBitcoinResult.hpp
+//  WrappedData.hpp
 //  CBitcoin
 //
-//  Created by Wolf McNally on 10/24/18.
+//  Created by Wolf McNally on 11/6/18.
 //
 //  Copyright © 2018 Blockchain Commons.
 //
@@ -18,31 +18,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#ifndef CBitcoinResult_hpp
-#define CBitcoinResult_hpp
+#ifndef WrappedData_hpp
+#define WrappedData_hpp
 
 #include <stdlib.h>
+#include "CBitcoinResult.hpp"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    typedef size_t CBitcoinResult;
-    #define CBITCOIN_SUCCESS 0
-    #define CBITCOIN_ERROR_INVALID_FORMAT 1
-    #define CBITCOIN_ERROR_INVALID_DATA_SIZE 2
-    #define CBITCOIN_ERROR_SEED_TOO_SMALL 3
-    #define CBITCOIN_ERROR_INVALID_SEED_SIZE 4
-    #define CBITCOIN_ERROR_INVALID_SEED 5
-    #define CBITCOIN_ERROR_UNSUPPORTED_LANGUAGE 6
-    #define CBITCOIN_ERROR_INVALID_VERSION 7
-    #define CBITCOIN_ERROR_PRIVATE_KEY_REQUIRED 8
-    #define CBITCOIN_ERROR_INVALID_KEY 9
-    #define CBITCOIN_ERROR_INVALID_ADDRESS 10
-    #define CBITCOIN_ERROR_INVALID_CHECKSUM 11
+    void _wrapEncode(const uint8_t* data, size_t dataLength, uint8_t version, uint8_t** wrappedData, size_t* wrappedDataLength);
+    CBitcoinResult _wrapDecode(const uint8_t* wrappedData, size_t wrappedDataLength, uint8_t* version, uint8_t** payload, size_t* payloadLength, uint32_t* checksum);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* CBitcoinResult_hpp */
+#endif /* WrappedData_hpp */
