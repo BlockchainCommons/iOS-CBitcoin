@@ -30,6 +30,7 @@ extern "C" {
 
     void _addressEncode(const uint8_t* ripemd160, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
     CBitcoinResult _addressDecode(const char* address, uint8_t* version, uint8_t** payload, size_t* payloadLength, uint32_t* checksum);
+    void _addressEmbed(const uint8_t* data, size_t dataLength, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
 
 #ifdef __cplusplus
 }

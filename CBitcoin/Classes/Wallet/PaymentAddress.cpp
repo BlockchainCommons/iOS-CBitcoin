@@ -43,3 +43,19 @@ CBitcoinResult _addressDecode(const char* address, uint8_t* version, uint8_t** p
     _sendData(payld, payload, payloadLength);
     return CBITCOIN_SUCCESS;
 }
+
+void _addressEmbed(const uint8_t* data, size_t dataLength, uint8_t version, char** paymentAddress, size_t* paymentAddressLength) {
+    auto dataChunk = _toDataChunk(data, dataLength);
+
+    // Create script from hash of data.
+    const auto ops = chain::script::to_pay_key_hash_pattern(ripemd160_hash(dataChunk));
+    const auto script = chain::script(std::move(ops));
+
+    // Make ripemd hash of serialized script.
+    const auto hash = ripemd160_hash(script.to_data(false));
+
+    // Make address (money sent here is lost forever).
+    const auto address = wallet::payment_address(hash, version);
+    const auto addressString = address.encoded();
+    _sendString(addressString, paymentAddress, paymentAddressLength);
+}
