@@ -40,6 +40,7 @@ extern "C" {
     #define CBITCOIN_ERROR_INVALID_KEY 9
     #define CBITCOIN_ERROR_INVALID_ADDRESS 10
     #define CBITCOIN_ERROR_INVALID_CHECKSUM 11
+    #define CBITCOIN_ERROR_INVALID_SCRIPT 12
 
 #ifdef __cplusplus
 }
