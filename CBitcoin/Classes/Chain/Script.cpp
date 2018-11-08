@@ -35,7 +35,20 @@ CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* enco
     if(!s.from_string(scriptString)) {
         return CBITCOIN_ERROR_INVALID_SCRIPT;
     }
+    
     const auto encodedData = s.to_data(false);
     _sendData(encodedData, encoded, encodedLength);
+    return CBITCOIN_SUCCESS;
+}
+
+CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength) {
+    const auto scriptString = std::string(script);
+    chain::script s;
+    if(!s.from_string(scriptString)) {
+        return CBITCOIN_ERROR_INVALID_SCRIPT;
+    }
+
+    const wallet::payment_address address(s, version);
+    _sendString(address.encoded(), paymentAddress, paymentAddressLength);
     return CBITCOIN_SUCCESS;
 }

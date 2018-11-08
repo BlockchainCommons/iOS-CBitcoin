@@ -30,6 +30,7 @@ extern "C" {
 
     void _scriptDecode(const uint8_t* data, size_t dataLength, char** decoded, size_t* decodedLength);
     CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* encodedLength);
+    CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
 
 #ifdef __cplusplus
 }
