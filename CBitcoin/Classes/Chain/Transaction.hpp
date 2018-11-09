@@ -30,6 +30,30 @@ extern "C" {
 
     CBitcoinResult _transactionDecode(const uint8_t* data, size_t dataLength, bool isPretty, char** decoded, size_t* decodedLength);
 
+    typedef struct _outputPoint _outputPoint;
+    _outputPoint* _Nonnull _outputPointNew();
+    void _outputPointDelete(_outputPoint* _Nonnull op);
+    uint32_t _outputPointGetIndex(_outputPoint* _Nonnull op);
+    void _outputPointSetIndex(_outputPoint* _Nonnull op, uint32_t index);
+    void _outputPointGetHash(_outputPoint* _Nonnull op, uint8_t** hash, size_t* hashLength);
+    void _outputPointSetHash(_outputPoint* _Nonnull op, const uint8_t* hash);
+
+    typedef struct _input _input;
+    _input* _Nonnull _inputNew();
+    void _inputDelete(_input* _Nonnull i);
+    _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull i);
+    void _inputSetPreviousOutput(_input* _Nonnull i, _outputPoint* _Nonnull op);
+    uint32_t _inputGetSequence(_input* _Nonnull i);
+    void _inputSetSequence(_input* _Nonnull i, uint32_t sequence);
+
+    typedef struct _output _output;
+    _output* _Nonnull _outputNew();
+    void _outputDelete(_output* _Nonnull o);
+    CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull o, const char* address);
+    uint64_t _outputGetValue(_output* _Nonnull o);
+    void _outputSetValue(_output* _Nonnull o, uint64_t value);
+    void _outputGetScript(_output* _Nonnull o, char** decoded, size_t* decodedLength);
+
 #ifdef __cplusplus
 }
 #endif
