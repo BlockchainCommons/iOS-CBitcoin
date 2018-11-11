@@ -50,4 +50,14 @@ void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* bytes) {
     }
 }
 
+template<typename T, typename U>
+void _sendInstances(std::vector<T> list, U*** instances, size_t* count) {
+    *count = list.size();
+    *instances = static_cast<U**>(malloc(*count * sizeof(U*)));
+    auto instancesArray = *instances;
+    int index = 0;
+    for(auto& i: list) {
+        instancesArray[index++] = (U*)&i;
+    }
+}
 #endif /* PrivateUtil_hpp */

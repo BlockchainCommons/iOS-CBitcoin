@@ -20,10 +20,10 @@
 
 #include "Free.hpp"
 
-void _freeString(char* string) {
-    free(string);
+void _freeData(void* data) {
+    free(data);
 }
 
-void _freeData(uint8_t* data) {
-    free(data);
+void _deleteInstance(_instance* instance) {
+    delete instance;
 }

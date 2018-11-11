@@ -32,27 +32,40 @@ extern "C" {
 
     typedef struct _outputPoint _outputPoint;
     _outputPoint* _Nonnull _outputPointNew();
-    void _outputPointDelete(_outputPoint* _Nonnull op);
-    uint32_t _outputPointGetIndex(_outputPoint* _Nonnull op);
-    void _outputPointSetIndex(_outputPoint* _Nonnull op, uint32_t index);
-    void _outputPointGetHash(_outputPoint* _Nonnull op, uint8_t** hash, size_t* hashLength);
-    void _outputPointSetHash(_outputPoint* _Nonnull op, const uint8_t* hash);
+    _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
+    uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance);
+    void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index);
+    void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t** hash, size_t* hashLength);
+    void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash);
 
     typedef struct _input _input;
     _input* _Nonnull _inputNew();
-    void _inputDelete(_input* _Nonnull i);
-    _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull i);
-    void _inputSetPreviousOutput(_input* _Nonnull i, _outputPoint* _Nonnull op);
-    uint32_t _inputGetSequence(_input* _Nonnull i);
-    void _inputSetSequence(_input* _Nonnull i, uint32_t sequence);
+    _input* _Nonnull _inputCopy(_input* _Nonnull instance);
+    _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance);
+    void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);
+    uint32_t _inputGetSequence(_input* _Nonnull instance);
+    void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence);
 
     typedef struct _output _output;
     _output* _Nonnull _outputNew();
-    void _outputDelete(_output* _Nonnull o);
-    CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull o, const char* address);
-    uint64_t _outputGetValue(_output* _Nonnull o);
-    void _outputSetValue(_output* _Nonnull o, uint64_t value);
-    void _outputGetScript(_output* _Nonnull o, char** decoded, size_t* decodedLength);
+    _output* _Nonnull _outputCopy(_output* _Nonnull instance);
+    CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address);
+    uint64_t _outputGetValue(_output* _Nonnull instance);
+    void _outputSetValue(_output* _Nonnull instance, uint64_t value);
+    void _outputGetScript(_output* _Nonnull instance, char** decoded, size_t* decodedLength);
+
+    typedef struct _transaction _transaction;
+    _transaction* _Nonnull _transactionNew();
+    void _transactionDelete(_transaction* _Nonnull t);
+    uint32_t _transactionGetVersion(_transaction* _Nonnull t);
+    void _transactionSetVersion(_transaction* _Nonnull t, uint32_t version);
+    uint32_t _transactionGetLockTime(_transaction* _Nonnull t);
+    void _transactionSetLockTime(_transaction* _Nonnull t, uint32_t lockTime);
+
+    void _transactionSetInputs(_transaction* _Nonnull t, const _input* const _Nonnull * inputs, size_t inputsCount);
+    void _transactionGetInputs(_transaction* _Nonnull t, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
+    void _transactionSetOutputs(_transaction* _Nonnull t, const _output* const _Nonnull * outputs, size_t outputsCount);
+    void _transactionGetOutputs(_transaction* _Nonnull t, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
 
 #ifdef __cplusplus
 }

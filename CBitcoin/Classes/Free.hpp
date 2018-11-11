@@ -27,8 +27,10 @@
 extern "C" {
 #endif
 
-    void _freeString(char* string);
-    void _freeData(uint8_t* data);
+    void _freeData(void* data);
+
+    typedef struct _instance _instance;
+    void _deleteInstance(_instance* instance);
 
 #ifdef __cplusplus
 }
