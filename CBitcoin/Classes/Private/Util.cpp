@@ -42,11 +42,6 @@ data_chunk _toDataChunk(const uint8_t* data, uint32_t length) {
     return data_chunk(data, data + length);
 }
 
-//template <size_t Size>
-//std::array<uint8_t, Size> _toArray(const uint8_t* data) {
-//    return std::array<uint8_t, Size>(data, data + Size);
-//}
-
 hash_digest _toHashDigest(const uint8_t* data) {
     hash_digest d;
     for(hash_digest::iterator cur = d.begin(); cur != d.end();) {

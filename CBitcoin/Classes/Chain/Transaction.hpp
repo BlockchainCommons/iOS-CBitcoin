@@ -56,16 +56,16 @@ extern "C" {
 
     typedef struct _transaction _transaction;
     _transaction* _Nonnull _transactionNew();
-    void _transactionDelete(_transaction* _Nonnull t);
-    uint32_t _transactionGetVersion(_transaction* _Nonnull t);
-    void _transactionSetVersion(_transaction* _Nonnull t, uint32_t version);
-    uint32_t _transactionGetLockTime(_transaction* _Nonnull t);
-    void _transactionSetLockTime(_transaction* _Nonnull t, uint32_t lockTime);
+    _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance);
+    uint32_t _transactionGetVersion(_transaction* _Nonnull instance);
+    void _transactionSetVersion(_transaction* _Nonnull instance, uint32_t version);
+    uint32_t _transactionGetLockTime(_transaction* _Nonnull instance);
+    void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime);
 
-    void _transactionSetInputs(_transaction* _Nonnull t, const _input* const _Nonnull * inputs, size_t inputsCount);
-    void _transactionGetInputs(_transaction* _Nonnull t, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
-    void _transactionSetOutputs(_transaction* _Nonnull t, const _output* const _Nonnull * outputs, size_t outputsCount);
-    void _transactionGetOutputs(_transaction* _Nonnull t, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
+    void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount);
+    void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
+    void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount);
+    void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
 
 #ifdef __cplusplus
 }

@@ -51,13 +51,23 @@ void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* bytes) {
 }
 
 template<typename T, typename U>
+std::vector<T> _receiveInstances(const U* const* instances, size_t count) {
+    std::vector<T> list;
+    for(auto index = 0; index < count; index++) {
+        const auto& value = *(T*)instances[index];
+        list.push_back(value);
+    }
+    return list;
+}
+
+template<typename T, typename U>
 void _sendInstances(std::vector<T> list, U*** instances, size_t* count) {
     *count = list.size();
     *instances = static_cast<U**>(malloc(*count * sizeof(U*)));
     auto instancesArray = *instances;
     int index = 0;
-    for(auto& i: list) {
-        instancesArray[index++] = (U*)&i;
+    for(const auto& i: list) {
+        instancesArray[index++] = (U*)new T(i);
     }
 }
 #endif /* PrivateUtil_hpp */

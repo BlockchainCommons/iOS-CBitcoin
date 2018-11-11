@@ -163,58 +163,52 @@ _transaction* _Nonnull _transactionNew() {
     return (_transaction*)new transaction;
 }
 
-void _transactionDelete(_transaction* _Nonnull t) {
-    delete t;
+_transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    auto* copy = new transaction(self);
+    return reinterpret_cast<_transaction*>(copy);
 }
 
-uint32_t _transactionGetVersion(_transaction* _Nonnull t) {
-    auto& self = *(transaction*)t;
+uint32_t _transactionGetVersion(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
     return self.version();
 }
 
-void _transactionSetVersion(_transaction* _Nonnull t, uint32_t version) {
-    auto& self = *(transaction*)t;
+void _transactionSetVersion(_transaction* _Nonnull instance, uint32_t version) {
+    auto& self = *reinterpret_cast<transaction*>(instance);
     self.set_version(version);
 }
 
-uint32_t _transactionGetLockTime(_transaction* _Nonnull t) {
-    auto& self = *(transaction*)t;
+uint32_t _transactionGetLockTime(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
     return self.locktime();
 }
 
-void _transactionSetLockTime(_transaction* _Nonnull t, uint32_t lockTime) {
-    auto& self = *(transaction*)t;
+void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime) {
+    auto& self = *reinterpret_cast<transaction*>(instance);
     self.set_locktime(lockTime);
 }
 
 
 
-void _transactionSetInputs(_transaction* _Nonnull t, const _input* const _Nonnull * inputs, size_t inputsCount) {
-    auto& self = *(transaction*)t;
-    input::list list;
-    for(auto index = 0; index < inputsCount; index++) {
-        auto& value = *(input*)inputs[index];
-        list.push_back(value);
-    }
+void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount) {
+    auto& self = *reinterpret_cast<transaction*>(instance);
+    input::list list = _receiveInstances<input, _input>(inputs, inputsCount);
     self.set_inputs(list);
 }
 
-void _transactionGetInputs(_transaction* _Nonnull t, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount) {
-    auto& self = *(transaction*)t;
+void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.inputs(), inputs, inputsCount);
 }
 
-void _transactionSetOutputs(_transaction* _Nonnull t, const _output* const _Nonnull * outputs, size_t outputsCount) {
-    auto& self = *(transaction*)t;
-    output::list list;
-    for(auto index = 0; index < outputsCount; index++) {
-        auto& value = *(output*)outputs[index];
-        list.push_back(value);
-    }
+void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount) {
+    auto& self = *reinterpret_cast<transaction*>(instance);
+    output::list list = _receiveInstances<output, _output>(outputs, outputsCount);
     self.set_outputs(list);
 }
 
-void _transactionGetOutputs(_transaction* _Nonnull t, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
-    auto& self = *(transaction*)t;
+void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.outputs(), outputs, outputsCount);
 }
