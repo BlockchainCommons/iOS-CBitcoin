@@ -54,6 +54,23 @@ _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance) {
     return reinterpret_cast<_outputPoint*>(copy);
 }
 
+CBitcoinResult _outputPointFromData(const uint8_t * data, size_t dataLength, _outputPoint** instance) {
+    const auto dataChunk = _toDataChunk(data, dataLength);
+    auto* i = new output_point();
+    if(!i->from_data(dataChunk)) {
+        return CBITCOIN_ERROR_INVALID_DATA;
+    }
+    *instance = reinterpret_cast<_outputPoint*>(i);
+    return CBITCOIN_SUCCESS;
+}
+
+void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+    const auto& self = *reinterpret_cast<output_point*>(instance);
+    const auto dataChunk = self.to_data();
+    _sendData(dataChunk, data, dataLength);
+}
+
+
 uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance) {
     const auto& self = *reinterpret_cast<const output_point*>(instance);
     return self.index();
@@ -73,6 +90,17 @@ void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash) {
     auto& self = *reinterpret_cast<output_point*>(instance);
     auto hashDigest = _toHashDigest(hash);
     self.set_hash(hashDigest);
+}
+
+bool _outputPointIsValid(_outputPoint* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const output_point*>(instance);
+    return self.is_valid();
+}
+
+bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2) {
+    const auto& lhs = *reinterpret_cast<const output_point*>(instance1);
+    const auto& rhs = *reinterpret_cast<const output_point*>(instance2);
+    return lhs == rhs;
 }
 
     // MARK: - Input
@@ -218,6 +246,12 @@ CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _tra
     return CBITCOIN_SUCCESS;
 }
 
+void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    const auto dataChunk = self.to_data();
+    _sendData(dataChunk, data, dataLength);
+}
+
 bool _transactionIsValid(_transaction* _Nonnull instance) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     return self.is_valid();
@@ -268,10 +302,4 @@ void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* cons
 void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.outputs(), outputs, outputsCount);
-}
-
-void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
-    const auto& self = *reinterpret_cast<transaction*>(instance);
-    const auto dataChunk = self.to_data();
-    _sendData(dataChunk, data, dataLength);
 }

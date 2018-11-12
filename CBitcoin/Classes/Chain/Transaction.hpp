@@ -33,10 +33,14 @@ extern "C" {
     typedef struct _outputPoint _outputPoint;
     _outputPoint* _Nonnull _outputPointNew();
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
+    CBitcoinResult _outputPointFromData(const uint8_t * data, size_t dataLength, _outputPoint** instance);
+    void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);
     uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance);
     void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index);
     void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t** hash, size_t* hashLength);
     void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash);
+    bool _outputPointIsValid(_outputPoint* _Nonnull instance);
+    bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);
 
     typedef struct _input _input;
     _input* _Nonnull _inputNew();
@@ -63,6 +67,7 @@ extern "C" {
     _transaction* _Nonnull _transactionNew();
     _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance);
     CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _transaction** instance);
+    void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _transactionIsValid(_transaction* _Nonnull instance);
     bool _transactionIsCoinbase(_transaction* _Nonnull instance);
     uint32_t _transactionGetVersion(_transaction* _Nonnull instance);
@@ -73,7 +78,6 @@ extern "C" {
     void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
     void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount);
     void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
-    void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
 
 #ifdef __cplusplus
 }
