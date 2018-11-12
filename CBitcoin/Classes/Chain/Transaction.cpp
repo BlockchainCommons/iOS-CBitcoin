@@ -87,6 +87,22 @@ _input* _Nonnull _inputCopy(_input* _Nonnull instance) {
     return reinterpret_cast<_input*>(copy);
 }
 
+CBitcoinResult _inputFromData(const uint8_t* data, size_t dataLength, _input** instance) {
+    const auto dataChunk = _toDataChunk(data, dataLength);
+    auto* i = new input();
+    if(!i->from_data(dataChunk)) {
+        return CBITCOIN_ERROR_INVALID_DATA;
+    }
+    *instance = reinterpret_cast<_input*>(i);
+    return CBITCOIN_SUCCESS;
+}
+
+bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2) {
+    const auto& lhs = *reinterpret_cast<input*>(instance1);
+    const auto& rhs = *reinterpret_cast<input*>(instance2);
+    return lhs == rhs;
+}
+
 _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance) {
     const auto& self = *reinterpret_cast<input*>(instance);
     output_point* outputPointInstance = new output_point(self.previous_output());
@@ -109,6 +125,13 @@ void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence) {
     self.set_sequence(sequence);
 }
 
+void _inputGetScript(_input* _Nonnull instance, char** decoded, size_t* decodedLength) {
+    const auto& self = *reinterpret_cast<input*>(instance);
+    const auto script = self.script();
+    const auto decodedString = script.to_string(machine::rule_fork::all_rules);
+    _sendString(decodedString, decoded, decodedLength);
+}
+
     // MARK: - Output
 
 _output* _Nonnull _outputNew() {
@@ -119,6 +142,22 @@ _output* _Nonnull _outputCopy(_output* _Nonnull instance) {
     const auto& self = *reinterpret_cast<output*>(instance);
     auto* copy = new output(self);
     return reinterpret_cast<_output*>(copy);
+}
+
+CBitcoinResult _outputFromData(const uint8_t* data, size_t dataLength, _output** instance) {
+    const auto dataChunk = _toDataChunk(data, dataLength);
+    auto* o = new output();
+    if(!o->from_data(dataChunk)) {
+        return CBITCOIN_ERROR_INVALID_DATA;
+    }
+    *instance = reinterpret_cast<_output*>(o);
+    return CBITCOIN_SUCCESS;
+}
+
+bool _outputEqual(_output* _Nonnull instance1, _input* _Nonnull instance2) {
+    const auto& lhs = *reinterpret_cast<output*>(instance1);
+    const auto& rhs = *reinterpret_cast<output*>(instance2);
+    return lhs == rhs;
 }
 
 CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address) {
@@ -169,6 +208,26 @@ _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance) {
     return reinterpret_cast<_transaction*>(copy);
 }
 
+CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _transaction** instance) {
+    const auto dataChunk = _toDataChunk(data, dataLength);
+    auto* t = new transaction();
+    if(!t->from_data(dataChunk)) {
+        return CBITCOIN_ERROR_INVALID_DATA;
+    }
+    *instance = reinterpret_cast<_transaction*>(t);
+    return CBITCOIN_SUCCESS;
+}
+
+bool _transactionIsValid(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_valid();
+}
+
+bool _transactionIsCoinbase(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_coinbase();
+}
+
 uint32_t _transactionGetVersion(_transaction* _Nonnull instance) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     return self.version();
@@ -188,8 +247,6 @@ void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime)
     auto& self = *reinterpret_cast<transaction*>(instance);
     self.set_locktime(lockTime);
 }
-
-
 
 void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount) {
     auto& self = *reinterpret_cast<transaction*>(instance);
@@ -211,4 +268,10 @@ void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* cons
 void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.outputs(), outputs, outputsCount);
+}
+
+void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    const auto dataChunk = self.to_data();
+    _sendData(dataChunk, data, dataLength);
 }

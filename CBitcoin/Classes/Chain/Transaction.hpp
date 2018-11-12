@@ -41,14 +41,19 @@ extern "C" {
     typedef struct _input _input;
     _input* _Nonnull _inputNew();
     _input* _Nonnull _inputCopy(_input* _Nonnull instance);
+    CBitcoinResult _inputFromData(const uint8_t* data, size_t dataLength, _input** instance);
+    bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2);
     _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance);
     void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);
     uint32_t _inputGetSequence(_input* _Nonnull instance);
     void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence);
+    void _inputGetScript(_input* _Nonnull instance, char** decoded, size_t* decodedLength);
 
     typedef struct _output _output;
     _output* _Nonnull _outputNew();
     _output* _Nonnull _outputCopy(_output* _Nonnull instance);
+    CBitcoinResult _outputFromData(const uint8_t* data, size_t dataLength, _output** instance);
+    bool _outputEqual(_output* _Nonnull instance1, _input* _Nonnull instance2);
     CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address);
     uint64_t _outputGetValue(_output* _Nonnull instance);
     void _outputSetValue(_output* _Nonnull instance, uint64_t value);
@@ -57,15 +62,18 @@ extern "C" {
     typedef struct _transaction _transaction;
     _transaction* _Nonnull _transactionNew();
     _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance);
+    CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _transaction** instance);
+    bool _transactionIsValid(_transaction* _Nonnull instance);
+    bool _transactionIsCoinbase(_transaction* _Nonnull instance);
     uint32_t _transactionGetVersion(_transaction* _Nonnull instance);
     void _transactionSetVersion(_transaction* _Nonnull instance, uint32_t version);
     uint32_t _transactionGetLockTime(_transaction* _Nonnull instance);
     void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime);
-
     void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount);
     void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
     void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount);
     void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
+    void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
 
 #ifdef __cplusplus
 }
