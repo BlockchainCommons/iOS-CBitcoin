@@ -70,6 +70,16 @@ void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t*
     _sendData(dataChunk, data, dataLength);
 }
 
+bool _outputPointIsValid(_outputPoint* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const output_point*>(instance);
+    return self.is_valid();
+}
+
+bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2) {
+    const auto& lhs = *reinterpret_cast<const output_point*>(instance1);
+    const auto& rhs = *reinterpret_cast<const output_point*>(instance2);
+    return lhs == rhs;
+}
 
 uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance) {
     const auto& self = *reinterpret_cast<const output_point*>(instance);
@@ -92,14 +102,87 @@ void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash) {
     self.set_hash(hashDigest);
 }
 
-bool _outputPointIsValid(_outputPoint* _Nonnull instance) {
-    const auto& self = *reinterpret_cast<const output_point*>(instance);
+    // MARK: - Opcode
+
+void _opcodeToString(uint8_t opcode, uint32_t ruleFork, char** string, size_t* stringLength) {
+    const auto op = machine::opcode(opcode);
+    const auto rules = static_cast<machine::rule_fork>(ruleFork);
+    const auto str = opcode_to_string(op, rules);
+    _sendString(str, string, stringLength);
+}
+
+CBitcoinResult _opcodeFromString(const char* string, uint8_t* opcode) {
+    const auto str = std::string(string);
+    machine::opcode op;
+    if(!opcode_from_string(op, str)) {
+        return CBITCOIN_ERROR_INVALID_OPCODE;
+    }
+    *opcode = static_cast<uint8_t>(op);
+    return CBITCOIN_SUCCESS;
+}
+
+void _opcodeToHexadecimal(uint8_t opcode, char** string, size_t* stringLength) {
+    const auto op = machine::opcode(opcode);
+    const auto str = opcode_to_hexadecimal(op);
+    _sendString(str, string, stringLength);
+}
+
+CBitcoinResult _opcodeFromHexadecimal(const char* string, uint8_t* opcode) {
+    const auto str = std::string(string);
+    machine::opcode op;
+    if(!opcode_from_hexadecimal(op, str)) {
+        return CBITCOIN_ERROR_INVALID_OPCODE;
+    }
+    *opcode = static_cast<uint8_t>(op);
+    return CBITCOIN_SUCCESS;
+}
+
+    // MARK: - Script
+
+_script* _Nonnull _scriptNew() {
+    return reinterpret_cast<_script*>(new script);
+}
+
+_script* _Nonnull _scriptCopy(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<script*>(instance);
+    auto* copy = new script(self);
+    return reinterpret_cast<_script*>(copy);
+}
+
+CBitcoinResult _scriptFromString(const char* string, _script** instance) {
+    const auto str = std::string(string);
+    auto* i = new script();
+    if(!i->from_string(str)) {
+        return CBITCOIN_ERROR_INVALID_SCRIPT;
+    }
+    *instance = reinterpret_cast<_script*>(i);
+    return CBITCOIN_SUCCESS;
+}
+
+CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance) {
+    const auto dataChunk = _toDataChunk(data, dataLength);
+    auto* i = new script();
+    if(!i->from_data(dataChunk, prefix)) {
+        return CBITCOIN_ERROR_INVALID_DATA;
+    }
+    *instance = reinterpret_cast<_script*>(i);
+    return CBITCOIN_SUCCESS;
+}
+
+void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength) {
+    const auto& self = *reinterpret_cast<script*>(instance);
+    const auto dataChunk = self.to_data(prefix);
+    _sendData(dataChunk, data, dataLength);
+}
+
+bool _scriptIsValid(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
     return self.is_valid();
 }
 
-bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2) {
-    const auto& lhs = *reinterpret_cast<const output_point*>(instance1);
-    const auto& rhs = *reinterpret_cast<const output_point*>(instance2);
+bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2) {
+    const auto& lhs = *reinterpret_cast<const script*>(instance1);
+    const auto& rhs = *reinterpret_cast<const script*>(instance2);
     return lhs == rhs;
 }
 
@@ -153,11 +236,16 @@ void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence) {
     self.set_sequence(sequence);
 }
 
-void _inputGetScript(_input* _Nonnull instance, char** decoded, size_t* decodedLength) {
+void _inputGetScript(_input* _Nonnull instance, uint32_t ruleFork, char** decoded, size_t* decodedLength) {
     const auto& self = *reinterpret_cast<input*>(instance);
     const auto script = self.script();
-    const auto decodedString = script.to_string(machine::rule_fork::all_rules);
+    const auto decodedString = script.to_string(ruleFork);
     _sendString(decodedString, decoded, decodedLength);
+}
+
+bool _inputIsValid(_input* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const input*>(instance);
+    return self.is_valid();
 }
 
     // MARK: - Output
@@ -216,11 +304,11 @@ void _outputSetValue(_output* _Nonnull instance, uint64_t value) {
     self.set_value(value);
 }
 
-void _outputGetScript(_output* _Nonnull instance, char** decoded, size_t* decodedLength) {
+void _outputGetScript(_output* _Nonnull instance, uint32_t ruleFork, char** decoded, size_t* decodedLength) {
     const auto& self = *reinterpret_cast<output*>(instance);
 
     const auto script = self.script();
-    const auto decodedString = script.to_string(machine::rule_fork::all_rules);
+    const auto decodedString = script.to_string(ruleFork);
     _sendString(decodedString, decoded, decodedLength);
 }
 

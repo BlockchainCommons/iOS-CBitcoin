@@ -35,12 +35,29 @@ extern "C" {
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
     CBitcoinResult _outputPointFromData(const uint8_t * data, size_t dataLength, _outputPoint** instance);
     void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    bool _outputPointIsValid(_outputPoint* _Nonnull instance);
+    bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);
     uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance);
     void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index);
     void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t** hash, size_t* hashLength);
     void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash);
-    bool _outputPointIsValid(_outputPoint* _Nonnull instance);
-    bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);
+
+    void _opcodeToString(uint8_t opcode, uint32_t ruleFork, char** string, size_t* stringLength);
+    CBitcoinResult _opcodeFromString(const char* string, uint8_t* opcode);
+    void _opcodeToHexadecimal(uint8_t opcode, char** string, size_t* stringLength);
+    CBitcoinResult _opcodeFromHexadecimal(const char* string, uint8_t* opcode);
+
+    typedef struct _operation _operation;
+    _operation* _Nonnull _operationNew();
+
+    typedef struct _script _script;
+    _script* _Nonnull _scriptNew();
+    _script* _Nonnull _scriptCopy(_script* _Nonnull instance);
+    CBitcoinResult _scriptFromString(const char* string, _script** instance);
+    CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
+    void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
+    bool _scriptIsValid(_script* _Nonnull instance);
+    bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2);
 
     typedef struct _input _input;
     _input* _Nonnull _inputNew();
@@ -51,7 +68,8 @@ extern "C" {
     void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);
     uint32_t _inputGetSequence(_input* _Nonnull instance);
     void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence);
-    void _inputGetScript(_input* _Nonnull instance, char** decoded, size_t* decodedLength);
+    void _inputGetScript(_input* _Nonnull instance, uint32_t ruleFork, char** decoded, size_t* decodedLength);
+    bool _inputIsValid(_input* _Nonnull instance);
 
     typedef struct _output _output;
     _output* _Nonnull _outputNew();
@@ -61,7 +79,7 @@ extern "C" {
     CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address);
     uint64_t _outputGetValue(_output* _Nonnull instance);
     void _outputSetValue(_output* _Nonnull instance, uint64_t value);
-    void _outputGetScript(_output* _Nonnull instance, char** decoded, size_t* decodedLength);
+    void _outputGetScript(_output* _Nonnull instance, uint32_t ruleFork, char** decoded, size_t* decodedLength);
 
     typedef struct _transaction _transaction;
     _transaction* _Nonnull _transactionNew();
