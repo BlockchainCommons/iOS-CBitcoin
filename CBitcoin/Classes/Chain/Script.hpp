@@ -32,6 +32,15 @@ extern "C" {
     CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* encodedLength);
     CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
 
+    typedef struct _script _script;
+    _script* _Nonnull _scriptNew();
+    _script* _Nonnull _scriptCopy(_script* _Nonnull instance);
+    CBitcoinResult _scriptFromString(const char* string, _script** instance);
+    CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
+    void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
+    bool _scriptIsValid(_script* _Nonnull instance);
+    bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2);
+
 #ifdef __cplusplus
 }
 #endif
