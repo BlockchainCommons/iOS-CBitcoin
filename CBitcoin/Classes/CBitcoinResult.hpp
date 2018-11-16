@@ -44,6 +44,7 @@ extern "C" {
     #define CBITCOIN_ERROR_INVALID_TRANSACTION 13
     #define CBITCOIN_ERROR_INVALID_DATA 14
     #define CBITCOIN_ERROR_INVALID_OPCODE 15
+    #define CBITCOIN_ERROR_CODE 16
 
 #ifdef __cplusplus
 }

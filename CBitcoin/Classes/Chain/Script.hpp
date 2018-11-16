@@ -28,6 +28,9 @@
 extern "C" {
 #endif
 
+    typedef struct _operation _operation;
+    typedef struct _transaction _transaction;
+
     void _scriptDecode(const uint8_t* data, size_t dataLength, char** decoded, size_t* decodedLength);
     CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* encodedLength);
     CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
@@ -37,10 +40,25 @@ extern "C" {
     _script* _Nonnull _scriptCopy(_script* _Nonnull instance);
     CBitcoinResult _scriptFromString(const char* string, _script** instance);
     CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
+    _script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * operations, size_t operationsCount);
     void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
     bool _scriptIsValid(_script* _Nonnull instance);
     bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2);
 
+    void _scriptGetOperations(_script* _Nonnull instance, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
+    bool _scriptIsEmpty(_script* _Nonnull instance);
+    void _scriptClear(_script* _Nonnull instance);
+
+    void _scriptGetWitnessProgram(_script* _Nonnull instance, uint8_t** program, size_t* programLength);
+    int _scriptGetVersion(_script* _Nonnull instance);
+    int _scriptGetPattern(_script* _Nonnull instance);
+    int _scriptGetInputPattern(_script* _Nonnull instance);
+    int _scriptGetOutputPattern(_script* _Nonnull instance);
+
+    void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
+
+    uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint32_t rules, _script* _Nonnull prevoutScriptInstance, uint64_t value);
+    
 #ifdef __cplusplus
 }
 #endif

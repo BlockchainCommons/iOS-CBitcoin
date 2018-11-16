@@ -27,11 +27,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+    typedef struct _script _script;
 
     typedef struct _outputPoint _outputPoint;
     _outputPoint* _Nonnull _outputPointNew();
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
     CBitcoinResult _outputPointFromData(const uint8_t* data, size_t dataLength, _outputPoint** instance);
+//    _outputPoint* _Nonnull _outputPointFromScript(_script* _Nonnull scriptInstance);
     void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _outputPointIsValid(_outputPoint* _Nonnull instance);
     bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);

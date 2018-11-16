@@ -23,12 +23,13 @@
 
 #include <stdlib.h>
 #include "CBitcoinResult.hpp"
-#include "Input.hpp"
-#include "Output.hpp"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+    typedef struct _input _input;
+    typedef struct _output _output;
 
     CBitcoinResult _transactionDecode(const uint8_t* data, size_t dataLength, bool isPretty, char** decoded, size_t* decodedLength);
 

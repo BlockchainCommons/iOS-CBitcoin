@@ -84,6 +84,12 @@ CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool pref
     return CBITCOIN_SUCCESS;
 }
 
+_script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * operations, size_t operationsCount) {
+    const auto list = _receiveInstances<machine::operation, _operation>(operations, operationsCount);
+    auto* i = new script(list);
+    return reinterpret_cast<_script*>(i);
+}
+
 void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength) {
     const auto& self = *reinterpret_cast<script*>(instance);
     const auto dataChunk = self.to_data(prefix);
@@ -99,4 +105,58 @@ bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2) {
     const auto& lhs = *reinterpret_cast<const script*>(instance1);
     const auto& rhs = *reinterpret_cast<const script*>(instance2);
     return lhs == rhs;
+}
+
+void _scriptGetOperations(_script* _Nonnull instance, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+    const auto& self = *reinterpret_cast<script*>(instance);
+    _sendInstances(self.operations(), operations, operationsCount);
+}
+
+bool _scriptIsEmpty(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    return self.empty();
+}
+
+void _scriptClear(_script* _Nonnull instance) {
+    auto& self = *reinterpret_cast<script*>(instance);
+    self.clear();
+}
+
+void _scriptGetWitnessProgram(_script* _Nonnull instance, uint8_t** program, size_t* programLength) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    const auto chunk = self.witness_program();
+    _sendData(chunk, program, programLength);
+}
+
+int _scriptGetVersion(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    return static_cast<int>(self.version());
+}
+
+int _scriptGetPattern(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    return static_cast<int>(self.pattern());
+}
+
+int _scriptGetInputPattern(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    return static_cast<int>(self.input_pattern());
+}
+
+int _scriptGetOutputPattern(_script* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const script*>(instance);
+    return static_cast<int>(self.output_pattern());
+}
+
+void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+    const auto slice = _toDataSlice(data, dataLength);
+    const auto ops = script::to_pay_null_data_pattern(slice);
+    _sendInstances(ops, operations, operationsCount);
+}
+
+uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint32_t rules, _script* _Nonnull prevoutScriptInstance, uint64_t value) {
+    const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
+    const auto& scr = *reinterpret_cast<const script*>(prevoutScriptInstance);
+    const code c = script::verify(tx, inputIndex, rules, scr, value);
+    return c.value();
 }

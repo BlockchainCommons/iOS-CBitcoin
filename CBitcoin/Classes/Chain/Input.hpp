@@ -36,9 +36,11 @@ extern "C" {
     bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2);
     _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance);
     void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);
+    _script* _Nonnull _inputGetScript(_input* _Nonnull instance);
+    void _inputSetScript(_input* _Nonnull instance, _script* _Nonnull scriptInstance);
     uint32_t _inputGetSequence(_input* _Nonnull instance);
     void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence);
-    void _inputGetScript(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
+    void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
     bool _inputIsValid(_input* _Nonnull instance);
 
 #ifdef __cplusplus

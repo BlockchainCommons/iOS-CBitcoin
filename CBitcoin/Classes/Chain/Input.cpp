@@ -67,6 +67,18 @@ void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull o
     self.set_previous_output(o);
 }
 
+_script* _Nonnull _inputGetScript(_input* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<input*>(instance);
+    auto* script = new chain::script(self.script());
+    return reinterpret_cast<_script*>(script);
+}
+
+void _inputSetScript(_input* _Nonnull instance, _script* _Nonnull scriptInstance) {
+    auto& self = *reinterpret_cast<input*>(instance);
+    const auto& s = *reinterpret_cast<const script*>(scriptInstance);
+    self.set_script(s);
+}
+
 uint32_t _inputGetSequence(_input* _Nonnull instance) {
     const auto& self = *reinterpret_cast<input*>(instance);
     return self.sequence();
@@ -77,7 +89,7 @@ void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence) {
     self.set_sequence(sequence);
 }
 
-void _inputGetScript(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
+void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
     const auto& self = *reinterpret_cast<input*>(instance);
     const auto script = self.script();
     const auto decodedString = script.to_string(activeRules);

@@ -100,7 +100,7 @@ void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime)
 
 void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount) {
     auto& self = *reinterpret_cast<transaction*>(instance);
-    input::list list = _receiveInstances<input, _input>(inputs, inputsCount);
+    const auto list = _receiveInstances<input, _input>(inputs, inputsCount);
     self.set_inputs(list);
 }
 
@@ -111,7 +111,7 @@ void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** 
 
 void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount) {
     auto& self = *reinterpret_cast<transaction*>(instance);
-    output::list list = _receiveInstances<output, _output>(outputs, outputsCount);
+    const auto list = _receiveInstances<output, _output>(outputs, outputsCount);
     self.set_outputs(list);
 }
 
