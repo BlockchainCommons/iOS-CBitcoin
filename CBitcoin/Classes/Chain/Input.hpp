@@ -32,7 +32,8 @@ extern "C" {
     typedef struct _input _input;
     _input* _Nonnull _inputNew();
     _input* _Nonnull _inputCopy(_input* _Nonnull instance);
-    CBitcoinResult _inputFromData(const uint8_t* data, size_t dataLength, _input** instance);
+    CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input** instance);
+    void _inputSerialize(_input* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2);
     _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance);
     void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);

@@ -36,8 +36,8 @@ extern "C" {
     typedef struct _transaction _transaction;
     _transaction* _Nonnull _transactionNew();
     _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance);
-    CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _transaction** instance);
-    void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _transactionDeserialize(const uint8_t* data, size_t dataLength, _transaction** instance);
+    void _transactionSerialize(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _transactionIsValid(_transaction* _Nonnull instance);
     bool _transactionIsCoinbase(_transaction* _Nonnull instance);
     uint32_t _transactionGetVersion(_transaction* _Nonnull instance);

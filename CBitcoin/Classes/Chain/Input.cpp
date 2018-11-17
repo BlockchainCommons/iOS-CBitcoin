@@ -39,7 +39,7 @@ _input* _Nonnull _inputCopy(_input* _Nonnull instance) {
     return reinterpret_cast<_input*>(copy);
 }
 
-CBitcoinResult _inputFromData(const uint8_t* data, size_t dataLength, _input** instance) {
+CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input** instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new input();
     if(!i->from_data(dataChunk)) {
@@ -47,6 +47,12 @@ CBitcoinResult _inputFromData(const uint8_t* data, size_t dataLength, _input** i
     }
     *instance = reinterpret_cast<_input*>(i);
     return CBITCOIN_SUCCESS;
+}
+
+void _inputSerialize(_input* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+    const auto& self = *reinterpret_cast<input*>(instance);
+    const auto dataChunk = self.to_data();
+    _sendData(dataChunk, data, dataLength);
 }
 
 bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2) {

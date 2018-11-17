@@ -39,9 +39,9 @@ extern "C" {
     _script* _Nonnull _scriptNew();
     _script* _Nonnull _scriptCopy(_script* _Nonnull instance);
     CBitcoinResult _scriptFromString(const char* string, _script** instance);
-    CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
+    CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
     _script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * operations, size_t operationsCount);
-    void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
+    void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
     bool _scriptIsValid(_script* _Nonnull instance);
     bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2);
 

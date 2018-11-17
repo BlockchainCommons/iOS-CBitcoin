@@ -39,7 +39,7 @@ _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance) {
     return reinterpret_cast<_outputPoint*>(copy);
 }
 
-CBitcoinResult _outputPointFromData(const uint8_t * data, size_t dataLength, _outputPoint** instance) {
+CBitcoinResult _outputPointDeserialize(const uint8_t * data, size_t dataLength, _outputPoint** instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new output_point();
     if(!i->from_data(dataChunk)) {
@@ -56,7 +56,7 @@ CBitcoinResult _outputPointFromData(const uint8_t * data, size_t dataLength, _ou
 //    return reinterpret_cast<_outputPoint*>(i);
 //}
 
-void _outputPointToData(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength) {
     const auto& self = *reinterpret_cast<output_point*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);

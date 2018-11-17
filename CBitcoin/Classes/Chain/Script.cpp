@@ -74,7 +74,7 @@ CBitcoinResult _scriptFromString(const char* string, _script** instance) {
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _scriptFromData(const uint8_t* data, size_t dataLength, bool prefix, _script** instance) {
+CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool prefix, _script** instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new script();
     if(!i->from_data(dataChunk, prefix)) {
@@ -90,7 +90,7 @@ _script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * opera
     return reinterpret_cast<_script*>(i);
 }
 
-void _scriptToData(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength) {
+void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength) {
     const auto& self = *reinterpret_cast<script*>(instance);
     const auto dataChunk = self.to_data(prefix);
     _sendData(dataChunk, data, dataLength);

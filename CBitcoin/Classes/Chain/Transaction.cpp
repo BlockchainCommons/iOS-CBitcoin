@@ -52,7 +52,7 @@ _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance) {
     return reinterpret_cast<_transaction*>(copy);
 }
 
-CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _transaction** instance) {
+CBitcoinResult _transactionDeserialize(const uint8_t* data, size_t dataLength, _transaction** instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* t = new transaction();
     if(!t->from_data(dataChunk)) {
@@ -62,7 +62,7 @@ CBitcoinResult _transactionFromData(const uint8_t* data, size_t dataLength, _tra
     return CBITCOIN_SUCCESS;
 }
 
-void _transactionToData(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _transactionSerialize(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
