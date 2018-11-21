@@ -58,7 +58,13 @@ extern "C" {
     void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
 
     uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint32_t rules, _script* _Nonnull prevoutScriptInstance, uint64_t value);
-    
+
+    void _generateSignatureHash(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, _script* _Nonnull scriptInstance, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** hash, size_t* hashLength);
+
+    bool _checkSignature(const uint8_t* _Nonnull signature, uint8_t sigHashType, const uint8_t* _Nonnull publicKey, size_t publicKeyLength, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, int32_t scriptVersion, uint64_t value);
+
+    CBitcoinResult _createEndorsement(const uint8_t* _Nonnull ecPrivateKey, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** endorsement, size_t* endorsementLength);
+
 #ifdef __cplusplus
 }
 #endif

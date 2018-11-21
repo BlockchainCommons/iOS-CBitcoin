@@ -160,3 +160,35 @@ uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inpu
     const code c = script::verify(tx, inputIndex, rules, scr, value);
     return c.value();
 }
+
+void _generateSignatureHash(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, _script* _Nonnull scriptInstance, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** hash, size_t* hashLength) {
+    const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
+    const auto& scr = *reinterpret_cast<const script*>(scriptInstance);
+    const auto ver = static_cast<script::script_version>(scriptVersion);
+    const auto h = script::generate_signature_hash(tx, inputIndex, scr, sigHashType, ver, value);
+    _sendData(h, hash, hashLength);
+}
+
+bool _checkSignature(const uint8_t* _Nonnull signature, uint8_t sigHashType, const uint8_t* _Nonnull publicKey, size_t publicKeyLength, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, int32_t scriptVersion, uint64_t value) {
+    ec_signature sig;
+    _toByteArray(sig, signature);
+    const auto key = _toDataChunk(publicKey, publicKeyLength);
+    const auto& scr = *reinterpret_cast<const script*>(scriptInstance);
+    const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
+    const auto ver = static_cast<script::script_version>(scriptVersion);
+    return script::check_signature(sig, sigHashType, key, scr, tx, inputIndex, ver, value);
+}
+
+CBitcoinResult _createEndorsement(const uint8_t* _Nonnull ecPrivateKey, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** endorsement, size_t* endorsementLength) {
+    ec_secret secret;
+    _toByteArray(secret, ecPrivateKey);
+    const auto& scr = *reinterpret_cast<const script*>(scriptInstance);
+    const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
+    const auto ver = static_cast<script::script_version>(scriptVersion);
+    libbitcoin::endorsement en;
+    if (!script::create_endorsement(en, secret, scr, tx, inputIndex, sigHashType, ver, value)) {
+        return CBITCOIN_ERROR_INVALID_SIGNATURE;
+    }
+    _sendData(en, endorsement, endorsementLength);
+    return CBITCOIN_SUCCESS;
+}
