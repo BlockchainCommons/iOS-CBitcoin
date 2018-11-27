@@ -96,6 +96,11 @@ void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t** data, s
     _sendData(dataChunk, data, dataLength);
 }
 
+size_t _scriptSerializedSize(_script* _Nonnull instance, bool prefix) {
+    const auto& self = *reinterpret_cast<script*>(instance);
+    return self.serialized_size(prefix);
+}
+
 bool _scriptIsValid(_script* _Nonnull instance) {
     const auto& self = *reinterpret_cast<const script*>(instance);
     return self.is_valid();

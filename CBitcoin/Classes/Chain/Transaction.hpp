@@ -40,6 +40,8 @@ extern "C" {
     void _transactionSerialize(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _transactionIsValid(_transaction* _Nonnull instance);
     bool _transactionIsCoinbase(_transaction* _Nonnull instance);
+    bool _transactionIsOversizedCoinbase(_transaction* _Nonnull instance);
+    bool _transactionIsNullNonCoinbase(_transaction* _Nonnull instance);
     uint32_t _transactionGetVersion(_transaction* _Nonnull instance);
     void _transactionSetVersion(_transaction* _Nonnull instance, uint32_t version);
     uint32_t _transactionGetLockTime(_transaction* _Nonnull instance);
@@ -48,6 +50,20 @@ extern "C" {
     void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount);
     void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount);
     void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount);
+    bool _transactionIsFinal(_transaction* _Nonnull instance, size_t blockHeight, uint32_t blockTime);
+    bool _transactionIsLocked(_transaction* _Nonnull instance, size_t blockHeight, uint32_t medianTimePast);
+    bool _transactionIsLockTimeConflict(_transaction* _Nonnull instance);
+    size_t _transactionSerializedSize(_transaction* _Nonnull instance);
+    void _transactionHash(_transaction* _Nonnull instance, uint8_t** hash, size_t* hashLength);
+    uint64_t _transactionTotalInputValue(_transaction* _Nonnull instance);
+    uint64_t _transactionTotalOutputValue(_transaction* _Nonnull instance);
+    bool _transactionIsOverspent(_transaction* _Nonnull instance);
+    size_t _transactionSignatureOperationsCount(_transaction* _Nonnull instance, bool bip16, bool bip141);
+    bool _transactionIsMissingPreviousOutputs(_transaction* _Nonnull instance);
+    bool _transactionIsConfirmedDoubleSpend(_transaction* _Nonnull instance);
+    bool _transactionIsDusty(_transaction* _Nonnull instance, uint64_t minimumOutputValue);
+    bool _transactionIsMature(_transaction* _Nonnull instance, size_t height);
+    bool _transactionIsInternalDoubleSpend(_transaction* _Nonnull instance);
 
 #ifdef __cplusplus
 }

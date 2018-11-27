@@ -33,9 +33,9 @@ extern "C" {
     _outputPoint* _Nonnull _outputPointNew();
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
     CBitcoinResult _outputPointDeserialize(const uint8_t* data, size_t dataLength, _outputPoint** instance);
-//    _outputPoint* _Nonnull _outputPointFromScript(_script* _Nonnull scriptInstance);
     void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);
     bool _outputPointIsValid(_outputPoint* _Nonnull instance);
+    bool _outputPointIsNull(_outputPoint* _Nonnull instance);
     bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);
     uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance);
     void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index);

@@ -42,6 +42,7 @@ extern "C" {
     CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);
     _script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * operations, size_t operationsCount);
     void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength);
+    size_t _scriptSerializedSize(_script* _Nonnull instance, bool prefix);
     bool _scriptIsValid(_script* _Nonnull instance);
     bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2);
 

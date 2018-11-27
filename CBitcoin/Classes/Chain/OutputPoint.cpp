@@ -49,13 +49,6 @@ CBitcoinResult _outputPointDeserialize(const uint8_t * data, size_t dataLength, 
     return CBITCOIN_SUCCESS;
 }
 
-//_outputPoint* _Nonnull _outputPointFromScript(_script* _Nonnull scriptInstance) {
-//    const auto& scr = *reinterpret_cast<script*>(scriptInstance);
-//    auto* i = new output_point;
-//    i->metadata.cache.set_script(scr);
-//    return reinterpret_cast<_outputPoint*>(i);
-//}
-
 void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength) {
     const auto& self = *reinterpret_cast<output_point*>(instance);
     const auto dataChunk = self.to_data();
@@ -65,6 +58,11 @@ void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size
 bool _outputPointIsValid(_outputPoint* _Nonnull instance) {
     const auto& self = *reinterpret_cast<const output_point*>(instance);
     return self.is_valid();
+}
+
+bool _outputPointIsNull(_outputPoint* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<const output_point*>(instance);
+    return self.is_null();
 }
 
 bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2) {

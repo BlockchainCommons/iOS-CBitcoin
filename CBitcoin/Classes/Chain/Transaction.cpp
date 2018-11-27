@@ -78,6 +78,16 @@ bool _transactionIsCoinbase(_transaction* _Nonnull instance) {
     return self.is_coinbase();
 }
 
+bool _transactionIsOversizedCoinbase(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_oversized_coinbase();
+}
+
+bool _transactionIsNullNonCoinbase(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_null_non_coinbase();
+}
+
 uint32_t _transactionGetVersion(_transaction* _Nonnull instance) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     return self.version();
@@ -118,4 +128,75 @@ void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* cons
 void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.outputs(), outputs, outputsCount);
+}
+
+bool _transactionIsFinal(_transaction* _Nonnull instance, size_t blockHeight, uint32_t blockTime) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_final(blockHeight, blockTime);
+}
+
+bool _transactionIsLocked(_transaction* _Nonnull instance, size_t blockHeight, uint32_t medianTimePast) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_locked(blockHeight, medianTimePast);
+}
+
+bool _transactionIsLockTimeConflict(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_locktime_conflict();
+}
+
+size_t _transactionSerializedSize(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.serialized_size();
+}
+
+void _transactionHash(_transaction* _Nonnull instance, uint8_t** hash, size_t* hashLength) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    const auto h = self.hash();
+    _sendData(h, hash, hashLength);
+}
+
+uint64_t _transactionTotalInputValue(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.total_input_value();
+}
+
+uint64_t _transactionTotalOutputValue(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.total_output_value();
+}
+
+bool _transactionIsOverspent(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_overspent();
+}
+
+size_t _transactionSignatureOperationsCount(_transaction* _Nonnull instance, bool bip16, bool bip141) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.signature_operations(bip16, bip141);
+}
+
+bool _transactionIsMissingPreviousOutputs(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_missing_previous_outputs();
+}
+
+bool _transactionIsConfirmedDoubleSpend(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_confirmed_double_spend();
+}
+
+bool _transactionIsDusty(_transaction* _Nonnull instance, uint64_t minimumOutputValue) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_dusty(minimumOutputValue);
+}
+
+bool _transactionIsMature(_transaction* _Nonnull instance, size_t height) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_mature(height);
+}
+
+bool _transactionIsInternalDoubleSpend(_transaction* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<transaction*>(instance);
+    return self.is_internal_double_spend();
 }
