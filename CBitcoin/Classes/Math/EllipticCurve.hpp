@@ -29,8 +29,10 @@ extern "C" {
 #endif
 
     CBitcoinResult _encodeSignature(const uint8_t* ecSignature, uint8_t** derSignature, size_t* derSignatureLength);
-    CBitcoinResult _parseSignature(const uint8_t* derSignature, size_t derSignatureSize, bool isStrict, uint8_t** ecSignature, size_t* ecSignatureLength);
-    
+    CBitcoinResult _parseSignature(const uint8_t* derSignature, size_t derSignatureLength, bool isStrict, uint8_t** ecSignature, size_t* ecSignatureLength);
+    CBitcoinResult _sign(const uint8_t* hashDigest, const uint8_t* privateKey, uint8_t** ecSignature, size_t* ecSignatureLength);
+    bool _verifySignature(const uint8_t* publicKey, size_t publicKeyLength, const uint8_t* hashDigest, const uint8_t* ecSignature);
+
 #ifdef __cplusplus
 }
 #endif

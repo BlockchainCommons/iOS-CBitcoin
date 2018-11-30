@@ -25,13 +25,13 @@
 
 using namespace libbitcoin;
 
-void _base32Encode(const char* prefix, const uint8_t* payload, size_t payloadLength, char** string, size_t* stringLength) {
+void _encodeBase32(const char* prefix, const uint8_t* payload, size_t payloadLength, char** string, size_t* stringLength) {
     base32 b32 { std::string(prefix), _toDataChunk(payload, payloadLength) };
     auto encoded = encode_base32(b32);
     _sendString(encoded, string, stringLength);
 }
 
-CBitcoinResult _base32Decode(const char* string, char** prefix, size_t* prefixLength, uint8_t** payload, size_t* payloadLength) {
+CBitcoinResult _decodeBase32(const char* string, char** prefix, size_t* prefixLength, uint8_t** payload, size_t* payloadLength) {
     auto s = std::string(string);
     auto b32 = base32();
     if(decode_base32(b32, s)) {

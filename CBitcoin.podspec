@@ -21,9 +21,9 @@ Pod::Spec.new do |s|
         'OTHER_CFLAGS' => '-w', \
         'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libboost.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libsecp256k1.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libbitcoin.framework/Headers"' }
 
-    s.ios.deployment_target = '9.3'
+    s.ios.deployment_target = '11.0'
+    s.macos.deployment_target = '10.13'
+    s.tvos.deployment_target = '11.0'
 
     s.module_name = 'CBitcoin'
-
-    #s.dependency 'WolfPipe'
 end

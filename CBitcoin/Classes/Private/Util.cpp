@@ -49,3 +49,19 @@ hash_digest _toHashDigest(const uint8_t* data) {
     }
     return d;
 }
+
+ec_secret _toECSecret(const uint8_t* data) {
+    ec_secret s;
+    for(ec_secret::iterator cur = s.begin(); cur != s.end();) {
+        *cur++ = *data++;
+    }
+    return s;
+}
+
+ec_signature _toECSignature(const uint8_t* data) {
+    ec_signature s;
+    for(ec_secret::iterator cur = s.begin(); cur != s.end();) {
+        *cur++ = *data++;
+    }
+    return s;
+}

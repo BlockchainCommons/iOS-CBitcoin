@@ -67,3 +67,25 @@ CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLen
     }
     return CBITCOIN_ERROR_INVALID_SEED_SIZE;
 }
+
+CBitcoinResult _compress(const uint8_t* uncompressedPublicKey, uint8_t** compressed, size_t* compressedLength) {
+    ec_uncompressed uncompressedKey;
+    _toByteArray(uncompressedKey, uncompressedPublicKey);
+    ec_compressed compressedKey;
+    if(!compress(compressedKey, uncompressedKey)) {
+        return CBITCOIN_ERROR_INVALID_KEY;
+    }
+    _sendData(compressedKey, compressed, compressedLength);
+    return CBITCOIN_SUCCESS;
+}
+
+CBitcoinResult _decompress(const uint8_t* compressedPublicKey, uint8_t** uncompressed, size_t* uncompressedLength) {
+    ec_compressed compressedKey;
+    _toByteArray(compressedKey, compressedPublicKey);
+    ec_uncompressed uncompressedKey;
+    if(!decompress(uncompressedKey, compressedKey)) {
+        return CBITCOIN_ERROR_INVALID_KEY;
+    }
+    _sendData(uncompressedKey, uncompressed, uncompressedLength);
+    return CBITCOIN_SUCCESS;
+}

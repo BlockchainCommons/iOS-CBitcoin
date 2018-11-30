@@ -34,6 +34,9 @@ extern "C" {
     CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
     CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);
 
+    CBitcoinResult _compress(const uint8_t* uncompressedPublicKey, uint8_t** compressed, size_t* compressedLength);
+    CBitcoinResult _decompress(const uint8_t* compressedPublicKey, uint8_t** uncompressed, size_t* uncompressedLength);
+
 #ifdef __cplusplus
 }
 #endif

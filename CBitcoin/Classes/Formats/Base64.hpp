@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-    void _base64Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    CBitcoinResult _base64Decode(const char* string, uint8_t** data, size_t* dataLength);
+    void _encodeBase64(const uint8_t* data, size_t length, char** string, size_t* stringLength);
+    CBitcoinResult _decodeBase64(const char* string, uint8_t** data, size_t* dataLength);
 
 #ifdef __cplusplus
 }

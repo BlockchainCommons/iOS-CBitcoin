@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-    void _base85Encode(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    CBitcoinResult _base85Decode(const char* string, uint8_t** data, size_t* dataLength);
+    void _encodeBase85(const uint8_t* data, size_t length, char** string, size_t* stringLength);
+    CBitcoinResult _decodeBase85(const char* string, uint8_t** data, size_t* dataLength);
 
 #ifdef __cplusplus
 }
