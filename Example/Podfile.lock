@@ -1,6 +1,6 @@
 PODS:
   - CBitcoin (0.1.0)
-  - WolfPipe (1.0.4)
+  - WolfPipe (1.0.7)
 
 DEPENDENCIES:
   - CBitcoin (from `../`)
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CBitcoin: a5ea3cb3c08dd4af1c02d8bab9f53bdb2c22055d
-  WolfPipe: 7ac686d6e3d4e960323c864c9e57a667cda7126c
+  CBitcoin: e7764dc7e4f33d028055c8c84375aa90b3318704
+  WolfPipe: 1a2cbb23efb14833647a2adcc034468bf82a289e
 
 PODFILE CHECKSUM: 782562ce09173240e493450b5e9e091bf051c140
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.6.0.beta.2
