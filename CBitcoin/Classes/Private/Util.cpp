@@ -50,6 +50,14 @@ hash_digest _toHashDigest(const uint8_t* data) {
     return d;
 }
 
+short_hash _toShortHash(const uint8_t* data) {
+    short_hash d;
+    for(short_hash::iterator cur = d.begin(); cur != d.end();) {
+        *cur++ = *data++;
+    }
+    return d;
+}
+
 ec_secret _toECSecret(const uint8_t* data) {
     ec_secret s;
     for(ec_secret::iterator cur = s.begin(); cur != s.end();) {

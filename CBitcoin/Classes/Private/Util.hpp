@@ -34,6 +34,7 @@ libbitcoin::data_chunk _toDataChunk(const uint8_t* data, uint32_t length);
 //std::array<uint8_t, Size> _toArray(const uint8_t* data);
 
 libbitcoin::hash_digest _toHashDigest(const uint8_t* data);
+libbitcoin::short_hash _toShortHash(const uint8_t* data);
 libbitcoin::ec_secret _toECSecret(const uint8_t* data);
 libbitcoin::ec_signature _toECSignature(const uint8_t* data);
 

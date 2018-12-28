@@ -59,3 +59,13 @@ void _addressEmbed(const uint8_t* data, size_t dataLength, uint8_t version, char
     const auto addressString = address.encoded();
     _sendString(addressString, paymentAddress, paymentAddressLength);
 }
+
+CBitcoinResult _addressHash(const char* address, uint8_t** hash, size_t* hashLength) {
+    const auto paymentAddress = wallet::payment_address(std::string(address));
+    if(!paymentAddress) {
+        return CBITCOIN_ERROR_INVALID_ADDRESS;
+    }
+    const auto h = paymentAddress.hash();
+    _sendData(h, hash, hashLength);
+    return CBITCOIN_SUCCESS;
+}

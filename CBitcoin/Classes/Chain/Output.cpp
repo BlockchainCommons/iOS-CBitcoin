@@ -90,10 +90,22 @@ void _outputSetValue(_output* _Nonnull instance, uint64_t value) {
     self.set_value(value);
 }
 
-void _outputGetScript(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
+void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
     const auto& self = *reinterpret_cast<output*>(instance);
 
     const auto script = self.script();
-    const auto decodedString = script.to_string(activeRules     );
+    const auto decodedString = script.to_string(activeRules);
     _sendString(decodedString, decoded, decodedLength);
+}
+
+_script* _Nonnull _outputGetScript(_output* _Nonnull instance) {
+    const auto& self = *reinterpret_cast<output*>(instance);
+    auto* script = new chain::script(self.script());
+    return reinterpret_cast<_script*>(script);
+}
+
+void _outputSetScript(_output* _Nonnull instance, _script* _Nonnull scriptInstance) {
+    auto& self = *reinterpret_cast<output*>(instance);
+    const auto& s = *reinterpret_cast<const script*>(scriptInstance);
+    self.set_script(s);
 }

@@ -57,6 +57,8 @@ extern "C" {
     int _scriptGetOutputPattern(_script* _Nonnull instance);
 
     void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
+    void _scriptMakePayKeyHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
+    void _scriptMakePayScriptHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount);
 
     uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint32_t rules, _script* _Nonnull prevoutScriptInstance, uint64_t value);
 

@@ -159,6 +159,18 @@ void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _oper
     _sendInstances(ops, operations, operationsCount);
 }
 
+void _scriptMakePayKeyHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+    const auto hash = _toShortHash(shortHash);
+    const auto ops = script::to_pay_key_hash_pattern(hash);
+    _sendInstances(ops, operations, operationsCount);
+}
+
+void _scriptMakePayScriptHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+    const auto hash = _toShortHash(shortHash);
+    const auto ops = script::to_pay_script_hash_pattern(hash);
+    _sendInstances(ops, operations, operationsCount);
+}
+
 uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint32_t rules, _script* _Nonnull prevoutScriptInstance, uint64_t value) {
     const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
     const auto& scr = *reinterpret_cast<const script*>(prevoutScriptInstance);

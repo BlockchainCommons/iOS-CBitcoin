@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include "CBitcoinResult.hpp"
+#include "Script.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,7 +38,9 @@ extern "C" {
     CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address);
     uint64_t _outputGetValue(_output* _Nonnull instance);
     void _outputSetValue(_output* _Nonnull instance, uint64_t value);
-    void _outputGetScript(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
+    void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
+    _script* _Nonnull _outputGetScript(_output* _Nonnull instance);
+    void _outputSetScript(_output* _Nonnull instance, _script* _Nonnull scriptInstance);
 
 #ifdef __cplusplus
 }
