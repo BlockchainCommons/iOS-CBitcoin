@@ -1,5 +1,5 @@
 //
-//  HDPrivateKey.cpp
+//  HDKey.cpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/29/18.
@@ -18,7 +18,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#include "HDPrivateKey.hpp"
+#include "HDKey.hpp"
 #include <bitcoin/bitcoin.hpp>
 #include "Util.hpp"
 

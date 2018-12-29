@@ -1,5 +1,5 @@
 //
-//  HDPrivateKey.hpp
+//  HDKey.hpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/30/18.
@@ -18,8 +18,8 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#ifndef HDPrivateKey_hpp
-#define HDPrivateKey_hpp
+#ifndef HDKey_hpp
+#define HDKey_hpp
 
 #include <stdlib.h>
 #include "CBitcoinResult.hpp"
@@ -39,4 +39,4 @@ extern "C" {
 }
 #endif
 
-#endif /* HDPrivateKey_hpp */
+#endif /* HDKey_hpp */
