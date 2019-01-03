@@ -29,7 +29,7 @@
 using namespace libbitcoin;
 using namespace chain;
 
-_input* _Nonnull _inputNew() {
+_input* _Nonnull _inputNew(void) {
     return reinterpret_cast<_input*>(new input);
 }
 

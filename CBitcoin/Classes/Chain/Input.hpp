@@ -30,7 +30,7 @@ extern "C" {
 #endif
 
     typedef struct _input _input;
-    _input* _Nonnull _inputNew();
+    _input* _Nonnull _inputNew(void);
     _input* _Nonnull _inputCopy(_input* _Nonnull instance);
     CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input** instance);
     void _inputSerialize(_input* _Nonnull instance, uint8_t** data, size_t* dataLength);

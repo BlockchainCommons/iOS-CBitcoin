@@ -25,11 +25,11 @@
 
 using namespace libbitcoin;
 
-size_t _mnemonicWordMultiple() {
+size_t _mnemonicWordMultiple(void) {
     return wallet::mnemonic_word_multiple;
 }
 
-size_t _mnemonicSeedMultiple() {
+size_t _mnemonicSeedMultiple(void) {
     return wallet::mnemonic_seed_multiple;
 }
 

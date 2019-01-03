@@ -54,7 +54,7 @@ CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paym
     return CBITCOIN_SUCCESS;
 }
 
-_script* _Nonnull _scriptNew() {
+_script* _Nonnull _scriptNew(void) {
     return reinterpret_cast<_script*>(new script);
 }
 

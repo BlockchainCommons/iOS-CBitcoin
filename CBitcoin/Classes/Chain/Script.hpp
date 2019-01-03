@@ -36,7 +36,7 @@ extern "C" {
     CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength);
 
     typedef struct _script _script;
-    _script* _Nonnull _scriptNew();
+    _script* _Nonnull _scriptNew(void);
     _script* _Nonnull _scriptCopy(_script* _Nonnull instance);
     CBitcoinResult _scriptFromString(const char* string, _script** instance);
     CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool prefix, _script** instance);

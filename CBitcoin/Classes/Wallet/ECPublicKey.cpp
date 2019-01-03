@@ -24,11 +24,11 @@
 
 using namespace libbitcoin;
 
-size_t _ecCompressedPublicKeySize() {
+size_t _ecCompressedPublicKeySize(void) {
     return ec_compressed_size;
 }
 
-size_t _ecUncompressedPublicKeySize() {
+size_t _ecUncompressedPublicKeySize(void) {
     return ec_uncompressed_size;
 }
 

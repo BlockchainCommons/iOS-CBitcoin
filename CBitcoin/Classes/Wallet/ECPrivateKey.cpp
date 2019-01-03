@@ -24,7 +24,7 @@
 
 using namespace libbitcoin;
 
-size_t _ecPrivateKeySize() {
+size_t _ecPrivateKeySize(void) {
     return ec_secret_size;
 }
 

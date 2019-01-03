@@ -29,7 +29,7 @@
 using namespace libbitcoin;
 using namespace machine;
 
-_operation* _Nonnull _operationNew() {
+_operation* _Nonnull _operationNew(void) {
     auto* i = new operation();
     return reinterpret_cast<_operation*>(i);
 }

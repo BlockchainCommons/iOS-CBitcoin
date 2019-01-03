@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-    size_t _ecCompressedPublicKeySize();
-    size_t _ecUncompressedPublicKeySize();
+    size_t _ecCompressedPublicKeySize(void);
+    size_t _ecUncompressedPublicKeySize(void);
 
     CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
     CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);

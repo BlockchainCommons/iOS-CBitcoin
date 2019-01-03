@@ -30,7 +30,7 @@ extern "C" {
 
     typedef struct _operation _operation;
 
-    _operation* _Nonnull _operationNew();
+    _operation* _Nonnull _operationNew(void);
     _operation* _Nonnull _operationFromOpcode(uint8_t opcode);
     CBitcoinResult _operationFromData(const uint8_t* data, size_t dataLength, bool isMinimal, _operation** instance);
 

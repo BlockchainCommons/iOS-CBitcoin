@@ -30,7 +30,7 @@
 using namespace libbitcoin;
 using namespace chain;
 
-_output* _Nonnull _outputNew() {
+_output* _Nonnull _outputNew(void) {
     return (_output*)new output;
 }
 

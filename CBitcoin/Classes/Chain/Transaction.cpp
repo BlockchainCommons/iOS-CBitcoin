@@ -42,7 +42,7 @@ CBitcoinResult _transactionDecode(const uint8_t* data, size_t dataLength, bool i
     return CBITCOIN_SUCCESS;
 }
 
-_transaction* _Nonnull _transactionNew() {
+_transaction* _Nonnull _transactionNew(void) {
     return (_transaction*)new transaction;
 }
 

@@ -28,7 +28,7 @@
 extern "C" {
 #endif
 
-    size_t _minimumSeedSize();
+    size_t _minimumSeedSize(void);
     CBitcoinResult _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength);
     CBitcoinResult _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHardened, char** childPrivateKey, size_t* childPrivateKeyLength);
     CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHardened, uint32_t publicVersion, uint32_t privateVersion, char** childPublicKey, size_t* childPublicKeyLength);

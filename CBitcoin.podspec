@@ -10,12 +10,12 @@ Pod::Spec.new do |s|
     s.homepage         = 'https://github.com/blockchaincommons/iOS-CBitcoin'
     s.license          = { :type => 'Apache', :file => 'LICENSE' }
     s.author           = { 'Wolf McNally' => 'wolf@wolfmcnally.com' }
-    s.source           = { :git => 'https://github.com/blockchaincommons/iOS-CBitcoin', :tag => s.version.to_s }
+    s.source           = { :git => 'https://github.com/blockchaincommons/iOS-CBitcoin.git', :tag => s.version.to_s }
 
     s.swift_version = '4.2'
 
     s.source_files = 'CBitcoin/Classes/**/*'
-    s.private_header_files = 'CBitcoin/Classes/Private/**/*'
+    s.private_header_files = 'CBitcoin/Classes/Private/**/*.hpp'
     s.vendored_frameworks = 'CBitcoin/Frameworks/*'
     s.pod_target_xcconfig = { \
         'OTHER_CFLAGS' => '-w', \

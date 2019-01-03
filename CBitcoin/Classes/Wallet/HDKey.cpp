@@ -24,7 +24,7 @@
 
 using namespace libbitcoin;
 
-size_t _minimumSeedSize() {
+size_t _minimumSeedSize(void) {
     return minimum_seed_size;
 }
 

@@ -34,7 +34,7 @@ extern "C" {
     CBitcoinResult _transactionDecode(const uint8_t* data, size_t dataLength, bool isPretty, char** decoded, size_t* decodedLength);
 
     typedef struct _transaction _transaction;
-    _transaction* _Nonnull _transactionNew();
+    _transaction* _Nonnull _transactionNew(void);
     _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance);
     CBitcoinResult _transactionDeserialize(const uint8_t* data, size_t dataLength, _transaction** instance);
     void _transactionSerialize(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength);

@@ -30,7 +30,7 @@ extern "C" {
     typedef struct _script _script;
 
     typedef struct _outputPoint _outputPoint;
-    _outputPoint* _Nonnull _outputPointNew();
+    _outputPoint* _Nonnull _outputPointNew(void);
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
     CBitcoinResult _outputPointDeserialize(const uint8_t* data, size_t dataLength, _outputPoint** instance);
     void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);

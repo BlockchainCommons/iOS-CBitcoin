@@ -24,15 +24,15 @@
 
 using namespace libbitcoin;
 
-uint8_t _btcDecimalPlaces() {
+uint8_t _btcDecimalPlaces(void) {
     return btc_decimal_places;
 }
 
-uint8_t _mbtcDecimalPlaces() {
+uint8_t _mbtcDecimalPlaces(void) {
     return mbtc_decimal_places;
 }
 
-uint8_t _ubtcDecimalPlaces() {
+uint8_t _ubtcDecimalPlaces(void) {
     return ubtc_decimal_places;
 }
 
