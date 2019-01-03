@@ -33,7 +33,7 @@ size_t _mnemonicSeedMultiple() {
     return wallet::mnemonic_seed_multiple;
 }
 
-const void* _dictionaryForLanguage(const char* language) {
+const void* _dictionaryForLanguage(const char* _Nonnull language) {
     auto languageString = std::string(language);
     const wallet::dictionary* dict;
     if(languageString == "en") {
@@ -62,7 +62,7 @@ const void* _dictionaryForLanguage(const char* language) {
     return (void*)dict;
 }
 
-CBitcoinResult _mnemonicNew(const uint8_t* seed, size_t seedLength, const void* dictionary, char** mnemonic, size_t* mnemonicLength) {
+CBitcoinResult _mnemonicNew(const uint8_t* _Nonnull seed, size_t seedLength, const void* _Nonnull dictionary, char** mnemonic, size_t* mnemonicLength) {
     const auto entropy = _toDataChunk(seed, seedLength);
     if(entropy.size() % wallet::mnemonic_seed_multiple != 0) {
         return CBITCOIN_ERROR_INVALID_SEED_SIZE;
@@ -87,7 +87,7 @@ long_hash _decode_mnemonic(const wallet::word_list& mnemonic,
 }
 
 /// Passphrase must already be normalized
-CBitcoinResult _mnemonicToSeed(const char* mnemonic, const void* dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength) {
+CBitcoinResult _mnemonicToSeed(const char* _Nonnull mnemonic, const void* _Nonnull dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength) {
     const auto mnemonicString = std::string(mnemonic);
     std::vector<std::string> words;
     boost::split(words, mnemonicString, [](char c){return c == ' ';});
@@ -99,13 +99,10 @@ CBitcoinResult _mnemonicToSeed(const char* mnemonic, const void* dictionary, con
         return CBITCOIN_ERROR_INVALID_FORMAT;
     }
     if(passphrase == NULL) {
-        passphrase = "";
-    }
-    auto passphraseString = std::string(passphrase);
-    if(passphraseString.empty()) {
         auto seedArray = wallet::decode_mnemonic(words);
         _sendData(seedArray, seed, seedLength);
     } else {
+        auto passphraseString = std::string(passphrase);
         auto seedArray = _decode_mnemonic(words, passphraseString);
         _sendData(seedArray, seed, seedLength);
     }
