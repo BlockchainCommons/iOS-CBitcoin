@@ -26,4 +26,11 @@ Pod::Spec.new do |s|
     s.tvos.deployment_target = '11.0'
 
     s.module_name = 'CBitcoin'
+
+    s.prepare_command = <<-CMD
+            pushd CBitcoin
+            rm -rf Frameworks/
+            unzip -o -q Frameworks.zip
+            popd
+        CMD
 end

@@ -89,7 +89,7 @@ build_libboost_framework() {
 }
 
 build_libsecp256k1_framework() {
-    message "building libsecp256k1.framework"
+    message "Building libsecp256k1.framework"
 
     LIB_ROOT="${DEPS_BUILD_ROOT}/libsecp256k1"
     LIB_NAME="libsecp256k1"
@@ -101,7 +101,7 @@ build_libsecp256k1_framework() {
 }
 
 build_libbitcoin_framework() {
-    message "building libbitcoin.framework"
+    message "Building libbitcoin.framework"
 
     LIB_ROOT="${DEPS_BUILD_ROOT}/libbitcoin"
     LIB_NAME="libbitcoin"
@@ -112,10 +112,20 @@ build_libbitcoin_framework() {
     build_framework "${FRAMEWORKS_ROOT}" "${LIB_NAME}" blockchaincommons "${STATIC_LIBRARY_PATH}" "${HEADERS}"
 }
 
+zip_frameworks() {
+    message "Zipping Frameworks"
+
+    pushd "${SRC_ROOT}"
+    rm -f "Frameworks.zip"
+    zip -qr Frameworks Frameworks
+    popd
+}
+
 start
 trap finish ERR
 build_libbitcoin
 build_libboost_framework
 build_libsecp256k1_framework
 build_libbitcoin_framework
+zip_frameworks
 finish
