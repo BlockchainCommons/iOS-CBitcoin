@@ -22,6 +22,10 @@ $ git --version
 git version 2.20.1
 ```
 
+## Unit Tests
+
+Tests for CBitcoin are available in the Bitcoin framework.
+
 ## Installation
 
 CBitcoin is available through [Cocoapads](https://cocoapods.org). To install it, add the following line to your Podfile:
