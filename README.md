@@ -7,6 +7,10 @@
 
 C bindings for [libbitcoin](https://github.com/libbitcoin). Intended primarily as support for the [Bitcoin](https://github.com/BlockchainCommons/iOS-Bitcoin) framework, which depends on this one and provides Swift bindings for libbitcoin.
 
+## Blog Post
+
+On January 25, 2019 I published an announcement for this framework on my blog [here](https://wolfmcnally.com/125/announcing-open-source-bitcoin-framework-for-ios/).
+
 ## Requirements
 
 * Swift 4.2
