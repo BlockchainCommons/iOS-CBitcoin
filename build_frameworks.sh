@@ -67,6 +67,12 @@ build_libbitcoin() {
     make libbitcoin.ios-universal
 }
 
+build_breadwalletcore() {
+    message "Building Breadwallet Core and dependencies"
+    cd ${DEPS_ROOT}
+    make breadwalletcore.ios-universal
+}
+
 build_libboost_framework() {
     message "Building libboost.framework"
 
@@ -119,9 +125,9 @@ build_breadwalletcore_framework() {
     LIB_NAME="breadwalletcore"
 
     STATIC_LIBRARY_PATH="${LIB_ROOT}/${BUILD_PATH}/${LIB_NAME}.a"
-    HEADERS="${LIB_ROOT}/ios-armv7/include/*"
+    HEADERS="${DEPS_BUILD_ROOT}/prefix/ios/armv7/include/breadwalletcore/*"
 
-    build_framework "${FRAMEWORKS_ROOT}" "${LIB_NAME}"
+    build_framework "${FRAMEWORKS_ROOT}" "${LIB_NAME}" blockchaincommons "${STATIC_LIBRARY_PATH}" "${HEADERS}"
 }
 
 zip_frameworks() {
@@ -135,6 +141,7 @@ zip_frameworks() {
 
 start
 trap finish ERR
+build_breadwalletcore
 build_libbitcoin
 build_libboost_framework
 build_libsecp256k1_framework
