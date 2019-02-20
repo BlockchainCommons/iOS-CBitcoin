@@ -112,6 +112,18 @@ build_libbitcoin_framework() {
     build_framework "${FRAMEWORKS_ROOT}" "${LIB_NAME}" blockchaincommons "${STATIC_LIBRARY_PATH}" "${HEADERS}"
 }
 
+build_breadwalletcore_framework() {
+    message "Building breadwalletcore.framework"
+
+    LIB_ROOT="${DEPS_BUILD_ROOT}/breadwalletcore"
+    LIB_NAME="breadwalletcore"
+
+    STATIC_LIBRARY_PATH="${LIB_ROOT}/${BUILD_PATH}/${LIB_NAME}.a"
+    HEADERS="${LIB_ROOT}/ios-armv7/include/*"
+
+    build_framework "${FRAMEWORKS_ROOT}" "${LIB_NAME}"
+}
+
 zip_frameworks() {
     message "Zipping Frameworks"
 
@@ -127,5 +139,6 @@ build_libbitcoin
 build_libboost_framework
 build_libsecp256k1_framework
 build_libbitcoin_framework
+build_breadwalletcore_framework
 zip_frameworks
 finish
