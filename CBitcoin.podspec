@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name             = 'CBitcoin'
-    s.version          = '0.2.2'
-    s.summary          = 'C Bindings for libbitcoin.'
+    s.version          = '0.3.0'
+    s.summary          = 'C Bindings for libbitcoin, breadwalletcore, and sss (Shamir Secret Sharing).'
 
     # s.description      = <<-DESC
     # TODO: Add long description of the pod here.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     s.vendored_frameworks = 'CBitcoin/Frameworks/*'
     s.pod_target_xcconfig = { \
         'OTHER_CFLAGS' => '-w', \
-        'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libboost.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libsecp256k1.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libbitcoin.framework/Headers"' }
+        'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libboost.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libsecp256k1.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libbitcoin.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/breadwalletcore.framework/Headers" "${PODS_TARGET_SRCROOT}/CBitcoin/Frameworks/libsss.framework/Headers"' }
 
     s.ios.deployment_target = '11.0'
     s.macos.deployment_target = '10.13'
