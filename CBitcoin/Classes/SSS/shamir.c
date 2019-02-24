@@ -43,3 +43,15 @@ void _sss_create_shares(void *out, const uint8_t *data, uint8_t n, uint8_t k) {
 int _sss_combine_shares(uint8_t *data, const void *shares, uint8_t k) {
     return sss_combine_shares(data, shares, k);
 }
+
+size_t _crypto_stream_keybytes() {
+    return crypto_stream_KEYBYTES;
+}
+
+size_t _crypto_stream_noncebytes() {
+    return crypto_stream_NONCEBYTES;
+}
+
+int _crypto_stream_xor(unsigned char* output, const unsigned char* input, size_t messageLength, const unsigned char* nonce, const unsigned char* key) {
+    return crypto_stream_xor(output, input, messageLength, nonce, key);
+}
