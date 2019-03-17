@@ -27,8 +27,10 @@
 int _randombytes(void *buf, size_t n);
 size_t _sss_message_length();
 size_t _sss_share_length();
-void _sss_create_shares(void *out, const uint8_t *data, uint8_t n, uint8_t k);
+void _sss_create_shares(void* _Nonnull out, const uint8_t *data, uint8_t n, uint8_t k);
 int _sss_combine_shares(uint8_t *data, const void *shares, uint8_t k);
+int _sss_create_shares_varlen(uint8_t* _Nonnull out, const uint8_t* _Nonnull data, const size_t data_len, uint8_t n, uint8_t k);
+int _sss_combine_shares_varlen(uint8_t* _Nonnull data, const uint8_t* _Nonnull shares, const size_t share_len, uint8_t k);
 
 size_t _crypto_stream_keybytes();
 size_t _crypto_stream_noncebytes();

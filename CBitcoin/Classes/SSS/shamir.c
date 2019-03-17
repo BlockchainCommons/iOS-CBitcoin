@@ -44,6 +44,15 @@ int _sss_combine_shares(uint8_t *data, const void *shares, uint8_t k) {
     return sss_combine_shares(data, shares, k);
 }
 
+int _sss_create_shares_varlen(uint8_t *out, const uint8_t *data, const size_t data_len, uint8_t n, uint8_t k) {
+    return sss_create_shares_varlen(out, data, data_len, n, k);
+}
+
+int _sss_combine_shares_varlen(uint8_t *data, const uint8_t *shares, const size_t share_len, uint8_t k) {
+    return sss_combine_shares_varlen(data, shares, share_len, k);
+}
+
+
 size_t _crypto_stream_keybytes() {
     return crypto_stream_KEYBYTES;
 }
