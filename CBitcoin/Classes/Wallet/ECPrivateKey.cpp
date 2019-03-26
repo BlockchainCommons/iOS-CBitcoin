@@ -28,7 +28,7 @@ size_t _ecPrivateKeySize(void) {
     return ec_secret_size;
 }
 
-CBitcoinResult _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateKey, size_t* privateKeyLength) {
+CBitcoinResult _ecNewPrivateKey(const uint8_t* _Nonnull seed, size_t seedLength, uint8_t* _Nullable * _Nonnull privateKey, size_t* _Nonnull privateKeyLength) {
     if(seedLength < minimum_seed_size) {
         return CBITCOIN_ERROR_SEED_TOO_SMALL;
     }
@@ -42,7 +42,7 @@ CBitcoinResult _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t*
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char** wif, size_t* wifLength) {
+CBitcoinResult _ecPrivateKeyToWIF(const uint8_t* _Nonnull privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char* _Nullable * _Nonnull wif, size_t* _Nonnull wifLength) {
     if(privateKeyLength != ec_secret_size) {
         return CBITCOIN_ERROR_INVALID_SEED_SIZE;
     }
@@ -56,7 +56,7 @@ CBitcoinResult _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLe
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _wifToECPrivateKey(const char* wif, uint8_t** privateKey, size_t* privateKeyLength) {
+CBitcoinResult _wifToECPrivateKey(const char* _Nonnull wif, uint8_t* _Nullable * _Nonnull privateKey, size_t* _Nonnull privateKeyLength) {
     const auto wifString = std::string(wif);
     const wallet::ec_private priv(wifString, wallet::ec_private::mainnet_p2kh);
     const auto secret = priv.secret();

@@ -33,7 +33,7 @@ size_t _mnemonicSeedMultiple(void) {
     return wallet::mnemonic_seed_multiple;
 }
 
-const void* _dictionaryForLanguage(const char* _Nonnull language) {
+const void* _Nullable _dictionaryForLanguage(const char* _Nonnull language) {
     auto languageString = std::string(language);
     const wallet::dictionary* dict;
     if(languageString == "en") {
@@ -62,7 +62,7 @@ const void* _dictionaryForLanguage(const char* _Nonnull language) {
     return (void*)dict;
 }
 
-CBitcoinResult _mnemonicNew(const uint8_t* _Nonnull seed, size_t seedLength, const void* _Nonnull dictionary, char** mnemonic, size_t* mnemonicLength) {
+CBitcoinResult _mnemonicNew(const uint8_t* _Nonnull seed, size_t seedLength, const void* _Nonnull dictionary, char* _Nullable * _Nonnull mnemonic, size_t* _Nonnull mnemonicLength) {
     const auto entropy = _toDataChunk(seed, seedLength);
     if(entropy.size() % wallet::mnemonic_seed_multiple != 0) {
         return CBITCOIN_ERROR_INVALID_SEED_SIZE;
@@ -87,7 +87,7 @@ long_hash _decode_mnemonic(const wallet::word_list& mnemonic,
 }
 
 /// Passphrase must already be normalized
-CBitcoinResult _mnemonicToSeed(const char* _Nonnull mnemonic, const void* _Nonnull dictionary, const char* passphrase, uint8_t** seed, size_t* seedLength) {
+CBitcoinResult _mnemonicToSeed(const char* _Nonnull mnemonic, const void* _Nonnull dictionary, const char* _Nullable passphrase, uint8_t* _Nullable * _Nonnull seed, size_t* _Nonnull seedLength) {
     const auto mnemonicString = std::string(mnemonic);
     std::vector<std::string> words;
     boost::split(words, mnemonicString, [](char c){return c == ' ';});

@@ -31,11 +31,11 @@ extern "C" {
     size_t _ecCompressedPublicKeySize(void);
     size_t _ecUncompressedPublicKeySize(void);
 
-    CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength);
-    CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength);
+    CBitcoinResult _toECPublicKey(const uint8_t* _Nonnull privateKey, size_t privateKeyLength, bool isCompressed, uint8_t* _Nullable * _Nonnull publicKey, size_t* _Nonnull publicKeyLength);
+    CBitcoinResult _toECPaymentAddress(const uint8_t* _Nonnull publicKey, size_t publicKeyLength, uint8_t version, char* _Nullable * _Nonnull address, size_t* _Nonnull addressLength);
 
-    CBitcoinResult _compress(const uint8_t* uncompressedPublicKey, uint8_t** compressed, size_t* compressedLength);
-    CBitcoinResult _decompress(const uint8_t* compressedPublicKey, uint8_t** uncompressed, size_t* uncompressedLength);
+    CBitcoinResult _compress(const uint8_t* _Nonnull uncompressedPublicKey, uint8_t* _Nullable * _Nonnull compressed, size_t* _Nonnull compressedLength);
+    CBitcoinResult _decompress(const uint8_t* _Nonnull compressedPublicKey, uint8_t* _Nullable * _Nonnull uncompressed, size_t* _Nonnull uncompressedLength);
 
 #ifdef __cplusplus
 }

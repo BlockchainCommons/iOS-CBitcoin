@@ -30,9 +30,9 @@ extern "C" {
 
     size_t _ecPrivateKeySize(void);
 
-    CBitcoinResult _ecNewPrivateKey(const uint8_t* seed, size_t seedLength, uint8_t** privateKey, size_t* privateKeyLength);
-    CBitcoinResult _ecPrivateKeyToWIF(const uint8_t* privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char** wif, size_t* wifLength);
-    CBitcoinResult _wifToECPrivateKey(const char* wif, uint8_t** privateKey, size_t* privateKeyLength);
+    CBitcoinResult _ecNewPrivateKey(const uint8_t* _Nonnull seed, size_t seedLength, uint8_t* _Nullable * _Nonnull privateKey, size_t* _Nonnull privateKeyLength);
+    CBitcoinResult _ecPrivateKeyToWIF(const uint8_t* _Nonnull privateKey, size_t privateKeyLength, uint8_t wifVersion, bool isCompressed, char* _Nullable * _Nonnull wif, size_t* _Nonnull wifLength);
+    CBitcoinResult _wifToECPrivateKey(const char* _Nonnull wif, uint8_t* _Nullable * _Nonnull privateKey, size_t* _Nonnull privateKeyLength);
 
 #ifdef __cplusplus
 }

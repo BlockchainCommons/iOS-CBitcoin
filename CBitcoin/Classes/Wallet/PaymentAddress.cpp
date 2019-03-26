@@ -24,7 +24,7 @@
 
 using namespace libbitcoin;
 
-void _addressEncode(const uint8_t* ripemd160, uint8_t version, char** paymentAddress, size_t* paymentAddressLength) {
+void _addressEncode(const uint8_t* _Nonnull ripemd160, uint8_t version, char* _Nullable * _Nonnull paymentAddress, size_t* _Nonnull paymentAddressLength) {
     short_hash hashArray;
     _toByteArray(hashArray, ripemd160);
     const wallet::payment_address address(hashArray, version);
@@ -32,7 +32,7 @@ void _addressEncode(const uint8_t* ripemd160, uint8_t version, char** paymentAdd
     _sendString(addressString, paymentAddress, paymentAddressLength);
 }
 
-CBitcoinResult _addressDecode(const char* address, uint8_t* version, uint8_t** payload, size_t* payloadLength, uint32_t* checksum) {
+CBitcoinResult _addressDecode(const char* _Nonnull address, uint8_t* _Nonnull version, uint8_t* _Nullable * _Nonnull payload, size_t* _Nonnull payloadLength, uint32_t* _Nonnull checksum) {
     const auto paymentAddress = wallet::payment_address(std::string(address));
     if(!paymentAddress) {
         return CBITCOIN_ERROR_INVALID_ADDRESS;
@@ -44,7 +44,7 @@ CBitcoinResult _addressDecode(const char* address, uint8_t* version, uint8_t** p
     return CBITCOIN_SUCCESS;
 }
 
-void _addressEmbed(const uint8_t* data, size_t dataLength, uint8_t version, char** paymentAddress, size_t* paymentAddressLength) {
+void _addressEmbed(const uint8_t* _Nonnull data, size_t dataLength, uint8_t version, char* _Nullable * _Nonnull paymentAddress, size_t* _Nonnull paymentAddressLength) {
     auto dataChunk = _toDataChunk(data, dataLength);
 
     // Create script from hash of data.
@@ -60,7 +60,7 @@ void _addressEmbed(const uint8_t* data, size_t dataLength, uint8_t version, char
     _sendString(addressString, paymentAddress, paymentAddressLength);
 }
 
-CBitcoinResult _addressHash(const char* address, uint8_t** hash, size_t* hashLength) {
+CBitcoinResult _addressHash(const char* _Nonnull address, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     const auto paymentAddress = wallet::payment_address(std::string(address));
     if(!paymentAddress) {
         return CBITCOIN_ERROR_INVALID_ADDRESS;

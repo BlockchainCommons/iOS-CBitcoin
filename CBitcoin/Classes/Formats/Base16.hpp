@@ -28,10 +28,10 @@
 extern "C" {
 #endif
 
-    void _encodeBase16(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    CBitcoinResult _decodeBase16(const char* string, uint8_t** data, size_t* dataLength);
-    void _encodeBitcoinHash(const uint8_t* data, char** string, size_t* stringLength);
-    CBitcoinResult _decodeBitcoinHash(const char* string, uint8_t** data, size_t* dataLength);
+    void _encodeBase16(const uint8_t* _Nonnull data, size_t length, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _decodeBase16(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
+    void _encodeBitcoinHash(const uint8_t* _Nonnull data, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _decodeBitcoinHash(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
 
 #ifdef __cplusplus
 }

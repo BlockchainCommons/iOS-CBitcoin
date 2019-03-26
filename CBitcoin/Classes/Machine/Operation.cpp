@@ -40,14 +40,14 @@ _operation* _Nonnull _operationFromOpcode(uint8_t opcode) {
     return reinterpret_cast<_operation*>(i);
 }
 
-CBitcoinResult _operationFromData(const uint8_t* data, size_t dataLength, bool isMinimal, _operation** instance) {
+CBitcoinResult _operationFromData(const uint8_t* _Nonnull data, size_t dataLength, bool isMinimal, _operation* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new operation(dataChunk, isMinimal);
     *instance = reinterpret_cast<_operation*>(i);
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _operationDeserialize(const uint8_t* data, size_t dataLength, _operation** instance) {
+CBitcoinResult _operationDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _operation* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new operation();
     if(!i->from_data(dataChunk)) {
@@ -57,13 +57,13 @@ CBitcoinResult _operationDeserialize(const uint8_t* data, size_t dataLength, _op
     return CBITCOIN_SUCCESS;
 }
 
-void _operationSerialize(_operation* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _operationSerialize(_operation* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<operation*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
 }
 
-CBitcoinResult _operationFromString(const char* string, _operation** instance) {
+CBitcoinResult _operationFromString(const char* _Nonnull string, _operation* _Nullable * _Nonnull instance) {
     const auto str = std::string(string);
     auto* i = new operation();
     if(!i->from_string(str)) {
@@ -73,7 +73,7 @@ CBitcoinResult _operationFromString(const char* string, _operation** instance) {
     return CBITCOIN_SUCCESS;
 }
 
-void _operationToString(_operation* _Nonnull instance, uint32_t activeRules, char** string, size_t* stringLength) {
+void _operationToString(_operation* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     const auto& self = *reinterpret_cast<operation*>(instance);
     const auto str = self.to_string(activeRules);
     _sendString(str, string, stringLength);
@@ -95,7 +95,7 @@ uint8_t _operationGetOpcode(_operation* _Nonnull instance) {
     return static_cast<uint8_t>(self.code());
 }
 
-void _operationGetData(_operation* _Nonnull instance, uint8_t** data, size_t *dataLength) {
+void _operationGetData(_operation* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t * _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<operation*>(instance);
     const auto dataChunk = self.data();
     _sendData(dataChunk, data, dataLength);

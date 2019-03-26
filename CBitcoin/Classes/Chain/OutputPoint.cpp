@@ -39,7 +39,7 @@ _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance) {
     return reinterpret_cast<_outputPoint*>(copy);
 }
 
-CBitcoinResult _outputPointDeserialize(const uint8_t * data, size_t dataLength, _outputPoint** instance) {
+CBitcoinResult _outputPointDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _outputPoint* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new output_point();
     if(!i->from_data(dataChunk)) {
@@ -49,7 +49,7 @@ CBitcoinResult _outputPointDeserialize(const uint8_t * data, size_t dataLength, 
     return CBITCOIN_SUCCESS;
 }
 
-void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<output_point*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
@@ -81,12 +81,12 @@ void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index) {
     self.set_index(index);
 }
 
-void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t** hash, size_t* hashLength) {
+void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     const auto& self = *reinterpret_cast<const output_point*>(instance);
     _sendData(self.hash(), hash, hashLength);
 }
 
-void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash) {
+void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* _Nonnull hash) {
     auto& self = *reinterpret_cast<output_point*>(instance);
     auto hashDigest = _toHashDigest(hash);
     self.set_hash(hashDigest);

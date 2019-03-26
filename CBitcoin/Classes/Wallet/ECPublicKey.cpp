@@ -32,7 +32,7 @@ size_t _ecUncompressedPublicKeySize(void) {
     return ec_uncompressed_size;
 }
 
-CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength, bool isCompressed, uint8_t** publicKey, size_t* publicKeyLength) {
+CBitcoinResult _toECPublicKey(const uint8_t* _Nonnull privateKey, size_t privateKeyLength, bool isCompressed, uint8_t* _Nullable * _Nonnull publicKey, size_t* _Nonnull publicKeyLength) {
     if(privateKeyLength != ec_secret_size) {
         return CBITCOIN_ERROR_INVALID_SEED_SIZE;
     }
@@ -47,7 +47,7 @@ CBitcoinResult _toECPublicKey(const uint8_t* privateKey, size_t privateKeyLength
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLength, uint8_t version, char** address, size_t* addressLength) {
+CBitcoinResult _toECPaymentAddress(const uint8_t* _Nonnull publicKey, size_t publicKeyLength, uint8_t version, char* _Nullable * _Nonnull address, size_t* _Nonnull addressLength) {
     if(publicKeyLength == ec_compressed_size) {
         ec_compressed point;
         _toByteArray(point, publicKey);
@@ -68,7 +68,7 @@ CBitcoinResult _toECPaymentAddress(const uint8_t* publicKey, size_t publicKeyLen
     return CBITCOIN_ERROR_INVALID_SEED_SIZE;
 }
 
-CBitcoinResult _compress(const uint8_t* uncompressedPublicKey, uint8_t** compressed, size_t* compressedLength) {
+CBitcoinResult _compress(const uint8_t* _Nonnull uncompressedPublicKey, uint8_t* _Nullable * _Nonnull compressed, size_t* _Nonnull compressedLength) {
     ec_uncompressed uncompressedKey;
     _toByteArray(uncompressedKey, uncompressedPublicKey);
     ec_compressed compressedKey;
@@ -79,7 +79,7 @@ CBitcoinResult _compress(const uint8_t* uncompressedPublicKey, uint8_t** compres
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _decompress(const uint8_t* compressedPublicKey, uint8_t** uncompressed, size_t* uncompressedLength) {
+CBitcoinResult _decompress(const uint8_t* _Nonnull compressedPublicKey, uint8_t* _Nullable * _Nonnull uncompressed, size_t* _Nonnull uncompressedLength) {
     ec_compressed compressedKey;
     _toByteArray(compressedKey, compressedPublicKey);
     ec_uncompressed uncompressedKey;

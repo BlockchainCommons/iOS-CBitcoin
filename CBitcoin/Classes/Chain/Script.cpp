@@ -23,14 +23,14 @@
 using namespace libbitcoin;
 using namespace chain;
 
-void _scriptDecode(const uint8_t* data, size_t dataLength, char** decoded, size_t* decodedLength) {
+void _scriptDecode(const uint8_t* _Nonnull data, size_t dataLength, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     const auto script = chain::script(dataChunk, false);
     const auto decodedString = script.to_string(machine::rule_fork::all_rules);
     _sendString(decodedString, decoded, decodedLength);
 }
 
-CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* encodedLength) {
+CBitcoinResult _scriptEncode(const char* _Nonnull script, uint8_t* _Nullable * _Nonnull encoded, size_t* _Nonnull encodedLength) {
     const auto scriptString = std::string(script);
     chain::script s;
     if(!s.from_string(scriptString)) {
@@ -42,7 +42,7 @@ CBitcoinResult _scriptEncode(const char* script, uint8_t** encoded, size_t* enco
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _scriptToAddress(const char* script, uint8_t version, char** paymentAddress, size_t* paymentAddressLength) {
+CBitcoinResult _scriptToAddress(const char* _Nonnull script, uint8_t version, char* _Nullable * _Nonnull paymentAddress, size_t* _Nonnull paymentAddressLength) {
     const auto scriptString = std::string(script);
     chain::script s;
     if(!s.from_string(scriptString)) {
@@ -64,7 +64,7 @@ _script* _Nonnull _scriptCopy(_script* _Nonnull instance) {
     return reinterpret_cast<_script*>(copy);
 }
 
-CBitcoinResult _scriptFromString(const char* string, _script** instance) {
+CBitcoinResult _scriptFromString(const char* _Nonnull string, _script* _Nullable * _Nonnull instance) {
     const auto str = std::string(string);
     auto* i = new script();
     if(!i->from_string(str)) {
@@ -74,7 +74,7 @@ CBitcoinResult _scriptFromString(const char* string, _script** instance) {
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool prefix, _script** instance) {
+CBitcoinResult _scriptDeserialize(const uint8_t* _Nonnull data, size_t dataLength, bool prefix, _script* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new script();
     if(!i->from_data(dataChunk, prefix)) {
@@ -84,13 +84,13 @@ CBitcoinResult _scriptDeserialize(const uint8_t* data, size_t dataLength, bool p
     return CBITCOIN_SUCCESS;
 }
 
-_script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * operations, size_t operationsCount) {
+_script* _Nonnull _scriptFromOperations(const _operation* const _Nonnull * _Nonnull operations, size_t operationsCount) {
     const auto list = _receiveInstances<machine::operation, _operation>(operations, operationsCount);
     auto* i = new script(list);
     return reinterpret_cast<_script*>(i);
 }
 
-void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t** data, size_t* dataLength) {
+void _scriptSerialize(_script* _Nonnull instance, bool prefix, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<script*>(instance);
     const auto dataChunk = self.to_data(prefix);
     _sendData(dataChunk, data, dataLength);
@@ -112,7 +112,7 @@ bool _scriptEqual(_script* _Nonnull instance1, _script* _Nonnull instance2) {
     return lhs == rhs;
 }
 
-void _scriptGetOperations(_script* _Nonnull instance, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+void _scriptGetOperations(_script* _Nonnull instance, _operation* _Nonnull * _Nullable * _Nonnull operations, size_t* _Nonnull operationsCount) {
     const auto& self = *reinterpret_cast<script*>(instance);
     _sendInstances(self.operations(), operations, operationsCount);
 }
@@ -127,7 +127,7 @@ void _scriptClear(_script* _Nonnull instance) {
     self.clear();
 }
 
-void _scriptGetWitnessProgram(_script* _Nonnull instance, uint8_t** program, size_t* programLength) {
+void _scriptGetWitnessProgram(_script* _Nonnull instance, uint8_t* _Nullable * _Nonnull program, size_t* _Nonnull programLength) {
     const auto& self = *reinterpret_cast<const script*>(instance);
     const auto chunk = self.witness_program();
     _sendData(chunk, program, programLength);
@@ -153,19 +153,19 @@ int _scriptGetOutputPattern(_script* _Nonnull instance) {
     return static_cast<int>(self.output_pattern());
 }
 
-void _scriptMakePayNullDataPattern(const uint8_t* data, size_t dataLength, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+void _scriptMakePayNullDataPattern(const uint8_t * _Nonnull data, size_t dataLength, _operation* _Nonnull* _Nullable * _Nonnull operations, size_t* _Nonnull operationsCount) {
     const auto slice = _toDataSlice(data, dataLength);
     const auto ops = script::to_pay_null_data_pattern(slice);
     _sendInstances(ops, operations, operationsCount);
 }
 
-void _scriptMakePayKeyHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+void _scriptMakePayKeyHashPattern(const uint8_t* _Nonnull shortHash, _operation* _Nonnull * _Nullable * _Nonnull operations, size_t* _Nonnull operationsCount) {
     const auto hash = _toShortHash(shortHash);
     const auto ops = script::to_pay_key_hash_pattern(hash);
     _sendInstances(ops, operations, operationsCount);
 }
 
-void _scriptMakePayScriptHashPattern(const uint8_t* shortHash, _operation* _Nonnull ** _Nonnull operations, size_t* _Nonnull operationsCount) {
+void _scriptMakePayScriptHashPattern(const uint8_t* _Nonnull shortHash, _operation* _Nonnull * _Nullable * _Nonnull operations, size_t* _Nonnull operationsCount) {
     const auto hash = _toShortHash(shortHash);
     const auto ops = script::to_pay_script_hash_pattern(hash);
     _sendInstances(ops, operations, operationsCount);
@@ -178,7 +178,7 @@ uint32_t _scriptVerify(_transaction* _Nonnull transactionInstance, uint32_t inpu
     return c.value();
 }
 
-void _generateSignatureHash(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, _script* _Nonnull scriptInstance, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** hash, size_t* hashLength) {
+void _generateSignatureHash(_transaction* _Nonnull transactionInstance, uint32_t inputIndex, _script* _Nonnull scriptInstance, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     const auto& tx = *reinterpret_cast<const transaction*>(transactionInstance);
     const auto& scr = *reinterpret_cast<const script*>(scriptInstance);
     const auto ver = static_cast<script::script_version>(scriptVersion);
@@ -196,7 +196,7 @@ bool _checkSignature(const uint8_t* _Nonnull signature, uint8_t sigHashType, con
     return script::check_signature(sig, sigHashType, key, scr, tx, inputIndex, ver, value);
 }
 
-CBitcoinResult _createEndorsement(const uint8_t* _Nonnull ecPrivateKey, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t** endorsement, size_t* endorsementLength) {
+CBitcoinResult _createEndorsement(const uint8_t* _Nonnull ecPrivateKey, _script* _Nonnull scriptInstance, _transaction* _Nonnull transactionInstance, uint32_t inputIndex, uint8_t sigHashType, int32_t scriptVersion, uint64_t value, uint8_t* _Nullable * _Nonnull endorsement, size_t* _Nonnull endorsementLength) {
     ec_secret secret;
     _toByteArray(secret, ecPrivateKey);
     const auto& scr = *reinterpret_cast<const script*>(scriptInstance);

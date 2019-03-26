@@ -29,14 +29,14 @@
 using namespace libbitcoin;
 using namespace chain;
 
-void _opcodeToString(uint8_t opcode, uint32_t activeRules, char** string, size_t* stringLength) {
+void _opcodeToString(uint8_t opcode, uint32_t activeRules, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     const auto op = machine::opcode(opcode);
     const auto rules = static_cast<machine::rule_fork>(activeRules);
     const auto str = opcode_to_string(op, rules);
     _sendString(str, string, stringLength);
 }
 
-CBitcoinResult _opcodeFromString(const char* string, uint8_t* opcode) {
+CBitcoinResult _opcodeFromString(const char* _Nonnull string, uint8_t* _Nonnull opcode) {
     const auto str = std::string(string);
     machine::opcode op;
     if(!opcode_from_string(op, str)) {
@@ -46,13 +46,13 @@ CBitcoinResult _opcodeFromString(const char* string, uint8_t* opcode) {
     return CBITCOIN_SUCCESS;
 }
 
-void _opcodeToHexadecimal(uint8_t opcode, char** string, size_t* stringLength) {
+void _opcodeToHexadecimal(uint8_t opcode, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     const auto op = machine::opcode(opcode);
     const auto str = opcode_to_hexadecimal(op);
     _sendString(str, string, stringLength);
 }
 
-CBitcoinResult _opcodeFromHexadecimal(const char* string, uint8_t* opcode) {
+CBitcoinResult _opcodeFromHexadecimal(const char* _Nonnull string, uint8_t* _Nonnull opcode) {
     const auto str = std::string(string);
     machine::opcode op;
     if(!opcode_from_hexadecimal(op, str)) {

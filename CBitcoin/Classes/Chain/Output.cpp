@@ -40,7 +40,7 @@ _output* _Nonnull _outputCopy(_output* _Nonnull instance) {
     return reinterpret_cast<_output*>(copy);
 }
 
-CBitcoinResult _outputDeserialize(const uint8_t* data, size_t dataLength, _output** instance) {
+CBitcoinResult _outputDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _output* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* o = new output();
     if(!o->from_data(dataChunk)) {
@@ -50,7 +50,7 @@ CBitcoinResult _outputDeserialize(const uint8_t* data, size_t dataLength, _outpu
     return CBITCOIN_SUCCESS;
 }
 
-void _outputSerialize(_output* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _outputSerialize(_output* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<output*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
@@ -62,7 +62,7 @@ bool _outputEqual(_output* _Nonnull instance1, _output* _Nonnull instance2) {
     return lhs == rhs;
 }
 
-CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address) {
+CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* _Nonnull address) {
     auto& self = *reinterpret_cast<output*>(instance);
 
     const auto paymentAddress = wallet::payment_address(std::string(address));
@@ -90,7 +90,7 @@ void _outputSetValue(_output* _Nonnull instance, uint64_t value) {
     self.set_value(value);
 }
 
-void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
+void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength) {
     const auto& self = *reinterpret_cast<output*>(instance);
 
     const auto script = self.script();

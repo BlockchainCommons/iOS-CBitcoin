@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-    void _wrapEncode(const uint8_t* data, size_t dataLength, uint8_t version, uint8_t** wrappedData, size_t* wrappedDataLength);
-    CBitcoinResult _wrapDecode(const uint8_t* wrappedData, size_t wrappedDataLength, uint8_t* version, uint8_t** payload, size_t* payloadLength, uint32_t* checksum);
+    void _wrapEncode(const uint8_t* _Nonnull data, size_t dataLength, uint8_t version, uint8_t* _Nullable * _Nonnull wrappedData, size_t* _Nonnull wrappedDataLength);
+    CBitcoinResult _wrapDecode(const uint8_t* _Nonnull wrappedData, size_t wrappedDataLength, uint8_t* _Nonnull version, uint8_t* _Nullable * _Nonnull payload, size_t* _Nonnull payloadLength, uint32_t* _Nonnull checksum);
 
 #ifdef __cplusplus
 }

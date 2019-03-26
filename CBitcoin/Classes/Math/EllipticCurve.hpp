@@ -28,10 +28,10 @@
 extern "C" {
 #endif
 
-    CBitcoinResult _encodeSignature(const uint8_t* ecSignature, uint8_t** derSignature, size_t* derSignatureLength);
-    CBitcoinResult _parseSignature(const uint8_t* derSignature, size_t derSignatureLength, bool isStrict, uint8_t** ecSignature, size_t* ecSignatureLength);
-    CBitcoinResult _sign(const uint8_t* hashDigest, const uint8_t* privateKey, uint8_t** ecSignature, size_t* ecSignatureLength);
-    bool _verifySignature(const uint8_t* publicKey, size_t publicKeyLength, const uint8_t* hashDigest, const uint8_t* ecSignature);
+    CBitcoinResult _encodeSignature(const uint8_t* _Nonnull ecSignature, uint8_t* _Nullable * _Nonnull derSignature, size_t* _Nonnull derSignatureLength);
+    CBitcoinResult _parseSignature(const uint8_t* _Nonnull derSignature, size_t derSignatureLength, bool isStrict, uint8_t* _Nullable * _Nonnull ecSignature, size_t* _Nonnull ecSignatureLength);
+    CBitcoinResult _sign(const uint8_t* _Nonnull hashDigest, const uint8_t* _Nonnull privateKey, uint8_t* _Nullable * _Nonnull ecSignature, size_t* _Nonnull ecSignatureLength);
+    bool _verifySignature(const uint8_t* _Nonnull publicKey, size_t publicKeyLength, const uint8_t* _Nonnull hashDigest, const uint8_t* _Nonnull ecSignature);
 
 #ifdef __cplusplus
 }

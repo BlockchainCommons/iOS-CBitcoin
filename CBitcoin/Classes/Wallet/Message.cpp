@@ -24,7 +24,7 @@
 
 using namespace libbitcoin;
 
-void _messageSign(const uint8_t* message, size_t messageLength, const char* wifKey, char** signature, size_t* signatureLength) {
+void _messageSign(const uint8_t* _Nonnull message, size_t messageLength, const char* _Nonnull wifKey, char* _Nullable * _Nonnull signature, size_t* _Nonnull signatureLength) {
     const auto messageSlice = _toDataSlice(message, messageLength);
     const auto wifString = std::string(wifKey);
     wallet::ec_private secret(wifString);
@@ -34,7 +34,7 @@ void _messageSign(const uint8_t* message, size_t messageLength, const char* wifK
     _sendString(signatureString, signature, signatureLength);
 }
 
-bool _messageValidate(const char* paymentAddress, const char* signature, const uint8_t* message, size_t messageLength) {
+bool _messageValidate(const char* _Nonnull paymentAddress, const char* _Nonnull signature, const uint8_t* _Nonnull message, size_t messageLength) {
     const auto address = wallet::payment_address(std::string(paymentAddress));
 
     data_chunk signatureChunk;

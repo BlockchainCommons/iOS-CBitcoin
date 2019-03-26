@@ -29,7 +29,7 @@
 using namespace libbitcoin;
 using namespace chain;
 
-CBitcoinResult _transactionDecode(const uint8_t* data, size_t dataLength, bool isPretty, char** decoded, size_t* decodedLength) {
+CBitcoinResult _transactionDecode(const uint8_t* _Nonnull data, size_t dataLength, bool isPretty, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     transaction tx;
     if(!tx.from_data(dataChunk)) {
@@ -52,7 +52,7 @@ _transaction* _Nonnull _transactionCopy(_transaction* _Nonnull instance) {
     return reinterpret_cast<_transaction*>(copy);
 }
 
-CBitcoinResult _transactionDeserialize(const uint8_t* data, size_t dataLength, _transaction** instance) {
+CBitcoinResult _transactionDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _transaction* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* t = new transaction();
     if(!t->from_data(dataChunk)) {
@@ -62,7 +62,7 @@ CBitcoinResult _transactionDeserialize(const uint8_t* data, size_t dataLength, _
     return CBITCOIN_SUCCESS;
 }
 
-void _transactionSerialize(_transaction* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _transactionSerialize(_transaction* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
@@ -108,24 +108,24 @@ void _transactionSetLockTime(_transaction* _Nonnull instance, uint32_t lockTime)
     self.set_locktime(lockTime);
 }
 
-void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * inputs, size_t inputsCount) {
+void _transactionSetInputs(_transaction* _Nonnull instance, const _input* const _Nonnull * _Nonnull inputs, size_t inputsCount) {
     auto& self = *reinterpret_cast<transaction*>(instance);
     const auto list = _receiveInstances<input, _input>(inputs, inputsCount);
     self.set_inputs(list);
 }
 
-void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull ** _Nonnull inputs, size_t* _Nonnull inputsCount) {
+void _transactionGetInputs(_transaction* _Nonnull instance, _input* _Nonnull * _Nullable * _Nonnull inputs, size_t* _Nonnull inputsCount) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.inputs(), inputs, inputsCount);
 }
 
-void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * outputs, size_t outputsCount) {
+void _transactionSetOutputs(_transaction* _Nonnull instance, const _output* const _Nonnull * _Nonnull outputs, size_t outputsCount) {
     auto& self = *reinterpret_cast<transaction*>(instance);
     const auto list = _receiveInstances<output, _output>(outputs, outputsCount);
     self.set_outputs(list);
 }
 
-void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull ** _Nonnull outputs, size_t* _Nonnull outputsCount) {
+void _transactionGetOutputs(_transaction* _Nonnull instance, _output* _Nonnull * _Nullable * _Nonnull outputs, size_t* _Nonnull outputsCount) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     _sendInstances(self.outputs(), outputs, outputsCount);
 }
@@ -150,7 +150,7 @@ size_t _transactionSerializedSize(_transaction* _Nonnull instance) {
     return self.serialized_size();
 }
 
-void _transactionHash(_transaction* _Nonnull instance, uint8_t** hash, size_t* hashLength) {
+void _transactionHash(_transaction* _Nonnull instance, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     const auto& self = *reinterpret_cast<transaction*>(instance);
     const auto h = self.hash();
     _sendData(h, hash, hashLength);

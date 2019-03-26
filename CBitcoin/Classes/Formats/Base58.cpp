@@ -30,16 +30,16 @@ bool _isBase58Char(char c) {
     return is_base58(c);
 }
 
-bool _isBase58String(const char* string) {
+bool _isBase58String(const char* _Nonnull string) {
     return is_base58(std::string(string));
 }
 
-void _encodeBase58(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
+void _encodeBase58(const uint8_t* _Nonnull data, size_t length, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     auto s = encode_base58(_toDataSlice(data, length));
     _sendString(s, string, stringLength);
 }
 
-CBitcoinResult _decodeBase58(const char* string, uint8_t** data, size_t* dataLength) {
+CBitcoinResult _decodeBase58(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     auto s = std::string(string);
     auto chunk = data_chunk();
     if(!decode_base58(chunk, s)) {
@@ -49,7 +49,7 @@ CBitcoinResult _decodeBase58(const char* string, uint8_t** data, size_t* dataLen
     return CBITCOIN_SUCCESS;
 }
 
-void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength) {
+void _encodeBase58Check(const uint8_t* _Nonnull data, size_t length, uint8_t version, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     auto bytes = to_chunk(version);
     auto payload = _toDataChunk(data, length);
     extend_data(bytes, payload);
@@ -58,7 +58,7 @@ void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, cha
     _sendString(s, string, stringLength);
 }
 
-CBitcoinResult _decodeBase58Check(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version) {
+CBitcoinResult _decodeBase58Check(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength, uint8_t* _Nonnull version) {
     auto s = std::string(string);
     if(s.length() == 0) {
         return CBITCOIN_ERROR_INVALID_FORMAT;

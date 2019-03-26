@@ -32,15 +32,15 @@ extern "C" {
     typedef struct _outputPoint _outputPoint;
     _outputPoint* _Nonnull _outputPointNew(void);
     _outputPoint* _Nonnull _outputPointCopy(_outputPoint* _Nonnull instance);
-    CBitcoinResult _outputPointDeserialize(const uint8_t* data, size_t dataLength, _outputPoint** instance);
-    void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _outputPointDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _outputPoint* _Nullable * _Nonnull instance);
+    void _outputPointSerialize(_outputPoint* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
     bool _outputPointIsValid(_outputPoint* _Nonnull instance);
     bool _outputPointIsNull(_outputPoint* _Nonnull instance);
     bool _outputPointEqual(_outputPoint* _Nonnull instance1, _outputPoint* _Nonnull instance2);
     uint32_t _outputPointGetIndex(_outputPoint* _Nonnull instance);
     void _outputPointSetIndex(_outputPoint* _Nonnull instance, uint32_t index);
-    void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t** hash, size_t* hashLength);
-    void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* hash);
+    void _outputPointGetHash(_outputPoint* _Nonnull instance, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength);
+    void _outputPointSetHash(_outputPoint* _Nonnull instance, const uint8_t* _Nonnull hash);
 
 #ifdef __cplusplus
 }

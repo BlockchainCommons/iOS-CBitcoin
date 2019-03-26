@@ -23,30 +23,30 @@
 
 #include <bitcoin/bitcoin.hpp>
 
-void _sendString(std::string s, char** string, size_t* stringLength);
-void _sendData(const libbitcoin::data_chunk& chunk, uint8_t** data, size_t* dataLength);
+void _sendString(std::string s, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+void _sendData(const libbitcoin::data_chunk& chunk, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
 
-libbitcoin::data_slice _toDataSlice(const uint8_t* data, uint32_t length);
+libbitcoin::data_slice _toDataSlice(const uint8_t* _Nonnull data, uint32_t length);
 
-libbitcoin::data_chunk _toDataChunk(const uint8_t* data, uint32_t length);
+libbitcoin::data_chunk _toDataChunk(const uint8_t* _Nonnull data, uint32_t length);
 
 //template <size_t Size>
-//std::array<uint8_t, Size> _toArray(const uint8_t* data);
+//std::array<uint8_t, Size> _toArray(const uint8_t* _Nonnull data);
 
-libbitcoin::hash_digest _toHashDigest(const uint8_t* data);
-libbitcoin::short_hash _toShortHash(const uint8_t* data);
-libbitcoin::ec_secret _toECSecret(const uint8_t* data);
-libbitcoin::ec_signature _toECSignature(const uint8_t* data);
+libbitcoin::hash_digest _toHashDigest(const uint8_t* _Nonnull data);
+libbitcoin::short_hash _toShortHash(const uint8_t* _Nonnull data);
+libbitcoin::ec_secret _toECSecret(const uint8_t* _Nonnull data);
+libbitcoin::ec_signature _toECSignature(const uint8_t* _Nonnull data);
 
 template<size_t SIZE>
-void _sendData(const libbitcoin::byte_array<SIZE>& hash, uint8_t** data, size_t* dataLength) {
+void _sendData(const libbitcoin::byte_array<SIZE>& hash, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     *dataLength = hash.size();
     *data = static_cast<uint8_t*>(malloc(*dataLength));
     std::copy(hash.begin(), hash.end(), *data);
 }
 
 template<size_t SIZE>
-void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* bytes) {
+void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* _Nonnull bytes) {
     auto p = bytes;
     for(typename libbitcoin::byte_array<SIZE>::iterator i = array.begin(); i != array.end();) {
         *i++ = *p++;
@@ -64,7 +64,7 @@ std::vector<T> _receiveInstances(const U* const* instances, size_t count) {
 }
 
 template<typename T, typename U>
-void _sendInstances(std::vector<T> list, U*** instances, size_t* count) {
+void _sendInstances(std::vector<T> list, U*** instances, size_t* _Nonnull count) {
     *count = list.size();
     *instances = static_cast<U**>(malloc(*count * sizeof(U*)));
     auto instancesArray = *instances;

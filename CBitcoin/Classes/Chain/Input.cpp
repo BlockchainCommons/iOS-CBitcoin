@@ -39,7 +39,7 @@ _input* _Nonnull _inputCopy(_input* _Nonnull instance) {
     return reinterpret_cast<_input*>(copy);
 }
 
-CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input** instance) {
+CBitcoinResult _inputDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _input* _Nullable * _Nonnull instance) {
     const auto dataChunk = _toDataChunk(data, dataLength);
     auto* i = new input();
     if(!i->from_data(dataChunk)) {
@@ -49,7 +49,7 @@ CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input*
     return CBITCOIN_SUCCESS;
 }
 
-void _inputSerialize(_input* _Nonnull instance, uint8_t** data, size_t* dataLength) {
+void _inputSerialize(_input* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     const auto& self = *reinterpret_cast<input*>(instance);
     const auto dataChunk = self.to_data();
     _sendData(dataChunk, data, dataLength);
@@ -95,7 +95,7 @@ void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence) {
     self.set_sequence(sequence);
 }
 
-void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength) {
+void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength) {
     const auto& self = *reinterpret_cast<input*>(instance);
     const auto script = self.script();
     const auto decodedString = script.to_string(activeRules);

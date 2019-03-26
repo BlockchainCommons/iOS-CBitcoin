@@ -24,58 +24,58 @@
 
 using namespace libbitcoin;
 
-void _ripemd160(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _ripemd160(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = ripemd160_hash(d);
     _sendData(h, hash, hashLength);
 }
 
-void _sha160(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _sha160(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = sha1_hash(d);
     _sendData(h, hash, hashLength);
 }
 
-void _sha256(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _sha256(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = sha256_hash(d);
     _sendData(h, hash, hashLength);
 }
 
-void _sha256HMAC(const uint8_t* data, size_t dataLength, const uint8_t* key, size_t keyLength, uint8_t** hash, size_t* hashLength) {
+void _sha256HMAC(const uint8_t* _Nonnull data, size_t dataLength, const uint8_t* _Nonnull key, size_t keyLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto k = _toDataSlice(key, keyLength);
     auto h = hmac_sha256_hash(d, k);
     _sendData(h, hash, hashLength);
 }
 
-void _sha512(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _sha512(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = sha512_hash(d);
     _sendData(h, hash, hashLength);
 }
 
-void _sha512HMAC(const uint8_t* data, size_t dataLength, const uint8_t* key, size_t keyLength, uint8_t** hash, size_t* hashLength) {
+void _sha512HMAC(const uint8_t* _Nonnull data, size_t dataLength, const uint8_t* _Nonnull key, size_t keyLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto k = _toDataSlice(key, keyLength);
     auto h = hmac_sha512_hash(d, k);
     _sendData(h, hash, hashLength);
 }
 
-void _pkcs5PBKDF2HMACSHA512(const uint8_t* passphrase, size_t passphraseLength, const uint8_t* salt, size_t saltLength, size_t iterations, uint8_t** hash, size_t* hashLength) {
+void _pkcs5PBKDF2HMACSHA512(const uint8_t* _Nonnull passphrase, size_t passphraseLength, const uint8_t* _Nonnull salt, size_t saltLength, size_t iterations, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto p = _toDataSlice(passphrase, passphraseLength);
     auto s = _toDataSlice(salt, saltLength);
     auto h = pkcs5_pbkdf2_hmac_sha512(p, s, iterations);
     _sendData(h, hash, hashLength);
 }
 
-void _bitcoin256(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _bitcoin256(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = bitcoin_hash(d);
     _sendData(h, hash, hashLength);
 }
 
-void _bitcoin160(const uint8_t* data, size_t dataLength, uint8_t** hash, size_t* hashLength) {
+void _bitcoin160(const uint8_t* _Nonnull data, size_t dataLength, uint8_t* _Nullable * _Nonnull hash, size_t* _Nonnull hashLength) {
     auto d = _toDataSlice(data, dataLength);
     auto h = bitcoin_short_hash(d);
     _sendData(h, hash, hashLength);

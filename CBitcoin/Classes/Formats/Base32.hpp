@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-    void _encodeBase32(const char* prefix, const uint8_t* payload, size_t payloadLength, char** string, size_t* stringLength);
-    CBitcoinResult _decodeBase32(const char* string, char** prefix, size_t* prefixLength, uint8_t** payload, size_t* payloadLength);
+    void _encodeBase32(const char* _Nonnull prefix, const uint8_t* _Nonnull payload, size_t payloadLength, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _decodeBase32(const char* _Nonnull string, char* _Nullable * _Nonnull prefix, size_t* _Nonnull prefixLength, uint8_t* _Nullable * _Nonnull payload, size_t* _Nonnull payloadLength);
 
 #ifdef __cplusplus
 }

@@ -25,12 +25,12 @@
 
 using namespace libbitcoin;
 
-void _encodeBase16(const uint8_t* data, size_t length, char** string, size_t* stringLength) {
+void _encodeBase16(const uint8_t* _Nonnull data, size_t length, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     auto s = encode_base16(_toDataSlice(data, length));
     _sendString(s, string, stringLength);
 }
 
-CBitcoinResult _decodeBase16(const char* string, uint8_t** data, size_t* dataLength) {
+CBitcoinResult _decodeBase16(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     auto s = std::string(string);
     auto chunk = data_chunk();
     if(decode_base16(chunk, s)) {
@@ -41,12 +41,12 @@ CBitcoinResult _decodeBase16(const char* string, uint8_t** data, size_t* dataLen
     }
 }
 
-void _encodeBitcoinHash(const uint8_t* data, char** string, size_t* stringLength) {
+void _encodeBitcoinHash(const uint8_t* _Nonnull data, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength) {
     auto s = encode_hash(_toHashDigest(data));
     _sendString(s, string, stringLength);
 }
 
-CBitcoinResult _decodeBitcoinHash(const char* string, uint8_t** data, size_t* dataLength) {
+CBitcoinResult _decodeBitcoinHash(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength) {
     auto s = std::string(string);
     auto hash = hash_digest();
     if(decode_hash(hash, s)) {

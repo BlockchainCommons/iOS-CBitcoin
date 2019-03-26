@@ -32,13 +32,13 @@ extern "C" {
     typedef struct _output _output;
     _output* _Nonnull _outputNew(void);
     _output* _Nonnull _outputCopy(_output* _Nonnull instance);
-    CBitcoinResult _outputDeserialize(const uint8_t* data, size_t dataLength, _output** instance);
-    void _outputSerialize(_output* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _outputDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _output* _Nullable * _Nonnull instance);
+    void _outputSerialize(_output* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
     bool _outputEqual(_output* _Nonnull instance1, _output* _Nonnull instance2);
-    CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* address);
+    CBitcoinResult _outputSetPaymentAddress(_output* _Nonnull instance, const char* _Nonnull address);
     uint64_t _outputGetValue(_output* _Nonnull instance);
     void _outputSetValue(_output* _Nonnull instance, uint64_t value);
-    void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
+    void _outputGetScriptString(_output* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength);
     _script* _Nonnull _outputGetScript(_output* _Nonnull instance);
     void _outputSetScript(_output* _Nonnull instance, _script* _Nonnull scriptInstance);
 

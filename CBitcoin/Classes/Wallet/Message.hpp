@@ -27,8 +27,8 @@
 extern "C" {
 #endif
 
-    void _messageSign(const uint8_t* message, size_t messageLength, const char* wifKey, char** signature, size_t* signatureLength);
-    bool _messageValidate(const char* paymentAddress, const char* signature, const uint8_t* message, size_t messageLength);
+    void _messageSign(const uint8_t* _Nonnull message, size_t messageLength, const char* _Nonnull wifKey, char* _Nullable * _Nonnull signature, size_t* _Nonnull signatureLength);
+    bool _messageValidate(const char* _Nonnull paymentAddress, const char* _Nonnull signature, const uint8_t* _Nonnull message, size_t messageLength);
 
 #ifdef __cplusplus
 }

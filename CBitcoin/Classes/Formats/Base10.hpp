@@ -32,8 +32,8 @@ extern "C" {
     uint8_t _mbtcDecimalPlaces(void);
     uint8_t _ubtcDecimalPlaces(void);
 
-    void _encodeBase10(uint64_t amount, char** string, size_t* stringLength, uint8_t decimalPlaces);
-    CBitcoinResult _decodeBase10(const char* string, uint64_t* amount, size_t decimalPlaces, bool strict);
+    void _encodeBase10(uint64_t amount, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength, uint8_t decimalPlaces);
+    CBitcoinResult _decodeBase10(const char* _Nonnull string, uint64_t* _Nonnull amount, size_t decimalPlaces, bool strict);
 
 #ifdef __cplusplus
 }

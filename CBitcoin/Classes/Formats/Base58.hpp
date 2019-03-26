@@ -30,11 +30,11 @@ extern "C" {
 #endif
 
     bool _isBase58Char(char c);
-    bool _isBase58String(const char* string);
-    void _encodeBase58(const uint8_t* data, size_t length, char** string, size_t* stringLength);
-    CBitcoinResult _decodeBase58(const char* string, uint8_t** data, size_t* dataLength);
-    void _encodeBase58Check(const uint8_t* data, size_t length, uint8_t version, char** string, size_t* stringLength);
-    CBitcoinResult _decodeBase58Check(const char* string, uint8_t** data, size_t* dataLength, uint8_t* version);
+    bool _isBase58String(const char* _Nonnull string);
+    void _encodeBase58(const uint8_t* _Nonnull data, size_t length, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _decodeBase58(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
+    void _encodeBase58Check(const uint8_t* _Nonnull data, size_t length, uint8_t version, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _decodeBase58Check(const char* _Nonnull string, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength, uint8_t* _Nonnull version);
 
 #ifdef __cplusplus
 }

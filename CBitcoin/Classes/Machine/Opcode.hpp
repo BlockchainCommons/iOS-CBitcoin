@@ -28,10 +28,10 @@
 extern "C" {
 #endif
 
-    void _opcodeToString(uint8_t opcode, uint32_t activeRules, char** string, size_t* stringLength);
-    CBitcoinResult _opcodeFromString(const char* string, uint8_t* opcode);
-    void _opcodeToHexadecimal(uint8_t opcode, char** string, size_t* stringLength);
-    CBitcoinResult _opcodeFromHexadecimal(const char* string, uint8_t* opcode);
+    void _opcodeToString(uint8_t opcode, uint32_t activeRules, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _opcodeFromString(const char* _Nonnull string, uint8_t* _Nonnull opcode);
+    void _opcodeToHexadecimal(uint8_t opcode, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
+    CBitcoinResult _opcodeFromHexadecimal(const char* _Nonnull string, uint8_t* _Nonnull opcode);
 
 #ifdef __cplusplus
 }

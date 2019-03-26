@@ -32,19 +32,19 @@ extern "C" {
 
     _operation* _Nonnull _operationNew(void);
     _operation* _Nonnull _operationFromOpcode(uint8_t opcode);
-    CBitcoinResult _operationFromData(const uint8_t* data, size_t dataLength, bool isMinimal, _operation** instance);
+    CBitcoinResult _operationFromData(const uint8_t* _Nonnull data, size_t dataLength, bool isMinimal, _operation* _Nullable * _Nonnull instance);
 
-    CBitcoinResult _operationDeserialize(const uint8_t* data, size_t dataLength, _operation** instance);
-    void _operationSerialize(_operation* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _operationDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _operation* _Nullable * _Nonnull instance);
+    void _operationSerialize(_operation* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
 
-    CBitcoinResult _operationFromString(const char* string, _operation** instance);
-    void _operationToString(_operation* _Nonnull instance, uint32_t activeRules, char** string, size_t* stringLength);
+    CBitcoinResult _operationFromString(const char* _Nonnull string, _operation* _Nullable * _Nonnull instance);
+    void _operationToString(_operation* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
 
     bool _operationIsValid(_operation* _Nonnull instance);
     bool _operationEqual(_operation* _Nonnull instance1, _operation* _Nonnull instance2);
 
     uint8_t _operationGetOpcode(_operation* _Nonnull instance);
-    void _operationGetData(_operation* _Nonnull instance, uint8_t** data, size_t *dataLength);
+    void _operationGetData(_operation* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t * _Nonnull dataLength);
 
 #ifdef __cplusplus
 }

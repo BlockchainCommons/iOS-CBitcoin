@@ -32,8 +32,8 @@ extern "C" {
     typedef struct _input _input;
     _input* _Nonnull _inputNew(void);
     _input* _Nonnull _inputCopy(_input* _Nonnull instance);
-    CBitcoinResult _inputDeserialize(const uint8_t* data, size_t dataLength, _input** instance);
-    void _inputSerialize(_input* _Nonnull instance, uint8_t** data, size_t* dataLength);
+    CBitcoinResult _inputDeserialize(const uint8_t* _Nonnull data, size_t dataLength, _input* _Nullable * _Nonnull instance);
+    void _inputSerialize(_input* _Nonnull instance, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
     bool _inputEqual(_input* _Nonnull instance1, _input* _Nonnull instance2);
     _outputPoint* _Nonnull _inputGetPreviousOutput(_input* _Nonnull const instance);
     void _inputSetPreviousOutput(_input* _Nonnull instance, _outputPoint* _Nonnull outputPointInstance);
@@ -41,7 +41,7 @@ extern "C" {
     void _inputSetScript(_input* _Nonnull instance, _script* _Nonnull scriptInstance);
     uint32_t _inputGetSequence(_input* _Nonnull instance);
     void _inputSetSequence(_input* _Nonnull instance, uint32_t sequence);
-    void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char** decoded, size_t* decodedLength);
+    void _inputGetScriptString(_input* _Nonnull instance, uint32_t activeRules, char* _Nullable * _Nonnull decoded, size_t* _Nonnull decodedLength);
     bool _inputIsValid(_input* _Nonnull instance);
 
 #ifdef __cplusplus

@@ -24,7 +24,7 @@
 
 using namespace libbitcoin;
 
-CBitcoinResult _encodeSignature(const uint8_t* ecSignature, uint8_t** derSignature, size_t* derSignatureLength) {
+CBitcoinResult _encodeSignature(const uint8_t* _Nonnull ecSignature, uint8_t* _Nullable * _Nonnull derSignature, size_t* _Nonnull derSignatureLength) {
     ec_signature ecSig;
     _toByteArray(ecSig, ecSignature);
     der_signature derSig;
@@ -35,7 +35,7 @@ CBitcoinResult _encodeSignature(const uint8_t* ecSignature, uint8_t** derSignatu
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _parseSignature(const uint8_t* derSignature, size_t derSignatureLength, bool isStrict, uint8_t** ecSignature, size_t* ecSignatureLength) {
+CBitcoinResult _parseSignature(const uint8_t* _Nonnull derSignature, size_t derSignatureLength, bool isStrict, uint8_t* _Nullable * _Nonnull ecSignature, size_t* _Nonnull ecSignatureLength) {
     const der_signature derSig = _toDataChunk(derSignature, derSignatureLength);
     ec_signature ecSig;
     if(!parse_signature(ecSig, derSig, isStrict)) {
@@ -45,7 +45,7 @@ CBitcoinResult _parseSignature(const uint8_t* derSignature, size_t derSignatureL
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _sign(const uint8_t* hashDigest, const uint8_t* privateKey, uint8_t** ecSignature, size_t* ecSignatureLength) {
+CBitcoinResult _sign(const uint8_t* _Nonnull hashDigest, const uint8_t* _Nonnull privateKey, uint8_t* _Nullable * _Nonnull ecSignature, size_t* _Nonnull ecSignatureLength) {
     const ec_secret secret = _toECSecret(privateKey);
     const hash_digest hash = _toHashDigest(hashDigest);
     ec_signature sig;
@@ -56,7 +56,7 @@ CBitcoinResult _sign(const uint8_t* hashDigest, const uint8_t* privateKey, uint8
     return CBITCOIN_SUCCESS;
 }
 
-bool _verifySignature(const uint8_t* publicKey, size_t publicKeyLength, const uint8_t* hashDigest, const uint8_t* ecSignature) {
+bool _verifySignature(const uint8_t* _Nonnull publicKey, size_t publicKeyLength, const uint8_t* _Nonnull hashDigest, const uint8_t* _Nonnull ecSignature) {
     const hash_digest hash = _toHashDigest(hashDigest);
     const ec_signature sig = _toECSignature(ecSignature);
     if(publicKeyLength == ec_compressed_size) {

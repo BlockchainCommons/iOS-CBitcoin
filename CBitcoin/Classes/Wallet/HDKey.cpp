@@ -28,7 +28,7 @@ size_t _minimumSeedSize(void) {
     return minimum_seed_size;
 }
 
-CBitcoinResult _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t version, char** key, size_t* keyLength) {
+CBitcoinResult _newHDPrivateKey(const uint8_t* _Nonnull seed, size_t seedLength, uint32_t version, char* _Nullable * _Nonnull key, size_t* _Nonnull keyLength) {
     if(seedLength < minimum_seed_size) {
         return CBITCOIN_ERROR_SEED_TOO_SMALL;
     }
@@ -43,7 +43,7 @@ CBitcoinResult _newHDPrivateKey(const uint8_t* seed, size_t seedLength, uint32_t
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, bool isHardened, char** childPrivateKey, size_t* childPrivateKeyLength) {
+CBitcoinResult _deriveHDPrivateKey(const char* _Nonnull parentPrivateKey, size_t index, bool isHardened, char* _Nullable * _Nonnull childPrivateKey, size_t* _Nonnull childPrivateKeyLength) {
     const auto parentPrivateString = std::string(parentPrivateKey);
     const auto parentPrivate = wallet::hd_private(parentPrivateString);
     if(!parentPrivate) {
@@ -62,7 +62,7 @@ CBitcoinResult _deriveHDPrivateKey(const char* parentPrivateKey, size_t index, b
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHardened, uint32_t publicVersion, uint32_t privateVersion, char** childPublicKey, size_t* childPublicKeyLength) {
+CBitcoinResult _deriveHDPublicKey(const char* _Nonnull parentKey, size_t index, bool isHardened, uint32_t publicVersion, uint32_t privateVersion, char* _Nullable * _Nonnull childPublicKey, size_t* _Nonnull childPublicKeyLength) {
     const std::string parentKeyString(parentKey);
     data_chunk parentKeyData;
     if (!decode_base58(parentKeyData, parentKeyString) || parentKeyData.size() != wallet::hd_key_size) {
@@ -114,7 +114,7 @@ CBitcoinResult _deriveHDPublicKey(const char* parentKey, size_t index, bool isHa
     }
 }
 
-CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, char** publicKeyOut, size_t* publicKeyLength) {
+CBitcoinResult _toHDPublicKey(const char* _Nonnull privateKeyIn, uint32_t publicVersion, char* _Nullable * _Nonnull publicKeyOut, size_t* _Nonnull publicKeyLength) {
     const std::string privateKeyString(privateKeyIn);
     wallet::hd_private privateKey(privateKeyString);
     const auto privateHDKey = privateKey.to_hd_key();
@@ -132,7 +132,7 @@ CBitcoinResult _toHDPublicKey(const char* privateKeyIn, uint32_t publicVersion, 
     return CBITCOIN_SUCCESS;
 }
 
-CBitcoinResult _toECKey(const char* hdKeyIn, uint32_t publicVersion, uint32_t privateVersion, bool* isPrivate, uint8_t** ecKeyOut, size_t* ecKeyLength) {
+CBitcoinResult _toECKey(const char* _Nonnull hdKeyIn, uint32_t publicVersion, uint32_t privateVersion, bool* _Nonnull isPrivate, uint8_t* _Nullable * _Nonnull ecKeyOut, size_t* _Nonnull ecKeyLength) {
     const std::string hdKey(hdKeyIn);
     data_chunk hdKeyData;
     if (!decode_base58(hdKeyData, hdKey) || hdKeyData.size() != wallet::hd_key_size) {
