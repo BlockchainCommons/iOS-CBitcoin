@@ -36,7 +36,7 @@ size_t _sss_share_length() {
     return sss_SHARE_LEN;
 }
 
-void _sss_create_shares(void *out, const uint8_t * _Nonnull data, uint8_t n, uint8_t k) {
+void _sss_create_shares(void* _Nonnull out, const uint8_t * _Nonnull data, uint8_t n, uint8_t k) {
     sss_create_shares(out, data, n, k);
 }
 
@@ -44,11 +44,11 @@ int _sss_combine_shares(uint8_t * _Nonnull data, const void * _Nonnull shares, u
     return sss_combine_shares(data, shares, k);
 }
 
-int _sss_create_shares_varlen(uint8_t *out, const uint8_t *data, const size_t data_len, uint8_t n, uint8_t k) {
+int _sss_create_shares_varlen(uint8_t* _Nonnull out, const uint8_t* _Nonnull data, const size_t data_len, uint8_t n, uint8_t k) {
     return sss_create_shares_varlen(out, data, data_len, n, k);
 }
 
-int _sss_combine_shares_varlen(uint8_t *data, const uint8_t *shares, const size_t share_len, uint8_t k) {
+int _sss_combine_shares_varlen(uint8_t* _Nonnull data, const uint8_t* _Nonnull shares, const size_t share_len, uint8_t k) {
     return sss_combine_shares_varlen(data, shares, share_len, k);
 }
 
