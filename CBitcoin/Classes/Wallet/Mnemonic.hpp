@@ -31,6 +31,7 @@ extern "C" {
     size_t _mnemonicWordMultiple(void);
     size_t _mnemonicSeedMultiple(void);
     const void* _Nullable _dictionaryForLanguage(const char* _Nonnull language);
+    CBitcoinResult _wordlistForLanguage(const char* _Nonnull language, char* _Nullable * _Nonnull wordList, size_t* _Nonnull wordListLength);
     CBitcoinResult _mnemonicNew(const uint8_t* _Nonnull seed, size_t seedLength, const void* _Nonnull dictionary, char* _Nullable * _Nonnull mnemonic, size_t* _Nonnull mnemonicLength);
     CBitcoinResult _mnemonicToSeed(const char* _Nonnull mnemonic, const void* _Nonnull dictionary, const char* _Nullable passphrase, uint8_t* _Nullable * _Nonnull seed, size_t* _Nonnull seedLength);
 

@@ -33,33 +33,47 @@ size_t _mnemonicSeedMultiple(void) {
     return wallet::mnemonic_seed_multiple;
 }
 
-const void* _Nullable _dictionaryForLanguage(const char* _Nonnull language) {
-    auto languageString = std::string(language);
-    const wallet::dictionary* dict;
+const wallet::dictionary* _dictionaryForLanguage(std::string languageString) {
     if(languageString == "en") {
-        dict = &wallet::language::en;
+        return &wallet::language::en;
     } else if(languageString == "es") {
-        dict = &wallet::language::es;
+        return &wallet::language::es;
     } else if(languageString == "ja") {
-        dict = &wallet::language::ja;
+        return &wallet::language::ja;
     } else if(languageString == "it") {
-        dict = &wallet::language::it;
+        return &wallet::language::it;
     } else if(languageString == "fr") {
-        dict = &wallet::language::fr;
+        return &wallet::language::fr;
     } else if(languageString == "cs") {
-        dict = &wallet::language::cs;
+        return &wallet::language::cs;
     } else if(languageString == "ru") {
-        dict = &wallet::language::ru;
+        return &wallet::language::ru;
     } else if(languageString == "uk") {
-        dict = &wallet::language::uk;
+        return &wallet::language::uk;
     } else if(languageString == "zh_Hans") {
-        dict = &wallet::language::zh_Hans;
+        return &wallet::language::zh_Hans;
     } else if(languageString == "zh_Hant") {
-        dict = &wallet::language::zh_Hant;
+        return &wallet::language::zh_Hant;
     } else {
         return NULL;
     }
+}
+
+const void* _Nullable _dictionaryForLanguage(const char* _Nonnull language) {
+    const wallet::dictionary* dict = _dictionaryForLanguage(std::string(language));
     return (void*)dict;
+}
+
+CBitcoinResult _wordlistForLanguage(const char* _Nonnull language, char* _Nullable * _Nonnull wordList, size_t* _Nonnull wordListLength) {
+    const wallet::dictionary* dict = _dictionaryForLanguage(std::string(language));
+    if(dict == NULL) {
+        return CBITCOIN_ERROR_UNSUPPORTED_LANGUAGE;
+    }
+    auto words = std::vector<std::string>();
+    std::transform(dict->begin(), dict->end(), std::back_inserter(words), [](const char* c) -> std::string { return std::string(c); });
+    std::string joinedWords = boost::algorithm::join(words, " ");
+    _sendString(joinedWords, wordList, wordListLength);
+    return CBITCOIN_SUCCESS;
 }
 
 CBitcoinResult _mnemonicNew(const uint8_t* _Nonnull seed, size_t seedLength, const void* _Nonnull dictionary, char* _Nullable * _Nonnull mnemonic, size_t* _Nonnull mnemonicLength) {
