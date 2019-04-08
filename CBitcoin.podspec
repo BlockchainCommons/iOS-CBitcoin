@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'CBitcoin'
-    s.version          = '0.4.1'
+    s.version          = '0.5.1'
     s.summary          = 'C Bindings for libbitcoin, breadwalletcore, and sss (Shamir Secret Sharing).'
 
     # s.description      = <<-DESC

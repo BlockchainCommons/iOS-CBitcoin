@@ -28,11 +28,11 @@ int _randombytes(void * _Nonnull buf, size_t n) {
     return randombytes(buf, n);
 }
 
-size_t _sss_message_length() {
+size_t _sss_message_length(void) {
     return sss_MLEN;
 }
 
-size_t _sss_share_length() {
+size_t _sss_share_length(void) {
     return sss_SHARE_LEN;
 }
 
@@ -53,11 +53,11 @@ int _sss_combine_shares_varlen(uint8_t* _Nonnull data, const uint8_t* _Nonnull s
 }
 
 
-size_t _crypto_stream_keybytes() {
+size_t _crypto_stream_keybytes(void) {
     return crypto_stream_KEYBYTES;
 }
 
-size_t _crypto_stream_noncebytes() {
+size_t _crypto_stream_noncebytes(void) {
     return crypto_stream_NONCEBYTES;
 }
 
