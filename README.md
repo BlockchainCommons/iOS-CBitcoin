@@ -21,12 +21,12 @@ $ brew install git-lfs
 $ which git
 /usr/local/bin/git
 $ git --version
-git version 2.20.1
+git version 2.21.0
 ```
 
 ## Installation
 
-CBitcoin no longer supports building via Cocoapods, but since it also relies on embedding several third-party pre-built binary frameworks (libbitcoin etc.) it is also not suitable for distribution via the Swift Package Manager at this time. So for now, it is built directly as an Xcode project.
+`CBitcoin` no longer supports building via Cocoapods, but since it also relies on embedding several third-party pre-built binary frameworks (libbitcoin etc.) it is also not suitable for distribution via the Swift Package Manager at this time. So for now, it is built directly as an Xcode project.
 
 In the shell:
 
@@ -56,4 +56,4 @@ Wolf McNally, wolf@wolfmcnally.com
 
 ## License
 
-CBitcoin is available under the Apache 2 license. See the LICENSE file for more info.
+`CBitcoin` is available under the Apache 2 license. See the LICENSE file for more info.
