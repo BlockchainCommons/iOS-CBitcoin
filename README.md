@@ -46,7 +46,7 @@ Within Xcode:
 
 ## Unit Tests
 
-* `CBitcoin` does not have built-in unit tests, but the `Bitcoin` Swift framework builds on `CBitcoin` and contains unit tests for all `CBitcoin` functionality.
+`CBitcoin` does not have built-in unit tests, but the `Bitcoin` Swift framework builds on `CBitcoin` and contains unit tests for all `CBitcoin` functionality.
 
 ## Building the frameworks yourself
 
