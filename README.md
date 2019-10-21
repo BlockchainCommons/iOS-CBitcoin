@@ -1,7 +1,5 @@
 # CBitcoin
 
-[![CI Status](https://img.shields.io/travis/wolfmcnally/CBitcoin.svg?style=flat)](https://travis-ci.org/wolfmcnally/CBitcoin)
-[![Version](https://img.shields.io/cocoapods/v/CBitcoin.svg?style=flat)](https://cocoapods.org/pods/CBitcoin)
 [![License](https://img.shields.io/cocoapods/l/CBitcoin.svg?style=flat)](https://cocoapods.org/pods/CBitcoin)
 [![Platform](https://img.shields.io/cocoapods/p/CBitcoin.svg?style=flat)](https://cocoapods.org/pods/CBitcoin)
 
@@ -58,4 +56,4 @@ Wolf McNally, wolf@wolfmcnally.com
 
 ## License
 
-CBitcoin is available under the MIT license. See the LICENSE file for more info.
+CBitcoin is available under the Apache 2 license. See the LICENSE file for more info.
