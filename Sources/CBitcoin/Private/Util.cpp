@@ -34,11 +34,11 @@ void _sendData(const data_chunk& chunk, uint8_t* _Nullable * _Nonnull data, size
     std::copy(chunk.begin(), chunk.end(), *data);
 }
 
-data_slice _toDataSlice(const uint8_t* _Nonnull data, uint32_t length) {
+data_slice _toDataSlice(const uint8_t* _Nonnull data, size_t length) {
     return data_slice(data, data + length);
 }
 
-data_chunk _toDataChunk(const uint8_t* _Nonnull data, uint32_t length) {
+data_chunk _toDataChunk(const uint8_t* _Nonnull data, size_t length) {
     return data_chunk(data, data + length);
 }
 

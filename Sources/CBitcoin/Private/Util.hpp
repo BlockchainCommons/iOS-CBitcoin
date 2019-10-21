@@ -26,9 +26,9 @@
 void _sendString(std::string s, char* _Nullable * _Nonnull string, size_t* _Nonnull stringLength);
 void _sendData(const libbitcoin::data_chunk& chunk, uint8_t* _Nullable * _Nonnull data, size_t* _Nonnull dataLength);
 
-libbitcoin::data_slice _toDataSlice(const uint8_t* _Nonnull data, uint32_t length);
+libbitcoin::data_slice _toDataSlice(const uint8_t* _Nonnull data, size_t length);
 
-libbitcoin::data_chunk _toDataChunk(const uint8_t* _Nonnull data, uint32_t length);
+libbitcoin::data_chunk _toDataChunk(const uint8_t* _Nonnull data, size_t length);
 
 //template <size_t Size>
 //std::array<uint8_t, Size> _toArray(const uint8_t* _Nonnull data);
@@ -54,7 +54,7 @@ void _toByteArray(libbitcoin::byte_array<SIZE>& array, const uint8_t* _Nonnull b
 }
 
 template<typename T, typename U>
-std::vector<T> _receiveInstances(const U* const* instances, size_t count) {
+std::vector<T> _receiveInstances(const U* _Nonnull const* _Nonnull instances, size_t count) {
     std::vector<T> list;
     for(auto index = 0; index < count; index++) {
         const auto& value = *(T*)instances[index];
@@ -64,7 +64,7 @@ std::vector<T> _receiveInstances(const U* const* instances, size_t count) {
 }
 
 template<typename T, typename U>
-void _sendInstances(std::vector<T> list, U*** instances, size_t* _Nonnull count) {
+void _sendInstances(std::vector<T> list, U* _Nonnull * _Nonnull * _Nonnull instances, size_t* _Nonnull count) {
     *count = list.size();
     *instances = static_cast<U**>(malloc(*count * sizeof(U*)));
     auto instancesArray = *instances;

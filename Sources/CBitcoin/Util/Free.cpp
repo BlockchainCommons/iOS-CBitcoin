@@ -1,5 +1,5 @@
 //
-//  Free.hpp
+//  Free.cpp
 //  CBitcoin
 //
 //  Created by Wolf McNally on 10/24/18.
@@ -18,22 +18,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#ifndef Free_hpp
-#define Free_hpp
+#include "Free.hpp"
 
-#include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-    void _freeData(void* data);
-
-    typedef struct _instance _instance;
-    void _deleteInstance(_instance* instance);
-
-#ifdef __cplusplus
+void _freeData(void* data) {
+    free(data);
 }
-#endif
 
-#endif /* Free_hpp */
+void _deleteInstance(_instance* instance) {
+    delete reinterpret_cast<int*>(instance);
+}

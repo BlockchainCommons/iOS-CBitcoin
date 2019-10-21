@@ -1,0 +1,4 @@
+framework module CBitcoin {
+    umbrella header "CBitcoin.h"
+    export *
+}

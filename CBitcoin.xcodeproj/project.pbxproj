@@ -1,0 +1,682 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		031A62C4235D6A8200CA9C4A /* CBitcoin.h in Headers */ = {isa = PBXBuildFile; fileRef = 031A62C3235D6A8200CA9C4A /* CBitcoin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		031A62C9235D6E3800CA9C4A /* libbitcoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AA235D551100BCEC35 /* libbitcoin.framework */; };
+		031A62CA235D6E3800CA9C4A /* libbitcoin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AA235D551100BCEC35 /* libbitcoin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		031A62CC235D6E3900CA9C4A /* libboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AC235D551100BCEC35 /* libboost.framework */; };
+		031A62CD235D6E3900CA9C4A /* libboost.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AC235D551100BCEC35 /* libboost.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		031A62CE235D6E3A00CA9C4A /* libsecp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AB235D551100BCEC35 /* libsecp256k1.framework */; };
+		031A62CF235D6E3A00CA9C4A /* libsecp256k1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AB235D551100BCEC35 /* libsecp256k1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		031A62D0235D6E3C00CA9C4A /* libsss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134A9235D551100BCEC35 /* libsss.framework */; };
+		031A62D1235D6E3C00CA9C4A /* libsss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134A9235D551100BCEC35 /* libsss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		03213473235D54F600BCEC35 /* Base58.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213437235D54F600BCEC35 /* Base58.cpp */; };
+		03213474235D54F600BCEC35 /* Base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213438235D54F600BCEC35 /* Base64.cpp */; };
+		03213475235D54F600BCEC35 /* Base16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213439235D54F600BCEC35 /* Base16.cpp */; };
+		03213476235D54F600BCEC35 /* Base10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321343A235D54F600BCEC35 /* Base10.cpp */; };
+		03213477235D54F600BCEC35 /* Base32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321343B235D54F600BCEC35 /* Base32.cpp */; };
+		03213478235D54F600BCEC35 /* Base85.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321343C235D54F600BCEC35 /* Base85.cpp */; };
+		03213479235D54F600BCEC35 /* Free.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321343E235D54F600BCEC35 /* Free.cpp */; };
+		0321347A235D54F600BCEC35 /* PaymentAddress.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213440235D54F600BCEC35 /* PaymentAddress.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321347B235D54F600BCEC35 /* Transaction.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213441235D54F600BCEC35 /* Transaction.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321347C235D54F600BCEC35 /* ECPublicKey.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213442235D54F600BCEC35 /* ECPublicKey.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321347D235D54F600BCEC35 /* Hash.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213443235D54F600BCEC35 /* Hash.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321347E235D54F600BCEC35 /* EllipticCurve.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213444235D54F600BCEC35 /* EllipticCurve.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321347F235D54F600BCEC35 /* WrappedData.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213445235D54F600BCEC35 /* WrappedData.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213480235D54F600BCEC35 /* Base85.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213446235D54F600BCEC35 /* Base85.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213481235D54F600BCEC35 /* shamir.h in Headers */ = {isa = PBXBuildFile; fileRef = 03213447235D54F600BCEC35 /* shamir.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213482235D54F600BCEC35 /* ECPrivateKey.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213448235D54F600BCEC35 /* ECPrivateKey.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213483235D54F600BCEC35 /* Opcode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213449235D54F600BCEC35 /* Opcode.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213484235D54F600BCEC35 /* CBitcoinResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344A235D54F600BCEC35 /* CBitcoinResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213485235D54F600BCEC35 /* Base32.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344B235D54F600BCEC35 /* Base32.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213486235D54F600BCEC35 /* Base16.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344C235D54F600BCEC35 /* Base16.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213487235D54F600BCEC35 /* Script.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344D235D54F600BCEC35 /* Script.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213488235D54F600BCEC35 /* Base10.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344E235D54F600BCEC35 /* Base10.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213489235D54F600BCEC35 /* Output.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0321344F235D54F600BCEC35 /* Output.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348A235D54F600BCEC35 /* Mnemonic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213450235D54F600BCEC35 /* Mnemonic.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348B235D54F600BCEC35 /* OutputPoint.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213451235D54F600BCEC35 /* OutputPoint.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348C235D54F600BCEC35 /* Operation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213452235D54F600BCEC35 /* Operation.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348D235D54F600BCEC35 /* Input.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213453235D54F600BCEC35 /* Input.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348E235D54F600BCEC35 /* HDKey.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213454235D54F600BCEC35 /* HDKey.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		0321348F235D54F600BCEC35 /* Free.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213455235D54F600BCEC35 /* Free.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213490235D54F600BCEC35 /* Base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213456235D54F600BCEC35 /* Base64.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213491235D54F600BCEC35 /* Message.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213457235D54F600BCEC35 /* Message.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213492235D54F600BCEC35 /* Base58.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213458235D54F600BCEC35 /* Base58.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		03213494235D54F600BCEC35 /* OutputPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321345B235D54F600BCEC35 /* OutputPoint.cpp */; };
+		03213495235D54F600BCEC35 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321345C235D54F600BCEC35 /* Input.cpp */; };
+		03213496235D54F600BCEC35 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321345D235D54F600BCEC35 /* Script.cpp */; };
+		03213497235D54F600BCEC35 /* Output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321345E235D54F600BCEC35 /* Output.cpp */; };
+		03213498235D54F600BCEC35 /* Transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321345F235D54F600BCEC35 /* Transaction.cpp */; };
+		03213499235D54F600BCEC35 /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213461235D54F600BCEC35 /* Hash.cpp */; };
+		0321349A235D54F600BCEC35 /* EllipticCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213462235D54F600BCEC35 /* EllipticCurve.cpp */; };
+		0321349B235D54F600BCEC35 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213464235D54F600BCEC35 /* Util.cpp */; };
+		0321349C235D54F600BCEC35 /* Util.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 03213465235D54F600BCEC35 /* Util.hpp */; };
+		0321349D235D54F600BCEC35 /* shamir.c in Sources */ = {isa = PBXBuildFile; fileRef = 03213467235D54F600BCEC35 /* shamir.c */; };
+		0321349E235D54F600BCEC35 /* Operation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213469235D54F600BCEC35 /* Operation.cpp */; };
+		0321349F235D54F600BCEC35 /* Opcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321346A235D54F600BCEC35 /* Opcode.cpp */; };
+		032134A0235D54F600BCEC35 /* HDKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321346C235D54F600BCEC35 /* HDKey.cpp */; };
+		032134A1235D54F600BCEC35 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321346D235D54F600BCEC35 /* Message.cpp */; };
+		032134A2235D54F600BCEC35 /* Mnemonic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321346E235D54F600BCEC35 /* Mnemonic.cpp */; };
+		032134A3235D54F600BCEC35 /* ECPrivateKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0321346F235D54F600BCEC35 /* ECPrivateKey.cpp */; };
+		032134A4235D54F600BCEC35 /* PaymentAddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213470235D54F600BCEC35 /* PaymentAddress.cpp */; };
+		032134A5235D54F600BCEC35 /* ECPublicKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213471235D54F600BCEC35 /* ECPublicKey.cpp */; };
+		032134A6235D54F600BCEC35 /* WrappedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213472235D54F600BCEC35 /* WrappedData.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		031A62CB235D6E3800CA9C4A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				031A62D1235D6E3C00CA9C4A /* libsss.framework in Embed Frameworks */,
+				031A62CD235D6E3900CA9C4A /* libboost.framework in Embed Frameworks */,
+				031A62CF235D6E3A00CA9C4A /* libsecp256k1.framework in Embed Frameworks */,
+				031A62CA235D6E3800CA9C4A /* libbitcoin.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		031A62C3235D6A8200CA9C4A /* CBitcoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBitcoin.h; sourceTree = "<group>"; };
+		031A62C5235D6BB200CA9C4A /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		03213437235D54F600BCEC35 /* Base58.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base58.cpp; sourceTree = "<group>"; };
+		03213438235D54F600BCEC35 /* Base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base64.cpp; sourceTree = "<group>"; };
+		03213439235D54F600BCEC35 /* Base16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base16.cpp; sourceTree = "<group>"; };
+		0321343A235D54F600BCEC35 /* Base10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base10.cpp; sourceTree = "<group>"; };
+		0321343B235D54F600BCEC35 /* Base32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base32.cpp; sourceTree = "<group>"; };
+		0321343C235D54F600BCEC35 /* Base85.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base85.cpp; sourceTree = "<group>"; };
+		0321343E235D54F600BCEC35 /* Free.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Free.cpp; sourceTree = "<group>"; };
+		03213440235D54F600BCEC35 /* PaymentAddress.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PaymentAddress.hpp; sourceTree = "<group>"; };
+		03213441235D54F600BCEC35 /* Transaction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transaction.hpp; sourceTree = "<group>"; };
+		03213442235D54F600BCEC35 /* ECPublicKey.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ECPublicKey.hpp; sourceTree = "<group>"; };
+		03213443235D54F600BCEC35 /* Hash.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hash.hpp; sourceTree = "<group>"; };
+		03213444235D54F600BCEC35 /* EllipticCurve.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EllipticCurve.hpp; sourceTree = "<group>"; };
+		03213445235D54F600BCEC35 /* WrappedData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WrappedData.hpp; sourceTree = "<group>"; };
+		03213446235D54F600BCEC35 /* Base85.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base85.hpp; sourceTree = "<group>"; };
+		03213447235D54F600BCEC35 /* shamir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shamir.h; sourceTree = "<group>"; };
+		03213448235D54F600BCEC35 /* ECPrivateKey.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ECPrivateKey.hpp; sourceTree = "<group>"; };
+		03213449235D54F600BCEC35 /* Opcode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Opcode.hpp; sourceTree = "<group>"; };
+		0321344A235D54F600BCEC35 /* CBitcoinResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CBitcoinResult.hpp; sourceTree = "<group>"; };
+		0321344B235D54F600BCEC35 /* Base32.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base32.hpp; sourceTree = "<group>"; };
+		0321344C235D54F600BCEC35 /* Base16.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base16.hpp; sourceTree = "<group>"; };
+		0321344D235D54F600BCEC35 /* Script.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Script.hpp; sourceTree = "<group>"; };
+		0321344E235D54F600BCEC35 /* Base10.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base10.hpp; sourceTree = "<group>"; };
+		0321344F235D54F600BCEC35 /* Output.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Output.hpp; sourceTree = "<group>"; };
+		03213450235D54F600BCEC35 /* Mnemonic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mnemonic.hpp; sourceTree = "<group>"; };
+		03213451235D54F600BCEC35 /* OutputPoint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutputPoint.hpp; sourceTree = "<group>"; };
+		03213452235D54F600BCEC35 /* Operation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Operation.hpp; sourceTree = "<group>"; };
+		03213453235D54F600BCEC35 /* Input.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
+		03213454235D54F600BCEC35 /* HDKey.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HDKey.hpp; sourceTree = "<group>"; };
+		03213455235D54F600BCEC35 /* Free.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Free.hpp; sourceTree = "<group>"; };
+		03213456235D54F600BCEC35 /* Base64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base64.hpp; sourceTree = "<group>"; };
+		03213457235D54F600BCEC35 /* Message.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Message.hpp; sourceTree = "<group>"; };
+		03213458235D54F600BCEC35 /* Base58.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Base58.hpp; sourceTree = "<group>"; };
+		0321345B235D54F600BCEC35 /* OutputPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputPoint.cpp; sourceTree = "<group>"; };
+		0321345C235D54F600BCEC35 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		0321345D235D54F600BCEC35 /* Script.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
+		0321345E235D54F600BCEC35 /* Output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Output.cpp; sourceTree = "<group>"; };
+		0321345F235D54F600BCEC35 /* Transaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transaction.cpp; sourceTree = "<group>"; };
+		03213461235D54F600BCEC35 /* Hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hash.cpp; sourceTree = "<group>"; };
+		03213462235D54F600BCEC35 /* EllipticCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EllipticCurve.cpp; sourceTree = "<group>"; };
+		03213464235D54F600BCEC35 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		03213465235D54F600BCEC35 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		03213467235D54F600BCEC35 /* shamir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shamir.c; sourceTree = "<group>"; };
+		03213469235D54F600BCEC35 /* Operation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Operation.cpp; sourceTree = "<group>"; };
+		0321346A235D54F600BCEC35 /* Opcode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Opcode.cpp; sourceTree = "<group>"; };
+		0321346C235D54F600BCEC35 /* HDKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HDKey.cpp; sourceTree = "<group>"; };
+		0321346D235D54F600BCEC35 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
+		0321346E235D54F600BCEC35 /* Mnemonic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mnemonic.cpp; sourceTree = "<group>"; };
+		0321346F235D54F600BCEC35 /* ECPrivateKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECPrivateKey.cpp; sourceTree = "<group>"; };
+		03213470235D54F600BCEC35 /* PaymentAddress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PaymentAddress.cpp; sourceTree = "<group>"; };
+		03213471235D54F600BCEC35 /* ECPublicKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECPublicKey.cpp; sourceTree = "<group>"; };
+		03213472235D54F600BCEC35 /* WrappedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WrappedData.cpp; sourceTree = "<group>"; };
+		032134A9235D551100BCEC35 /* libsss.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libsss.framework; sourceTree = "<group>"; };
+		032134AA235D551100BCEC35 /* libbitcoin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libbitcoin.framework; sourceTree = "<group>"; };
+		032134AB235D551100BCEC35 /* libsecp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libsecp256k1.framework; sourceTree = "<group>"; };
+		032134AC235D551100BCEC35 /* libboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libboost.framework; sourceTree = "<group>"; };
+		032134B2235D555100BCEC35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		034E863D235D545400F44F7B /* CBitcoin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CBitcoin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		034E863A235D545400F44F7B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				031A62D0235D6E3C00CA9C4A /* libsss.framework in Frameworks */,
+				031A62CC235D6E3900CA9C4A /* libboost.framework in Frameworks */,
+				031A62CE235D6E3A00CA9C4A /* libsecp256k1.framework in Frameworks */,
+				031A62C9235D6E3800CA9C4A /* libbitcoin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03213435235D54F600BCEC35 /* CBitcoin */ = {
+			isa = PBXGroup;
+			children = (
+				03213436235D54F600BCEC35 /* Formats */,
+				0321343D235D54F600BCEC35 /* Util */,
+				0321343F235D54F600BCEC35 /* include */,
+				0321345A235D54F600BCEC35 /* Chain */,
+				03213460235D54F600BCEC35 /* Math */,
+				03213463235D54F600BCEC35 /* Private */,
+				03213466235D54F600BCEC35 /* SSS */,
+				03213468235D54F600BCEC35 /* Machine */,
+				0321346B235D54F600BCEC35 /* Wallet */,
+			);
+			name = CBitcoin;
+			path = Sources/CBitcoin;
+			sourceTree = "<group>";
+		};
+		03213436235D54F600BCEC35 /* Formats */ = {
+			isa = PBXGroup;
+			children = (
+				03213437235D54F600BCEC35 /* Base58.cpp */,
+				03213438235D54F600BCEC35 /* Base64.cpp */,
+				03213439235D54F600BCEC35 /* Base16.cpp */,
+				0321343A235D54F600BCEC35 /* Base10.cpp */,
+				0321343B235D54F600BCEC35 /* Base32.cpp */,
+				0321343C235D54F600BCEC35 /* Base85.cpp */,
+			);
+			path = Formats;
+			sourceTree = "<group>";
+		};
+		0321343D235D54F600BCEC35 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0321343E235D54F600BCEC35 /* Free.cpp */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0321343F235D54F600BCEC35 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				03213440235D54F600BCEC35 /* PaymentAddress.hpp */,
+				03213441235D54F600BCEC35 /* Transaction.hpp */,
+				03213442235D54F600BCEC35 /* ECPublicKey.hpp */,
+				03213443235D54F600BCEC35 /* Hash.hpp */,
+				03213444235D54F600BCEC35 /* EllipticCurve.hpp */,
+				03213445235D54F600BCEC35 /* WrappedData.hpp */,
+				03213446235D54F600BCEC35 /* Base85.hpp */,
+				03213447235D54F600BCEC35 /* shamir.h */,
+				03213448235D54F600BCEC35 /* ECPrivateKey.hpp */,
+				03213449235D54F600BCEC35 /* Opcode.hpp */,
+				0321344A235D54F600BCEC35 /* CBitcoinResult.hpp */,
+				0321344B235D54F600BCEC35 /* Base32.hpp */,
+				0321344C235D54F600BCEC35 /* Base16.hpp */,
+				0321344D235D54F600BCEC35 /* Script.hpp */,
+				0321344E235D54F600BCEC35 /* Base10.hpp */,
+				0321344F235D54F600BCEC35 /* Output.hpp */,
+				03213450235D54F600BCEC35 /* Mnemonic.hpp */,
+				03213451235D54F600BCEC35 /* OutputPoint.hpp */,
+				03213452235D54F600BCEC35 /* Operation.hpp */,
+				03213453235D54F600BCEC35 /* Input.hpp */,
+				03213454235D54F600BCEC35 /* HDKey.hpp */,
+				03213455235D54F600BCEC35 /* Free.hpp */,
+				03213456235D54F600BCEC35 /* Base64.hpp */,
+				03213457235D54F600BCEC35 /* Message.hpp */,
+				03213458235D54F600BCEC35 /* Base58.hpp */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		0321345A235D54F600BCEC35 /* Chain */ = {
+			isa = PBXGroup;
+			children = (
+				0321345B235D54F600BCEC35 /* OutputPoint.cpp */,
+				0321345C235D54F600BCEC35 /* Input.cpp */,
+				0321345D235D54F600BCEC35 /* Script.cpp */,
+				0321345E235D54F600BCEC35 /* Output.cpp */,
+				0321345F235D54F600BCEC35 /* Transaction.cpp */,
+			);
+			path = Chain;
+			sourceTree = "<group>";
+		};
+		03213460235D54F600BCEC35 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				03213461235D54F600BCEC35 /* Hash.cpp */,
+				03213462235D54F600BCEC35 /* EllipticCurve.cpp */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
+		03213463235D54F600BCEC35 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				03213464235D54F600BCEC35 /* Util.cpp */,
+				03213465235D54F600BCEC35 /* Util.hpp */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		03213466235D54F600BCEC35 /* SSS */ = {
+			isa = PBXGroup;
+			children = (
+				03213467235D54F600BCEC35 /* shamir.c */,
+			);
+			path = SSS;
+			sourceTree = "<group>";
+		};
+		03213468235D54F600BCEC35 /* Machine */ = {
+			isa = PBXGroup;
+			children = (
+				03213469235D54F600BCEC35 /* Operation.cpp */,
+				0321346A235D54F600BCEC35 /* Opcode.cpp */,
+			);
+			path = Machine;
+			sourceTree = "<group>";
+		};
+		0321346B235D54F600BCEC35 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				0321346C235D54F600BCEC35 /* HDKey.cpp */,
+				0321346D235D54F600BCEC35 /* Message.cpp */,
+				0321346E235D54F600BCEC35 /* Mnemonic.cpp */,
+				0321346F235D54F600BCEC35 /* ECPrivateKey.cpp */,
+				03213470235D54F600BCEC35 /* PaymentAddress.cpp */,
+				03213471235D54F600BCEC35 /* ECPublicKey.cpp */,
+				03213472235D54F600BCEC35 /* WrappedData.cpp */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		032134A7235D551100BCEC35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				032134A9235D551100BCEC35 /* libsss.framework */,
+				032134AA235D551100BCEC35 /* libbitcoin.framework */,
+				032134AB235D551100BCEC35 /* libsecp256k1.framework */,
+				032134AC235D551100BCEC35 /* libboost.framework */,
+			);
+			name = Frameworks;
+			path = Sources/Frameworks;
+			sourceTree = "<group>";
+		};
+		034E8633235D545400F44F7B = {
+			isa = PBXGroup;
+			children = (
+				032134B2235D555100BCEC35 /* Info.plist */,
+				031A62C5235D6BB200CA9C4A /* module.modulemap */,
+				031A62C3235D6A8200CA9C4A /* CBitcoin.h */,
+				032134A7235D551100BCEC35 /* Frameworks */,
+				03213435235D54F600BCEC35 /* CBitcoin */,
+				034E863E235D545400F44F7B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		034E863E235D545400F44F7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				034E863D235D545400F44F7B /* CBitcoin.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		034E8638235D545400F44F7B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03213485235D54F600BCEC35 /* Base32.hpp in Headers */,
+				0321348C235D54F600BCEC35 /* Operation.hpp in Headers */,
+				03213489235D54F600BCEC35 /* Output.hpp in Headers */,
+				03213487235D54F600BCEC35 /* Script.hpp in Headers */,
+				03213486235D54F600BCEC35 /* Base16.hpp in Headers */,
+				0321348B235D54F600BCEC35 /* OutputPoint.hpp in Headers */,
+				0321348A235D54F600BCEC35 /* Mnemonic.hpp in Headers */,
+				03213492235D54F600BCEC35 /* Base58.hpp in Headers */,
+				0321347F235D54F600BCEC35 /* WrappedData.hpp in Headers */,
+				0321348F235D54F600BCEC35 /* Free.hpp in Headers */,
+				03213484235D54F600BCEC35 /* CBitcoinResult.hpp in Headers */,
+				031A62C4235D6A8200CA9C4A /* CBitcoin.h in Headers */,
+				0321347C235D54F600BCEC35 /* ECPublicKey.hpp in Headers */,
+				03213481235D54F600BCEC35 /* shamir.h in Headers */,
+				0321347A235D54F600BCEC35 /* PaymentAddress.hpp in Headers */,
+				03213483235D54F600BCEC35 /* Opcode.hpp in Headers */,
+				03213491235D54F600BCEC35 /* Message.hpp in Headers */,
+				03213482235D54F600BCEC35 /* ECPrivateKey.hpp in Headers */,
+				0321347D235D54F600BCEC35 /* Hash.hpp in Headers */,
+				0321347E235D54F600BCEC35 /* EllipticCurve.hpp in Headers */,
+				0321348E235D54F600BCEC35 /* HDKey.hpp in Headers */,
+				03213488235D54F600BCEC35 /* Base10.hpp in Headers */,
+				03213480235D54F600BCEC35 /* Base85.hpp in Headers */,
+				03213490235D54F600BCEC35 /* Base64.hpp in Headers */,
+				0321347B235D54F600BCEC35 /* Transaction.hpp in Headers */,
+				0321349C235D54F600BCEC35 /* Util.hpp in Headers */,
+				0321348D235D54F600BCEC35 /* Input.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		034E863C235D545400F44F7B /* CBitcoin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 034E8645235D545400F44F7B /* Build configuration list for PBXNativeTarget "CBitcoin" */;
+			buildPhases = (
+				034E8638235D545400F44F7B /* Headers */,
+				034E8639235D545400F44F7B /* Sources */,
+				034E863A235D545400F44F7B /* Frameworks */,
+				034E863B235D545400F44F7B /* Resources */,
+				031A62CB235D6E3800CA9C4A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CBitcoin;
+			productName = CBitcoin;
+			productReference = 034E863D235D545400F44F7B /* CBitcoin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		034E8634235D545400F44F7B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = "Blockchain Commons";
+				TargetAttributes = {
+					034E863C235D545400F44F7B = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = 034E8637235D545400F44F7B /* Build configuration list for PBXProject "CBitcoin" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 034E8633235D545400F44F7B;
+			productRefGroup = 034E863E235D545400F44F7B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				034E863C235D545400F44F7B /* CBitcoin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		034E863B235D545400F44F7B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		034E8639235D545400F44F7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				032134A5235D54F600BCEC35 /* ECPublicKey.cpp in Sources */,
+				03213496235D54F600BCEC35 /* Script.cpp in Sources */,
+				032134A0235D54F600BCEC35 /* HDKey.cpp in Sources */,
+				03213474235D54F600BCEC35 /* Base64.cpp in Sources */,
+				032134A2235D54F600BCEC35 /* Mnemonic.cpp in Sources */,
+				03213478235D54F600BCEC35 /* Base85.cpp in Sources */,
+				03213473235D54F600BCEC35 /* Base58.cpp in Sources */,
+				03213494235D54F600BCEC35 /* OutputPoint.cpp in Sources */,
+				03213499235D54F600BCEC35 /* Hash.cpp in Sources */,
+				03213479235D54F600BCEC35 /* Free.cpp in Sources */,
+				03213498235D54F600BCEC35 /* Transaction.cpp in Sources */,
+				032134A1235D54F600BCEC35 /* Message.cpp in Sources */,
+				03213477235D54F600BCEC35 /* Base32.cpp in Sources */,
+				032134A4235D54F600BCEC35 /* PaymentAddress.cpp in Sources */,
+				0321349B235D54F600BCEC35 /* Util.cpp in Sources */,
+				0321349A235D54F600BCEC35 /* EllipticCurve.cpp in Sources */,
+				0321349F235D54F600BCEC35 /* Opcode.cpp in Sources */,
+				0321349E235D54F600BCEC35 /* Operation.cpp in Sources */,
+				03213495235D54F600BCEC35 /* Input.cpp in Sources */,
+				032134A6235D54F600BCEC35 /* WrappedData.cpp in Sources */,
+				032134A3235D54F600BCEC35 /* ECPrivateKey.cpp in Sources */,
+				03213475235D54F600BCEC35 /* Base16.cpp in Sources */,
+				0321349D235D54F600BCEC35 /* shamir.c in Sources */,
+				03213476235D54F600BCEC35 /* Base10.cpp in Sources */,
+				03213497235D54F600BCEC35 /* Output.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		034E8643235D545400F44F7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		034E8644235D545400F44F7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		034E8646235D545400F44F7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 92TUA8H52D;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources/Frameworks",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = module.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = blockchaincommons.CBitcoin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Sources/Frameworks/libbitcoin.framework/Headers\"",
+					"\"$(SRCROOT)/Sources/Frameworks/libsss.framework/Headers\"",
+					"\"$(SRCROOT)/Sources/Frameworks/libboost.framework/Headers\"",
+				);
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		034E8647235D545400F44F7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 92TUA8H52D;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources/Frameworks",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = module.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = blockchaincommons.CBitcoin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Sources/Frameworks/libbitcoin.framework/Headers\"",
+					"\"$(SRCROOT)/Sources/Frameworks/libsss.framework/Headers\"",
+					"\"$(SRCROOT)/Sources/Frameworks/libboost.framework/Headers\"",
+				);
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		034E8637235D545400F44F7B /* Build configuration list for PBXProject "CBitcoin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				034E8643235D545400F44F7B /* Debug */,
+				034E8644235D545400F44F7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		034E8645235D545400F44F7B /* Build configuration list for PBXNativeTarget "CBitcoin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				034E8646235D545400F44F7B /* Debug */,
+				034E8647235D545400F44F7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 034E8634235D545400F44F7B /* Project object */;
+}

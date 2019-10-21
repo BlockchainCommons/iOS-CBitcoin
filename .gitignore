@@ -25,3 +25,5 @@ DerivedData
 Carthage/Build
 Pods/
 Frameworks/
+
+.build

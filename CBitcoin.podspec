@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
     s.module_name = 'CBitcoin'
 
     s.prepare_command = <<-CMD
-            pushd CBitcoin
+            pushd Sources
             rm -rf Frameworks/
             unzip -o -q Frameworks.zip
             popd

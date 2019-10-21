@@ -52,7 +52,7 @@ CBitcoinResult _deriveHDPrivateKey(const char* _Nonnull parentPrivateKey, size_t
 
     static constexpr auto firstHard = wallet::hd_first_hardened_key;
     const auto position = isHardened ? firstHard + index : index;
-    const auto childPrivate = parentPrivate.derive_private(position);
+    const auto childPrivate = parentPrivate.derive_private(static_cast<uint32_t>(position));
     if (!childPrivate) {
         return CBITCOIN_ERROR_INVALID_KEY;
     }
@@ -91,7 +91,7 @@ CBitcoinResult _deriveHDPublicKey(const char* _Nonnull parentKey, size_t index, 
         static constexpr auto firstHard = wallet::hd_first_hardened_key;
         const auto position = isHardened ? firstHard + index : index;
 
-        const auto childPubKey = privateKey.derive_public(position);
+        const auto childPubKey = privateKey.derive_public(static_cast<uint32_t>(position));
         if(!childPubKey) {
             return CBITCOIN_ERROR_INVALID_KEY;
         }
@@ -104,7 +104,7 @@ CBitcoinResult _deriveHDPublicKey(const char* _Nonnull parentKey, size_t index, 
         if(!publicKey) {
             return CBITCOIN_ERROR_INVALID_KEY;
         }
-        const auto childPubKey = publicKey.derive_public(index);
+        const auto childPubKey = publicKey.derive_public(static_cast<uint32_t>(index));
         if(!childPubKey) {
             return CBITCOIN_ERROR_INVALID_KEY;
         }

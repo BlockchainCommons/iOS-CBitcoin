@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 POD_ROOT="${PWD}"
-SRC_ROOT="${POD_ROOT}/CBitcoin"
+SRC_ROOT="${POD_ROOT}/Sources"
 FRAMEWORKS_ROOT="${SRC_ROOT}/Frameworks"
 DEPS_ROOT="${SRC_ROOT}/airbitz-core/deps"
 DEPS_BUILD_ROOT="${DEPS_ROOT}/build"
