@@ -28,6 +28,8 @@ git version 2.20.1
 
 ## Installation
 
+CBitcoin no longer supports building via Cocoapods, but since it also relies on embedding several third-party pre-built binary frameworks (libbitcoin etc.) it is also not suitable for distribution via the Swift Package Manager at this time. So for now, it is built directly as an Xcode project.
+
 In the shell:
 
 ```bash
@@ -44,7 +46,7 @@ Within Xcode:
 
 ## Unit Tests
 
-* `CBitcoin` does not have built-in unit tests, but the `Bitcoin` Swift framework builds on `CBitcoin` and contains unit tests for all of `CBitcoin` functionality.
+* `CBitcoin` does not have built-in unit tests, but the `Bitcoin` Swift framework builds on `CBitcoin` and contains unit tests for all `CBitcoin` functionality.
 
 ## Building the frameworks yourself
 
