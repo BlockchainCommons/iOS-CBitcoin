@@ -26,17 +26,25 @@ $ git --version
 git version 2.20.1
 ```
 
-## Unit Tests
-
-Tests for CBitcoin are available in the Bitcoin framework.
-
 ## Installation
 
-CBitcoin is available through [Cocoapads](https://cocoapods.org). To install it, add the following line to your Podfile:
+In the shell:
 
-```ruby
-pod 'CBitcoin'
+```bash
+$ git clone https://github.com/BlockchainCommons/iOS-CBitcoin.git CBitcoin
+$ cd CBitcoin/Sources
+$ unzip -q Frameworks.zip
+$ cd ..
+$ open CBitcoin.xcodeproj/
 ```
+
+Within Xcode:
+
+* Build the `CBitcoin` target for an available platform.
+
+## Unit Tests
+
+* `CBitcoin` does not have built-in unit tests, but the `Bitcoin` Swift framework builds on `CBitcoin` and contains unit tests for all of `CBitcoin` functionality.
 
 ## Building the frameworks yourself
 
