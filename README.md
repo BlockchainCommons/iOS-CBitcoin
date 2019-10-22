@@ -1,8 +1,5 @@
 # CBitcoin
 
-[![License](https://img.shields.io/cocoapods/l/CBitcoin.svg?style=flat)](https://cocoapods.org/pods/CBitcoin)
-[![Platform](https://img.shields.io/cocoapods/p/CBitcoin.svg?style=flat)](https://cocoapods.org/pods/CBitcoin)
-
 C bindings for [libbitcoin](https://github.com/libbitcoin). Intended primarily as support for the [Bitcoin](https://github.com/BlockchainCommons/iOS-Bitcoin) framework, which depends on this one and provides Swift bindings for libbitcoin.
 
 ## Blog Post
