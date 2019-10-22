@@ -146,6 +146,8 @@
 		032134AC235D551100BCEC35 /* libboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libboost.framework; sourceTree = "<group>"; };
 		032134B2235D555100BCEC35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034E863D235D545400F44F7B /* CBitcoin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CBitcoin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0398AF81235FAC9700D2BF49 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		0398AF82235FAC9700D2BF49 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +311,8 @@
 		034E8633235D545400F44F7B = {
 			isa = PBXGroup;
 			children = (
+				0398AF81235FAC9700D2BF49 /* LICENSE.md */,
+				0398AF82235FAC9700D2BF49 /* README.md */,
 				032134B2235D555100BCEC35 /* Info.plist */,
 				031A62C5235D6BB200CA9C4A /* module.modulemap */,
 				031A62C3235D6A8200CA9C4A /* CBitcoin.h */,
