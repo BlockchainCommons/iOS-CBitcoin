@@ -8,7 +8,9 @@ On January 25, 2019 I published an announcement for this framework on my blog [h
 
 ## Requirements
 
-* Swift 5
+* Swift 5.1
+
+* Xcode 11.3
 
 * This distribution includes pre-built fat frameworks for `libbitcoin` and its dependencies: `libboost`, and `libsecp256k1`. In order to check out this large pre-built file, you need to install the latest version of Git and the Git Large File Storage handler:
 
