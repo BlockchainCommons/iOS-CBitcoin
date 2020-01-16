@@ -59,32 +59,11 @@
 		032134A4235D54F600BCEC35 /* PaymentAddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213470235D54F600BCEC35 /* PaymentAddress.cpp */; };
 		032134A5235D54F600BCEC35 /* ECPublicKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213471235D54F600BCEC35 /* ECPublicKey.cpp */; };
 		032134A6235D54F600BCEC35 /* WrappedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03213472235D54F600BCEC35 /* WrappedData.cpp */; };
-		0398AF65235F9DAE00D2BF49 /* libbitcoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AA235D551100BCEC35 /* libbitcoin.framework */; };
-		0398AF66235F9DAE00D2BF49 /* libbitcoin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AA235D551100BCEC35 /* libbitcoin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0398AF68235F9DAF00D2BF49 /* libboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AC235D551100BCEC35 /* libboost.framework */; };
-		0398AF69235F9DAF00D2BF49 /* libboost.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AC235D551100BCEC35 /* libboost.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0398AF6A235F9DB100D2BF49 /* libsecp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AB235D551100BCEC35 /* libsecp256k1.framework */; };
-		0398AF6B235F9DB100D2BF49 /* libsecp256k1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AB235D551100BCEC35 /* libsecp256k1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0398AF6C235F9DB200D2BF49 /* libsss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134A9235D551100BCEC35 /* libsss.framework */; };
-		0398AF6D235F9DB200D2BF49 /* libsss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 032134A9235D551100BCEC35 /* libsss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		03F54DE323D0547100D5F32C /* libbitcoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AA235D551100BCEC35 /* libbitcoin.framework */; };
+		03F54DE623D0547200D5F32C /* libboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AC235D551100BCEC35 /* libboost.framework */; };
+		03F54DE823D0547300D5F32C /* libsecp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134AB235D551100BCEC35 /* libsecp256k1.framework */; };
+		03F54DEA23D0547500D5F32C /* libsss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032134A9235D551100BCEC35 /* libsss.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		0398AF67235F9DAE00D2BF49 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0398AF6D235F9DB200D2BF49 /* libsss.framework in Embed Frameworks */,
-				0398AF69235F9DAF00D2BF49 /* libboost.framework in Embed Frameworks */,
-				0398AF6B235F9DB100D2BF49 /* libsecp256k1.framework in Embed Frameworks */,
-				0398AF66235F9DAE00D2BF49 /* libbitcoin.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		031A62C3235D6A8200CA9C4A /* CBitcoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBitcoin.h; sourceTree = "<group>"; };
@@ -155,10 +134,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0398AF6C235F9DB200D2BF49 /* libsss.framework in Frameworks */,
-				0398AF68235F9DAF00D2BF49 /* libboost.framework in Frameworks */,
-				0398AF6A235F9DB100D2BF49 /* libsecp256k1.framework in Frameworks */,
-				0398AF65235F9DAE00D2BF49 /* libbitcoin.framework in Frameworks */,
+				03F54DEA23D0547500D5F32C /* libsss.framework in Frameworks */,
+				03F54DE623D0547200D5F32C /* libboost.framework in Frameworks */,
+				03F54DE823D0547300D5F32C /* libsecp256k1.framework in Frameworks */,
+				03F54DE323D0547100D5F32C /* libbitcoin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +357,6 @@
 				034E8639235D545400F44F7B /* Sources */,
 				034E863A235D545400F44F7B /* Frameworks */,
 				034E863B235D545400F44F7B /* Resources */,
-				0398AF67235F9DAE00D2BF49 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -609,6 +587,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources/Frameworks/libsss.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libsecp256k1.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libboost.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libbitcoin.framework",
+				);
 				MODULEMAP_FILE = module.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = blockchaincommons.CBitcoin;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -645,6 +630,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources/Frameworks/libsss.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libsecp256k1.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libboost.framework",
+					"$(PROJECT_DIR)/Sources/Frameworks/libbitcoin.framework",
 				);
 				MODULEMAP_FILE = module.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = blockchaincommons.CBitcoin;

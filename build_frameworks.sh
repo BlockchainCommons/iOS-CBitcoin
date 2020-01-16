@@ -49,6 +49,7 @@ build_framework() {
     defaults write "${INFO_PLIST_PATH}" CFBundleInfoDictionaryVersion "6.0"
     defaults write "${INFO_PLIST_PATH}" CFBundleExecutable "${FRAMEWORK_BASE_NAME}"
     defaults write "${INFO_PLIST_PATH}" CFBundleIdentifier "${FRAMEWORK_BASE_IDENTIFIER}.${FRAMEWORK_BASE_NAME}"
+    defaults write "${INFO_PLIST_PATH}" CFBundleSupportedPlatforms -array-add "iPhoneOS"
 
     cp -r ${SOURCE_HEADERS} "${HEADERS_PATH}/" # Globbing happens here
 }
@@ -161,13 +162,11 @@ start
 trap finish ERR
 
 build_libbitcoin
-build_breadwalletcore
 build_sss
 
 build_libboost_framework
 build_libsecp256k1_framework
 build_libbitcoin_framework
-build_breadwalletcore_framework
 build_sss_framework
 
 zip_frameworks
